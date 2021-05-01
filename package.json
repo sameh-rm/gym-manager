@@ -2,20 +2,51 @@
   "name": "gym_manager",
   "version": "0.1.0",
   "private": true,
+  "main": "public/electron.js",
+  "proxy": "http://127.0.0.1:5000",
+  "homepage": "./",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
+    "bootstrap": "^4.6.0",
+    "colors": "^1.4.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "mongoose": "^5.12.7",
     "react": "^17.0.2",
+    "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.2",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "concurrently \"cross-env BROWSER=none yarn client\" \"wait-on http://localhost:3000 && yarn electron-dev\"",
+    "client": "react-scripts start",
+    "build:react": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron-dev": "set ELECTRON_START_URL=http://localhost:3000 && electron .",
+    "electron-build": "electron-builder build --win",
+    "release": "yarn react-build && electron-builder --publish=always",
+    "build": "yarn build:react && yarn electron-build",
+    "electron": "electron ."
+  },
+  "build": {
+    "appId": "com.gymanager.electron",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -34,5 +65,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^6.0.2",
+    "electron": "^12.0.6",
+    "electron-builder": "^22.10.5"
   }
 }
