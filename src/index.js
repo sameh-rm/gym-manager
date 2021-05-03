@@ -1,12 +1,25 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { Spinner } from "react-bootstrap";
+import "./i18n";
+import "./assets/css/yeti.bootstrap.min.css";
+import "./assets/css/fs/css/all.min.css";
+import "./index.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Suspense
+      fallback={
+        <Spinner
+          animation="border"
+          style={{ position: "absolute", top: "50%", left: "50%" }}
+        />
+      }
+    >
+      <App />
+    </Suspense>
   </React.StrictMode>,
   document.getElementById("root")
 );
