@@ -1,4 +1,4 @@
-import { Col, Container, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Footer from "./components/Footer/Footer.component";
 import Header from "./components/Header/Header.component";
@@ -7,7 +7,7 @@ import ErrorBoundary from "./components/Utils/ErrorBoundary";
 import Dashboard from "./Pages/Dashboard/Dashboard.page";
 import { useTranslation } from "react-i18next";
 function App() {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   document.dir = i18n.dir();
   return (
     <Router className="App">

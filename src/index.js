@@ -3,6 +3,10 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Spinner } from "react-bootstrap";
+import { Provider } from "react-redux";
+import { store, persistor } from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
+
 import "./i18n";
 import "./assets/css/yeti.bootstrap.min.css";
 import "./assets/css/fs/css/all.min.css";
@@ -18,7 +22,11 @@ ReactDOM.render(
         />
       }
     >
-      <App />
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <App />
+        </PersistGate>
+      </Provider>
     </Suspense>
   </React.StrictMode>,
   document.getElementById("root")

@@ -1,8 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import SidebarItem from "./SidebarItem/SidebarItem.component";
-import { sidebarItems } from "./sidebar_items";
+
 import "./sidebar.styles.scss";
 const Sidebar = () => {
+  const sidenav = useSelector((state) => state.sidenav);
+  const sidebarItems = sidenav.sidebarItems;
   return (
     <div className="sidebar">
       <div className="sidebar_wrapper">
@@ -21,6 +24,9 @@ const Sidebar = () => {
               icon={item.icon}
               url={item.url}
               subitems={item.subitems}
+              expanded={item.expanded}
+              selected={item.selected}
+              height={item.height}
             />
           ))}
         </div>

@@ -7,6 +7,7 @@ export const sidebarItems = [
   {
     title: "Members",
     icon: <i className="far fa-dumbbell"></i>,
+    expanded: true,
     subitems: [
       {
         title: "New Member",
@@ -22,6 +23,7 @@ export const sidebarItems = [
   },
   {
     title: "Memberships",
+    expanded: true,
     icon: <i className="fal fa-id-card-alt"></i>,
     subitems: [
       {
@@ -38,6 +40,7 @@ export const sidebarItems = [
   },
   {
     title: "POS",
+    expanded: true,
     url: "/pos",
     icon: <i className="fal fa-cash-register"></i>,
     subitems: [
@@ -56,6 +59,7 @@ export const sidebarItems = [
 
   {
     title: "Expenses",
+    expanded: true,
     icon: <i className="far fa-coins"></i>,
     subitems: [
       {
@@ -72,6 +76,7 @@ export const sidebarItems = [
   },
   {
     title: "Reports",
+    expanded: true,
     icon: <i className="fal fa-sitemap"></i>,
     subitems: [
       // Lists the gym daily income Daily Courses and monthly courses
@@ -147,6 +152,8 @@ export const sidebarItems = [
   },
   {
     title: "Settings",
+    icon: <i className="far fa-cog"></i>,
+    expanded: true,
     subitems: [
       {
         title: "Settings",
