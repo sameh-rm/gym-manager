@@ -9,8 +9,25 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
+    backend: {
+      // path where resources get loaded from
+
+      loadPath:
+        process.env.NODE_ENV === "development"
+          ? "/locales/{{lng}}/{{ns}}.json"
+          : process.env.NODE_ENV === "production" &&
+            "./locales/{{lng}}/{{ns}}.json",
+      // path to post missing resources
+      addPath:
+        process.env.NODE_ENV === "development"
+          ? "/locales/{{lng}}/{{ns}}.missing.json"
+          : process.env.NODE_ENV === "production" &&
+            "./locales/{{lng}}/{{ns}}.missing.json",
+      // jsonIndent to use when storing json files
+      jsonIndent: 2,
+    },
     fallbackLng: "en",
-    lng: "en",
+    lng: "ar",
     debug: true,
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default

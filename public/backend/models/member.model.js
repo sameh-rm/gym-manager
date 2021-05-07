@@ -7,7 +7,7 @@ const memberSchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
-    memberships: [
+    courses: [
       {
         name: {
           type: String,
@@ -34,10 +34,20 @@ const memberSchema = mongoose.Schema(
           type: Number,
           required: true,
         },
-        membership: {
+        confirmed: {
+          type: Boolean,
+          required: true,
+          default: false,
+        },
+        status: {
+          type: Boolean,
+          required: true,
+          default: true,
+        },
+        Course: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
-          ref: "MemberShip",
+          ref: "Course",
         },
       },
     ],
@@ -61,6 +71,11 @@ const memberSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    phone: {
+      type: String,
+      required: true,
+    },
+
     nationalId: {
       type: String,
       required: true,

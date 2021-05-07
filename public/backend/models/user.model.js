@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    email: {
+    username: {
       type: String,
       required: true,
       unique: true,
@@ -23,13 +23,18 @@ const userSchema = mongoose.Schema(
     },
     permissions: [
       {
-        name: {
-          type: String,
+        permission: {
+          type: mongoose.Schema.Types.ObjectId,
           required: true,
+          ref: "Permission",
         },
-        model: {
-          type: String,
+        allowed_by: {
+          type: mongoose.Schema.Types.ObjectId,
           required: true,
+          ref: "User",
+        },
+        description: {
+          type: String,
         },
       },
     ],
@@ -48,5 +53,5 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
-export const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
 module.exports = User;

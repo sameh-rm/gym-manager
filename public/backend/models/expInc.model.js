@@ -3,6 +3,11 @@ const mongoose = require("mongoose");
 const expIncSchema = mongoose.Schema(
   {
     description: { type: String, required: true },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
     value: {
       type: Number,
       required: true,

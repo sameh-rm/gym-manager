@@ -1,33 +1,19 @@
-
 .sidebar {
-	width: 300px;
-	height: 100vh;
 	background-image: url("../../assets/images/sidebar-bg.jpg");
-	background-size: cover;
-	margin: 0;
-	color: #fff;
-	transition: all 300ms ease-in;
-    z-index: 10000;
-	.sidebar_wrapper {
-		background-color: rgba($color: #000000, $alpha: 0.8);
+
+	.itemIconContainer {
 		width: 100%;
-		height: 100%;
-        .brand{
-            font-size: 2rem;
-            text-transform: uppercase;
-        }
-		.body {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-            overflow: scroll;
-			height: 86vh;
-			display: flex;
-			flex-direction: column;
-            &::-webkit-scrollbar {
-                display: none;
-              }
+		text-align: center;
+		padding-top: .5rem;
+		height: 48px;
+		font-size: 1.4rem;
+
+		&:hover {
+			cursor: pointer;
+			background-color: rgba(100, 100, 100, 0.3);
+			border-radius: 10px;
+			text-decoration: underline;
+
 		}
 	}
-      
-  
 }

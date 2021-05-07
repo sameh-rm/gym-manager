@@ -1,29 +1,82 @@
 import React from "react";
-import { Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
-
+import { useEffect } from "react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import {
+  navCollapse,
+  selectItem,
+} from "../../redux/coreReducers/sidenaveReducer/sidenav.actions";
+import CustomMenu from "../CustomeMenu/CustomMenu";
+import { BrandContainer } from "./Header.styles";
+import "./header.styles.scss";
 const Header = () => {
+  const { i18n } = useTranslation();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const collapse = useSelector((state) => state.core.sidenav.collapse);
+  const [userInfoExpanded, setUserInfoExpanded] = useState(false);
+  const [alarmMenuExpanded, setAlarmMenuExpanded] = useState(false);
+  const expandHandler = (target) => {
+    switch (target) {
+      case "userInfo":
+        setUserInfoExpanded(!userInfoExpanded);
+        break;
+      case "alarm":
+        setAlarmMenuExpanded(!alarmMenuExpanded);
+        break;
+      default:
+        break;
+    }
+  };
+  const collapseHandler = (e) => {
+    dispatch(navCollapse());
+  };
+  const homeHandler = () => {
+    dispatch(selectItem("Dashboard"));
+    history.push("/");
+  };
+
   return (
     <header>
-      <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <NavDropdown title={"userInfo"} id="username">
-              <LinkContainer to="profile">
-                <NavDropdown.Item>Profile</NavDropdown.Item>
-              </LinkContainer>
-              <NavDropdown.Item>Logout</NavDropdown.Item>
-              <NavDropdown.Item>Logout</NavDropdown.Item>
-            </NavDropdown>
-            <LinkContainer to="/login">
-              <Nav.Link>
-                <i className="fa fa-user"></i> Sign In
-              </Nav.Link>
-            </LinkContainer>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+      <div className="navbar flex paper_elevation">
+        <div onClick={homeHandler}>
+          <BrandContainer
+            dir={i18n.dir()}
+            className="brand flex text-center"
+            collapse={collapse}
+          >
+            <CustomMenu header="first" size="lg" />
+
+            {/* <i className="fab fa-gitlab pb-2 m-auto px-5"></i> */}
+
+            <h3 className="mx-2 title">
+              <span style={{ color: "#1fe086" }}>Gym</span> <span>Manager</span>
+            </h3>
+
+            <div className="burger px-2 mx-2" onClick={collapseHandler}>
+              <i className="fas fa-bars">
+                <CustomMenu header="burger" size="md" />
+              </i>
+            </div>
+          </BrandContainer>
+        </div>
+
+        <div
+          className="float-left relative pointer"
+          onClick={() => expandHandler("userInfo")}
+        >
+          UserInfo
+          <i className="fas fa-user"> </i>
+          <CustomMenu
+            expand={userInfoExpanded}
+            expandHandler={setUserInfoExpanded}
+            header={<h3>left</h3>}
+            size="lg"
+          />
+        </div>
+      </div>
     </header>
   );
 };

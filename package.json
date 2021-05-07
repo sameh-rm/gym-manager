@@ -6,13 +6,18 @@
   "proxy": "http://127.0.0.1:5000",
   "homepage": "./",
   "dependencies": {
+    "@nivo/bar": "^0.69.1",
+    "@nivo/core": "^0.69.0",
+    "@nivo/line": "^0.69.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "bootstrap": "^4.6.0",
     "colors": "^1.4.0",
+    "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -21,17 +26,23 @@
     "i18next-browser-languagedetector": "^6.1.0",
     "i18next-http-backend": "^1.2.2",
     "jquery": "^3.6.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.7",
+    "multer": "^1.4.2",
     "node-sass": "^5.0.0",
+    "prop-types": "^15.7.2",
     "react": "^16.10.0",
     "react-bootstrap": "^1.5.2",
     "react-dom": "^16.10.0",
     "react-i18next": "^11.8.15",
     "react-redux": "^7.2.4",
+    "react-responsive": "^8.2.0",
     "react-router": "^5.2.0",
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-select": "^4.3.0",
+    "react-tooltip": "^4.2.19",
     "redux": "^4.1.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-persist": "^6.0.0",
@@ -40,8 +51,10 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "concurrently \"cross-env BROWSER=none yarn client\" \"wait-on http://localhost:3000 && yarn electron-dev\"",
+    "start:electron": "concurrently \"cross-env BROWSER=none yarn client\" \"wait-on http://localhost:3000 && yarn electron-dev\"",
+    "start": "concurrently \"yarn server\" \"yarn client\"",
     "client": "react-scripts start",
+    "server": "nodemon ./public/backend/server.js",
     "build:react": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -57,8 +70,11 @@
       "build/**/*",
       "node_modules/**/*"
     ],
+    "extraResources": [
+      "./uploads/**"
+    ],
     "directories": {
-      "buildResources": "assets"
+      "buildResources": "public"
     }
   },
   "eslintConfig": {
@@ -82,6 +98,7 @@
   "devDependencies": {
     "concurrently": "^6.0.2",
     "electron": "^12.0.6",
-    "electron-builder": "^22.10.5"
+    "electron-builder": "^22.10.5",
+    "nodemon": "^2.0.7"
   }
 }

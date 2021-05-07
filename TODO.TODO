@@ -1,0 +1,97 @@
+Login Page
+Edit User
+Delete User
+permissions
+# Shift Time is editable  at settings for now from 6am to 5:59am
+# Users
+    1- Create Users (Only Admin Allowed)
+    2- Delete Users ##
+    3- Edit User (A user can edit his infos but admin can edit everyone's infos)
+    
+    # Model:
+    name, username, image, password, isAdmin,
+    permission:[{action,model},{action,model}]
+
+# PermissionGroup
+    1- Create PermissionGroup (Only Admin Allowed)
+    2- Delete PermissionGroup  (Only Admin Allowed)
+    3- Edit PermissionGroup (Only Admin Allowed)
+    
+    # Model:
+    name, permissions,user
+    
+# Members
+    1- Create Member (Any User Can Do it)
+    2- Edit Member (Any User Can Do it)
+        [name,age,phone,...etc but not the courses]
+    3- Delete Member (Only Admin Can Do it)
+
+    # Model:
+    name, address, phone, nationalID, tall, weight, age,memberShips, courses:[
+        {
+            
+            user:userObj, Name:Gym, Start: 1/5, End: 1/8,
+            CoursePlan:(يومى \ *شهرى), Period: 3, Price:200,
+            paid:100, remain (better Calculated):100,
+            confirmed:false (Not yet to be confirmed by admin),
+            status:(active/disabled)
+        }]
+# Courses
+    1- Create Courses (Only Admin)
+    2- Delete Courses (Only Admin)
+    2- Edit Courses (Only Admin)
+    # Model:
+    {name: Gym, M.Price:75, D.Price:10, DaysPerMonth: 26, MinutesPerMonth:60}
+    {name: Sauna, M.Price:60, D.Price:20, DaysPerMonth: 4, MinutesPerMonth:10}
+
+# MemberShips 
+    1- Create MemberShip (Only Admin)
+    2- Delete MemberShip (Only Admin)
+    2- Edit MemberShip (Only Admin)
+    # Model:
+    {name: Silver, Price:350, Months: 3,description, Courses:[
+        {
+            CourseObj, Name:Gym, DaysPerMonth: 26, MinutesPerMonth:60
+            CourseObj, Name:Sauna, DaysPerMonth: 4, MinutesPerMonth:10
+        }]}
+
+# Trainers
+    1- Create Trainers (Only Admin)
+    2- Delete Trainers (Only Admin)
+    2- Edit Trainers (Only Admin)
+    # Model:
+    {
+        name:Sameh, nationalID:29408, phone:011,
+        address, tall, weight, age,
+        courses:[
+            {
+                name:Gym, price: 40 
+            },
+            {
+                name:Diet, price: 80 
+            },
+        ]
+        Member:[
+            {
+                memberObj, Name, CourseName, active,
+                startDate, EndDate, price, paid, remain
+            }
+        ]
+    }
+
+
+Create User EndPoint is ready
+GET All Users EndPoint is ready
+@TODO
+    Create NewUserForm
+    Create UpdateUserForm
+    Create UserProfilePage // it can be delayed till the end
+    Create UserListPage
+    
+    Members API and pages and Member Profile
+    Courses API and pages
+    MemberShips API and Pages
+
+    Reports 
+
+

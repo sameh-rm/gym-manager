@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const memberShipSchema = mongoose.Schema(
+const courseSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -8,6 +8,10 @@ const memberShipSchema = mongoose.Schema(
       ref: "User",
     },
     name: {
+      type: String,
+      required: true,
+    },
+    description: {
       type: String,
       required: true,
     },
@@ -21,6 +25,16 @@ const memberShipSchema = mongoose.Schema(
       required: true,
       default: 0.0,
     },
+    daysPerMonth: {
+      type: Number,
+      required: true,
+      default: 26,
+    },
+    minutesPerTime: {
+      type: Number,
+      required: true,
+      default: 60,
+    },
     period: {
       type: Number,
       required: true,
@@ -31,6 +45,6 @@ const memberShipSchema = mongoose.Schema(
   }
 );
 
-const MemberShip = mongoose.model("MemberShip", memberShipSchema);
+const Course = mongoose.model("Course", courseSchema);
 
-module.exports = MemberShip;
+module.exports = Course;

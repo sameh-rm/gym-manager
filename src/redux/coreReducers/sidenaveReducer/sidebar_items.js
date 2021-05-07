@@ -10,14 +10,14 @@ export const sidebarItems = [
     expanded: true,
     subitems: [
       {
-        title: "New Member",
-        url: "/members/new",
-        icon: <i className="far fa-user-plus"></i>,
-      },
-      {
         title: "Members List",
         url: "/members",
         icon: <i className="fal fa-list"></i>,
+      },
+      {
+        title: "New Member",
+        url: "/members/new",
+        icon: <i className="far fa-user-plus"></i>,
       },
     ],
   },
@@ -27,21 +27,20 @@ export const sidebarItems = [
     icon: <i className="fal fa-id-card-alt"></i>,
     subitems: [
       {
-        title: "New MemberShip",
-        url: "/memberships/new",
-        icon: <i className="fad fa-layer-plus"></i>,
-      },
-      {
         title: "MemberShip List",
         url: "/memberships",
         icon: <i className="fad fa-layer-group"></i>,
+      },
+      {
+        title: "New MemberShip",
+        url: "/memberships/new",
+        icon: <i className="fad fa-layer-plus"></i>,
       },
     ],
   },
   {
     title: "POS",
     expanded: true,
-    url: "/pos",
     icon: <i className="fal fa-cash-register"></i>,
     subitems: [
       {
@@ -63,14 +62,14 @@ export const sidebarItems = [
     icon: <i className="far fa-coins"></i>,
     subitems: [
       {
-        title: "Add Expense",
-        url: "/expenses/add",
-        icon: <i className="far fa-plus"></i>,
-      },
-      {
         title: "Expenses List",
         url: "/expenses",
         icon: <i className="far fa-receipt"></i>,
+      },
+      {
+        title: "Add Expense",
+        url: "/expenses/add",
+        icon: <i className="far fa-plus"></i>,
       },
     ],
   },
@@ -158,17 +157,17 @@ export const sidebarItems = [
       {
         title: "Settings",
         icon: <i className="far fa-cog"></i>,
-        url: "/settings",
+        url: "/admin/settings",
       },
       {
         title: "User List",
         icon: <i className="far fa-cog"></i>,
-        url: "/users",
+        url: "/admin/users",
       },
       {
         title: "Add User",
         icon: <i className="far fa-cog"></i>,
-        url: "/users/add",
+        url: "/admin/adduser",
       },
     ],
   },
