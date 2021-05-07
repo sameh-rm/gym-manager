@@ -1,6 +1,6 @@
 const expressAsyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
-const User = require("../models/userModel.js");
+const User = require("../models/user.model.js");
 
 const loginRequired = expressAsyncHandler(async (req, res, next) => {
   let token = req.headers.authorization ? req.headers.authorization : "";
