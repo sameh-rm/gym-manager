@@ -1,6 +1,7 @@
 const User = require("../models/user.model.js");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generatToken.js");
+const { paginateResults } = require("../middlewares/pagination.Middlewares.js");
 // @desc    Create New User
 // @route   POST /api/users
 // @access  private/admin
@@ -10,8 +11,9 @@ const createUser = asyncHandler(async (req, res) => {
     username,
     password,
     image,
-    permissions,
-    permissionGroups,
+    isAdmin = false,
+    permissions = [],
+    permissionGroups = [{ permissions: [] }],
   } = req.body;
   const userExists = await User.findOne({ username });
   if (userExists) {
@@ -35,7 +37,10 @@ const createUser = asyncHandler(async (req, res) => {
     password,
     image,
     permissions,
+    isAdmin,
   });
+
+  console.log(image);
 
   if (user) {
     res.status(201).json({
@@ -43,6 +48,7 @@ const createUser = asyncHandler(async (req, res) => {
       name: user.name,
       username: user.username,
       isAdmin: user.isAdmin,
+      image: user.image,
       token: generateToken(user._id),
     });
   } else {
@@ -55,8 +61,11 @@ const createUser = asyncHandler(async (req, res) => {
 // @route   GET /api/users
 // @access  private/admin
 const getAllUsers = asyncHandler(async (req, res) => {
-  const users = await User.find({});
-  res.send(users);
+  const users = await User.find({}).limit(req.limit).skip(req.startIndex);
+  // const result = paginateResults(req, User, { results: users });
+
+  res.status(200);
+  res.json({ results: users });
 });
 
 const login = asyncHandler(async (req, res) => {
@@ -78,4 +87,67 @@ const login = asyncHandler(async (req, res) => {
     throw new Error("wrong username or password");
   }
 });
-module.exports = { createUser, getAllUsers, login };
+
+/**
+  @desc    Update a User byAdmin
+  @route   GET /api/users
+  @access  private/admin
+ */
+const updateUser = asyncHandler(async (req, res) => {
+  // spread req.body
+  const {
+    name,
+    username,
+    password,
+    image,
+    isAdmin,
+    permissions = [],
+    permissionGroups = [{ permissions: [] }],
+  } = req.body;
+
+  const loggedUser = req.user;
+
+  const user = await User.findById(req.params.id);
+
+  if (user) {
+    user.name = name || user.name;
+    user.username = username || user.username;
+    user.password = password || user.password;
+    user.image = image || user.image;
+    user.isAdmin = isAdmin;
+    user.user = loggedUser;
+    // user.permissions = permissions;
+    // user.permissionGroups = permissionGroups;
+  } else {
+    res.status(404);
+    throw new Error("User is not found!");
+  }
+
+  const updatedUser = await user.save();
+  if (updatedUser) {
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      username: updatedUser.username,
+      image: updatedUser.image,
+      isAdmin: updatedUser.isAdmin,
+      token: generateToken(updatedUser._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid User Data");
+  }
+});
+
+const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (user) {
+    await user.remove();
+    res.status(200);
+    res.json({ message: "deleted Successfully" });
+  } else {
+    res.status(404);
+    throw new Error("Not Found!");
+  }
+});
+module.exports = { createUser, getAllUsers, login, updateUser, deleteUser };

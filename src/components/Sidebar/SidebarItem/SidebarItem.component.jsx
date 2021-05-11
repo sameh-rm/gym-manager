@@ -79,6 +79,7 @@ const SidebarItem = ({
       {subitems && (
         <div className="subitems-menu">
           <SidebarSubItem
+            onlyAdminAllowed
             parentTitle={title}
             height={height}
             expanded={expanded}

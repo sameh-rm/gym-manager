@@ -98,6 +98,11 @@ const memberSchema = mongoose.Schema(
       required: true,
       default: 0.0,
     },
+    isActive: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
   },
   {
     timestamps: true,

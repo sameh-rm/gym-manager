@@ -36,6 +36,16 @@ export const sidebarItems = [
         url: "/memberships/new",
         icon: <i className="fad fa-layer-plus"></i>,
       },
+      {
+        title: "Courses List",
+        url: "/courses",
+        icon: <i className="fal fa-list"></i>,
+      },
+      {
+        title: "New Course",
+        url: "/courses/new",
+        icon: <i className="far fa-user-plus"></i>,
+      },
     ],
   },
   {
@@ -167,7 +177,7 @@ export const sidebarItems = [
       {
         title: "Add User",
         icon: <i className="far fa-cog"></i>,
-        url: "/admin/adduser",
+        url: "/admin/users/add",
       },
     ],
   },

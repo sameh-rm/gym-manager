@@ -1,7 +1,9 @@
-Login Page
-Edit User
-Delete User
+
 permissions
+Courses API and UI
+MemberShips API and UI
+Modify Tables to searchable and pagenate
+
 # Shift Time is editable  at settings for now from 6am to 5:59am
 # Users
     1- Create Users (Only Admin Allowed)

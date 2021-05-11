@@ -70,9 +70,6 @@
       "build/**/*",
       "node_modules/**/*"
     ],
-    "extraResources": [
-      "./uploads/**"
-    ],
     "directories": {
       "buildResources": "public"
     }

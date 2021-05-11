@@ -18,7 +18,10 @@ const MainContainer = ({ children }) => {
     <>
       <div
         className="content"
-        style={{ textAlign: document.dir === "rtl" ? "right" : "left" }}
+        style={{
+          height: "100vh",
+          textAlign: document.dir === "rtl" ? "right" : "left",
+        }}
       >
         <div className="mainContent">
           <Header />
@@ -26,11 +29,11 @@ const MainContainer = ({ children }) => {
             <Sidebar />
             <div className="main">
               <main className="p-3 pagesContainer">{children}</main>
+              <Footer />
             </div>
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

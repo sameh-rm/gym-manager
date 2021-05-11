@@ -31,7 +31,7 @@ export const SidebarContainer = styled.div`
       -ms-overflow-style: none; /* IE and Edge */
       scrollbar-width: none; /* Firefox */
       overflow: scroll;
-      height: 99%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       &::-webkit-scrollbar {

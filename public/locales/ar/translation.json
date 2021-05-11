@@ -47,5 +47,10 @@
   "Permission Groups": "مجموعات الصلاحيات",
   "Submit": "حفظ",
   "LogIn": "دخول",
-  "wrong username or password": "خطأ بإسم المستخدم اوكلمة المرور"
+  "wrong username or password": "خطأ بإسم المستخدم اوكلمة المرور",
+  "User Was Created Successfully!": "تم تسجيل المستخدم بنجاح!",
+  "Not authorized as an admin": "غير مصرح لغير المديرين!",
+  "User Was Updated Successfully!": "تم تحديث بيانات المستخدم!",
+  "Courses List": "قائمة التمارين",
+  "New Course": "تمرين جديد"
 }

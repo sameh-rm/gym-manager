@@ -1,5 +1,4 @@
 import React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,7 +40,7 @@ const Header = () => {
   return (
     <header>
       <div className="navbar flex paper_elevation">
-        <div onClick={homeHandler}>
+        <div>
           <BrandContainer
             dir={i18n.dir()}
             className="brand flex text-center"
@@ -51,11 +50,11 @@ const Header = () => {
 
             {/* <i className="fab fa-gitlab pb-2 m-auto px-5"></i> */}
 
-            <h3 className="mx-2 title">
+            <h3 className="mx-2 title" onClick={homeHandler}>
               <span style={{ color: "#1fe086" }}>Gym</span> <span>Manager</span>
             </h3>
 
-            <div className="burger px-2 mx-2" onClick={collapseHandler}>
+            <div className="burger px-2 mx-2 " onClick={collapseHandler}>
               <i className="fas fa-bars">
                 <CustomMenu header="burger" size="md" />
               </i>

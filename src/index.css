@@ -43,7 +43,6 @@ code {
   display: flex;
   justify-content: center;
   width: 100vw;
-  max-height: calc(100vh - 54px);
 }
 .pagesContainer {
   max-height: calc(100% - 54px);
@@ -55,7 +54,23 @@ code {
 .pagesContainer::-webkit-scrollbar {
   display: none;
 }
+.hide-scrollbar {
+  overflow: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 
+* {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  transition: all ease 300ms;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
 .main {
   width: 100%;
 }
@@ -138,4 +153,18 @@ h2 {
 .flex {
   display: flex;
   flex-direction: row;
+}
+
+.table-action-btn {
+  width: 35px;
+  margin: 0.1rem;
+}
+
+footer {
+  z-index: 150;
+  background-color: white !important;
+}
+
+.searchTxtInput {
+  border-radius: 5px;
 }

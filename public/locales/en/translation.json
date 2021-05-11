@@ -47,5 +47,8 @@
   "Choose File": "Choose File",
   "Permission Groups": "Permission Groups",
   "Submit": "Submit",
-  "LogIn": "LogIn"
+  "LogIn": "LogIn",
+  "User Was Created Successfully!": "User Was Created Successfully!",
+  "Not authorized as an admin": "Not authorized as an admin",
+  "User Was Updated Successfully!": "User Was Updated Successfully!"
 }

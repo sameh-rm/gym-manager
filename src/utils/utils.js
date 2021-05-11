@@ -12,10 +12,36 @@ export const uploadImage = async (e, setUploading, setImage) => {
       },
     };
     const { data } = await request.post("/api/upload", formData, config);
-    setImage(data);
+    setImage(data.replace(/\\/g, "/"));
     setUploading(false);
   } catch (error) {
     console.error(error);
     setUploading(false);
   }
+};
+const pageLimit = 10;
+export const paginate = (data, pageNum, limitNum) => {
+  const page = parseInt(pageNum);
+  const limit = parseInt(limitNum || pageLimit);
+  const startIndex = (page - 1) * limit;
+  const endIndex = page + limit;
+  const result = {
+    results: data.slice(startIndex, startIndex + limit),
+    endIndex,
+    startIndex,
+  };
+  if (endIndex < data.length) {
+    result.next = {
+      page: page + 1,
+      limit: limit,
+    };
+  }
+
+  if (startIndex > 0) {
+    result.prev = {
+      page: page - 1,
+      limit: limit,
+    };
+  }
+  return result;
 };

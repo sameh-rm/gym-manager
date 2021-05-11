@@ -46,6 +46,24 @@ const membershipSchema = mongoose.Schema(
           required: true,
           default: 60,
         },
+        description: {
+          type: String,
+          required: true,
+        },
+        dailyPrice: {
+          type: Number,
+          required: true,
+          default: 0.0,
+        },
+        monthlyPrice: {
+          type: Number,
+          required: true,
+          default: 0.0,
+        },
+        period: {
+          type: Number,
+          required: true,
+        },
       },
     ],
   },

@@ -1,25 +1,32 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 
-const FormItem = ({
-  title,
-  value,
-  onChangeHandler,
-  type,
-  placeholder,
-  required,
-  children,
-}) => {
+const FormItem = (props) => {
+  const {
+    title,
+    value,
+    onChangeHandler,
+    type,
+    placeholder,
+    required,
+    children,
+    icon,
+    className,
+  } = props;
   return (
-    <Form.Group controlId={title.toLowerCase()}>
-      <Form.Label>{title}</Form.Label>
+    <Form.Group
+      controlId={title ? title.toLowerCase() : placeholder.toLowerCase()}
+    >
+      {title && <Form.Label>{title}</Form.Label>}
       <Form.Control
+        className={className}
         required={required}
         type={type}
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChangeHandler(e.target.value)}
-      ></Form.Control>
+      />
+
       {children}
     </Form.Group>
   );

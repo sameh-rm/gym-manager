@@ -1,8 +1,11 @@
 import React from "react";
-import { Button, Container, Table } from "react-bootstrap";
+import { Button, Container, Image, Table } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
+import { Link } from "react-router-dom";
+import { deleteUser } from "../../../redux/coreReducers/adminReducers/admin.actions";
+import Message from "../../Message";
 import AsyncComponent from "../../Utils/AsyncComponent";
 /**
  * @param loading shows Loader Component if its true.
@@ -11,21 +14,33 @@ import AsyncComponent from "../../Utils/AsyncComponent";
  */
 const UsersTable = ({ history }) => {
   const { t } = useTranslation();
-  const deleteHandler = () => {
-    console.log("Delete Handler Not Implemented");
+  const dispatch = useDispatch();
+  const deleteHandler = (id) => {
+    if (window.confirm(t("Are you sure?"))) {
+      dispatch(deleteUser(id));
+    }
   };
 
   const { loading, error, usersList } = useSelector(
     (state) => state.core.usersList
   );
+  const { loading: deleteLoading, error: deleteError, success } = useSelector(
+    (state) => state.core.deleteUser
+  );
   return (
     <Container>
-      <AsyncComponent loading={loading} error={error}>
+      <AsyncComponent
+        loading={loading || deleteLoading}
+        error={error || deleteError}
+      >
+        {success && (
+          <Message variant="info">{t("User Was Deleted Successfully")}</Message>
+        )}
         <Table striped hover bordered responsive className="mt-3">
           <thead>
             <tr>
               <th colSpan={2}>#</th>
-              <th colSpan={3}>{t("Image")}</th>
+              <th colSpan={1}>{t("Image")}</th>
               <th colSpan={3}>{t("Name")}</th>
               <th colSpan={2}>{t("Username")}</th>
               <th colSpan={1}>{t("IsAdmin")}</th>
@@ -42,11 +57,25 @@ const UsersTable = ({ history }) => {
             ) : (
               usersList.map((user, idx) => (
                 <tr key={idx + 1}>
-                  <td colSpan={2}>{user._id}</td>
-                  <td colSpan={3}>{user.image}</td>
-                  <td colSpan={3}>{user.name}</td>
-                  <td colSpan={2}>{user.username}</td>
-                  <td colSpan={1} className="text-center">
+                  <td colSpan={2} className="align-middle">
+                    <Link to={`/admin/users/${user._id}`}>{user._id}</Link>
+                  </td>
+                  <td className="align-middle text-center">
+                    <Image
+                      alt={user.name}
+                      rounded
+                      fluid
+                      width="45px"
+                      src={user.image}
+                    />
+                  </td>
+                  <td colSpan={3} className="align-middle">
+                    {user.name}
+                  </td>
+                  <td colSpan={2} className="align-middle">
+                    {user.username}
+                  </td>
+                  <td colSpan={1} className="align-middle text-center">
                     {user.isAdmin ? (
                       <i
                         className="fas fa-check"
@@ -59,9 +88,9 @@ const UsersTable = ({ history }) => {
                       ></i>
                     )}
                   </td>
-                  <td colSpan={1} className="text-center">
+                  <td colSpan={1} className="align-middle text-center">
                     <LinkContainer
-                      to={`/users/${user._id}/edit`}
+                      to={`/admin/users/${user._id}/edit`}
                       className="mx-2"
                     >
                       <Button
@@ -74,7 +103,7 @@ const UsersTable = ({ history }) => {
                     </LinkContainer>
 
                     <Button
-                      onClick={deleteHandler}
+                      onClick={() => deleteHandler(user._id)}
                       variant="danger"
                       className="btn-sm mx-2"
                       title={t("Delete")}

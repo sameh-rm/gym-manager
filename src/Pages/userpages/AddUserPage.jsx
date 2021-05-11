@@ -9,9 +9,9 @@ import { selectItemByUrl } from "../../redux/coreReducers/sidenaveReducer/sidena
 const AddUserPage = ({ history, location }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  console.log(location);
   useEffect(() => {
     dispatch(selectItemByUrl(location.pathname));
+    // dispatch({ type: "RESET" });
   }, [dispatch, location]);
 
   return (
