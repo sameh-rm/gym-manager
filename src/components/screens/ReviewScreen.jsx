@@ -172,8 +172,9 @@ const ReviewScreen = ({
         <Row>
           <Image fluid src={image} alt={name} />
         </Row>
-        <Row className="pt-5 px-5">
+        <Row className="pt-5 px-2">
           <FormItem
+            className="md-12"
             title={t("Payment")}
             value={payment}
             placeholder={t("Payment")}

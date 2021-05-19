@@ -17,10 +17,14 @@ const subscribed = (member) => {
       if (paid >= sub.price && sub.price !== sub.paid) {
         sub.paid = sub.price;
         paid -= sub.price;
+        sub.paymentStatus = true;
       } else {
         sub.paid = paid;
         paid = 0;
+        sub.paymentStatus = false;
       }
+    } else {
+      sub.paymentStatus = false;
     }
   });
 
@@ -96,9 +100,8 @@ const getMemberById = expressAsyncHandler(async (req, res) => {
       weight: member.weight,
       phone: member.phone,
       nationalId: member.nationalId,
-      memberships: member.memberships,
+      subscriptions: member.subscriptions,
       personalAddress: member.personalAddress,
-      courses: member.courses,
       members: member.members,
       createdAt: member.createdAt,
       updatedAt: member.updatedAt,

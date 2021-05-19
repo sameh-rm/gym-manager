@@ -79,7 +79,7 @@ const MultiStepForm = ({
         >
           {forms[selectedForm]}
 
-          <Row className="py-5">
+          <Row className="py-3">
             {currentIndex > 0 && (
               <Col>
                 <Button

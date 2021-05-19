@@ -86,7 +86,7 @@ const FormCoursesMenu = ({
           </Row>
         </ListGroup.Item>
         {coursesValues.length === 0 ? (
-          <ListGroup.Item disabled>Select Some {title}</ListGroup.Item>
+          <ListGroup.Item disabled>{title}</ListGroup.Item>
         ) : (
           coursesValues.map((option, idx) => {
             return (

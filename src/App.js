@@ -20,6 +20,7 @@ import MemberShipPage from "./Pages/MembershipPages/MemberShipPage";
 import AddMemberShipPage from "./Pages/MembershipPages/AddMembershipPage";
 import EditMembershipPage from "./Pages/MembershipPages/EditMembershipPage";
 import Switch from "react-bootstrap/esm/Switch";
+import MemberProfilePage from "./Pages/membersPages/MemberProfilePage";
 
 function App({ history }) {
   const { i18n } = useTranslation();
@@ -51,6 +52,7 @@ function App({ history }) {
           <Route exact path="/members" component={MembersPage} />
           <Route path="/members/add" component={AddMemberPage} />
           <Route path="/members/:id/edit" component={EditMemberPage} />
+          <Route exact path="/members/:id" component={MemberProfilePage} />
           {/* <Route render={() => <Redirect to="/" />} /> */}
         </Switch>
       </ErrorBoundary>

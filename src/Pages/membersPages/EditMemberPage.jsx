@@ -44,7 +44,7 @@ const AddMemberPage = ({ history }) => {
   return (
     <MainContainer>
       <Container className="paper_elevation">
-        <Row>
+        <Row className="paper_elevation mb-4">
           <Col>
             <h2>{t("Add Member")}</h2>
           </Col>
@@ -62,7 +62,10 @@ const AddMemberPage = ({ history }) => {
           className="hide-scrollbar"
           style={{ height: "calc(100vh - 250px)", overflow: "scroll" }}
         >
-          <AsyncComponent error={error} loading={loading}>
+          <AsyncComponent
+            error={error || updateError}
+            loading={loading || updateLoading}
+          >
             <Container>
               <EditMemberForm />
             </Container>

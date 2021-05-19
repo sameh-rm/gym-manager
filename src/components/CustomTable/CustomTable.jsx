@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Table } from "react-bootstrap";
+import { Badge, Container, Row, Table } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -25,7 +25,6 @@ const searchData = (data, searchTxt) => {
 const CustomTable = ({
   columns,
   data,
-  detailEndpoint,
   editEndpoint,
   loading,
   error,
@@ -33,6 +32,7 @@ const CustomTable = ({
   deleteHandler,
   listData,
   moreRows = 0,
+  noActions,
 }) => {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
@@ -79,7 +79,7 @@ const CustomTable = ({
                     {t(col[0].toUpperCase() + col.substring(1))}
                   </th>
                 ))}
-                <th></th>
+                {!noActions && <th></th>}
               </tr>
             </thead>
             <tbody>
@@ -92,9 +92,12 @@ const CustomTable = ({
                 paginatedData.map((row, idx) => (
                   <tr key={idx + 1}>
                     <TableTD>
-                      <Link to={`/${detailEndpoint}/${row._id}`}>
-                        {row.name}
-                      </Link>
+                      <Link to={`/${editEndpoint}/${row._id}`}>{row.name}</Link>
+                      <Row className="px-2">
+                        {row.type === "Membership" && (
+                          <Badge variant="warning">{t("Membership")}</Badge>
+                        )}
+                      </Row>
                     </TableTD>
                     {columns.map(
                       (k, idx2) =>
@@ -104,17 +107,21 @@ const CustomTable = ({
                             cellData={row[k]}
                             alt={row.name ? row.name : ""}
                           >
-                            {row[k]}
+                            {k === "endsAt" || k === "startedAt"
+                              ? row[k].substring(0, 10)
+                              : row[k]}
                           </TableTD>
                         )
                     )}
-                    <ActionsTD
-                      id={row._id}
-                      deleteHandler={() => {
-                        deleteHandler(row._id);
-                      }}
-                      editEndpoint={editEndpoint}
-                    />
+                    {!noActions && (
+                      <ActionsTD
+                        id={row._id}
+                        deleteHandler={() => {
+                          deleteHandler(row._id);
+                        }}
+                        editEndpoint={editEndpoint}
+                      />
+                    )}
                   </tr>
                 ))
               )}

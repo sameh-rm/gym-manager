@@ -92,8 +92,16 @@
   "Select Courses": "إختر تمارين",
   "Add Membership": "إضافة عضوية",
   "MemberShip Was Updated Successfully!": "تم تعديل العضوية",
-  "Membership": "العضوية",
+  "Membership": "عضوية",
   "No Courses": "لا توجد تمارين",
   "Total": "إجمالى",
-  "NationalId": "الرقم القومى"
+  "NationalId": "الرقم القومى",
+  "Home": "الرئيسية",
+  "Member": "مشترك",
+  "None": "غير معرف",
+  "PaymentStatus": "تم الدفع",
+  "Confirmed": "مصرح",
+  "EndsAt": "ت.الإنتهاء",
+  "StartedAt": "ت.البداية",
+  "Paid": "المدفوع"
 }

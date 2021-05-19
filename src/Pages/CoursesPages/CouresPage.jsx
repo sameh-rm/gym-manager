@@ -56,7 +56,7 @@ const CoursePage = ({ history, location }) => {
   return (
     <MainContainer>
       <Container className="paper_elevation">
-        <Row>
+        <Row className="paper_elevation mb-4">
           <Col>
             <h2>{t("Courses List")}</h2>
           </Col>

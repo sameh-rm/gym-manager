@@ -36,7 +36,7 @@ const memberSchema = mongoose.Schema(
           required: true,
           default: true,
         },
-        started_at: {
+        startedAt: {
           type: Date,
           required: true,
           default: Date.now(),
@@ -50,7 +50,7 @@ const memberSchema = mongoose.Schema(
           required: true,
           default: false,
         },
-        payment_status: {
+        paymentStatus: {
           // paid, notPaid,
           type: Boolean,
           required: true,
@@ -79,7 +79,7 @@ const memberSchema = mongoose.Schema(
           required: true,
           default: "شهرى",
         },
-        started_at: {
+        startedAt: {
           type: Date,
           required: true,
           default: Date.now(),

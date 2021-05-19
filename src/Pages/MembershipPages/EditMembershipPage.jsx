@@ -107,7 +107,7 @@ const AddMembershipPage = ({ history }) => {
   return (
     <MainContainer>
       <Container className="paper_elevation">
-        <Row>
+        <Row className="paper_elevation mb-4">
           <Col>
             <h2>{t(`${id ? "Edit" : "Add"} Membership`)}</h2>
           </Col>

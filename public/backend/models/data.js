@@ -50,12 +50,12 @@ const x = {
           required: true,
           default: true,
         },
-        started_at: {
+        startedAt: {
           type: Date,
           required: true,
           default: Date.now(),
         },
-        ends_at: {
+        endsAt: {
           type: Date,
           required: true,
         },
@@ -64,7 +64,7 @@ const x = {
           required: true,
           default: false,
         },
-        payment_status: {
+        paymentStatus: {
           // paid, notPaid,
           type: Boolean,
           required: true,
@@ -101,12 +101,12 @@ const x = {
           required: true,
           default: true,
         },
-        started_at: {
+        startedAt: {
           type: Date,
           required: true,
           default: Date.now(),
         },
-        ends_at: {
+        endsAt: {
           type: Date,
           required: true,
         },
@@ -115,7 +115,7 @@ const x = {
           required: true,
           default: false,
         },
-        payment_status: {
+        paymentStatus: {
           // paid, notPaid,
           type: Boolean,
           required: true,
@@ -144,12 +144,12 @@ const x = {
           required: true,
           default: "شهرى",
         },
-        started_at: {
+        startedAt: {
           type: Date,
           required: true,
           default: Date.now(),
         },
-        ends_at: {
+        endsAt: {
           type: Date,
           required: true,
         },
