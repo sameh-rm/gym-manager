@@ -1,5 +1,11 @@
 const express = require("express");
-const { getAllMembers } = require("../controllers/member.controller.js");
+const {
+  getAllMembers,
+  createMember,
+  getMemberById,
+  updateMember,
+  deleteMember,
+} = require("../controllers/member.controller.js");
 const {
   loginRequired,
   adminRequired,
@@ -7,6 +13,15 @@ const {
 
 const router = express.Router();
 
-router.route("/").get(loginRequired, adminRequired, getAllMembers);
+router
+  .route("/")
+  .get(loginRequired, adminRequired, getAllMembers)
+  .post(loginRequired, adminRequired, createMember);
+
+router
+  .route("/:id")
+  .get(loginRequired, adminRequired, getMemberById)
+  .put(loginRequired, adminRequired, updateMember)
+  .delete(loginRequired, adminRequired, deleteMember);
 
 module.exports = router;

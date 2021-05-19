@@ -1,6 +1,7 @@
 import { request } from "./request";
+const url = "http://127.0.0.1:5000";
 
-export const uploadImage = async (e, setUploading, setImage) => {
+export const uploadImage = async (e, setUploading, setImage, afterUpload) => {
   const file = e.target.files[0];
   const formData = new FormData();
   formData.append("image", file);
@@ -12,13 +13,20 @@ export const uploadImage = async (e, setUploading, setImage) => {
       },
     };
     const { data } = await request.post("/api/upload", formData, config);
-    setImage(data.replace(/\\/g, "/"));
+    setTimeout(() => console.log("After Uploading excuted"), 5000);
+
+    if (afterUpload) {
+      afterUpload(data);
+    } else {
+      setImage(data.replace(/\\/g, "/"));
+    }
     setUploading(false);
   } catch (error) {
     console.error(error);
     setUploading(false);
   }
 };
+
 const pageLimit = 10;
 export const paginate = (data, pageNum, limitNum) => {
   const page = parseInt(pageNum);
@@ -44,4 +52,8 @@ export const paginate = (data, pageNum, limitNum) => {
     };
   }
   return result;
+};
+
+export const loadImageUrl = (imageUrl) => {
+  return `${url}${imageUrl}`;
 };

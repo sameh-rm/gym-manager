@@ -18,7 +18,6 @@ const selectItemByUrl = (sidebarItems, url) => {
     if (item.url === url) {
       return { ...item, selected: true };
     } else {
-      console.log(url);
       if (item.subitems) {
         return {
           ...item,

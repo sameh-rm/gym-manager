@@ -1,10 +1,13 @@
+import { combineReducers } from "redux";
+import persistReducer from "redux-persist/es/persistReducer";
 import { courseActionTypes } from "./course.actionTypes";
+import storage from "redux-persist/lib/storage";
+import { coursesToOptions } from "./utils";
 
 const initState = {
   coursesList: [],
 };
-
-export const coursesListReducer = (state = initState, action) => {
+const coursesListReducer = (state = initState, action) => {
   switch (action.type) {
     case courseActionTypes.COURSES_LIST_REQUEST:
       return {
@@ -14,6 +17,7 @@ export const coursesListReducer = (state = initState, action) => {
     case courseActionTypes.COURSES_LIST_SUCCESS:
       return {
         coursesList: action.payload.results,
+        coursesAsOptions: coursesToOptions(action.payload.results),
         prev: action.payload.prev,
         next: action.payload.next,
         loading: false,
@@ -30,7 +34,7 @@ export const coursesListReducer = (state = initState, action) => {
   }
 };
 
-export const addcourseReducer = (state = {}, action) => {
+const addcourseReducer = (state = {}, action) => {
   switch (action.type) {
     case courseActionTypes.CREATE_COURSE_REQUEST:
       return {
@@ -60,7 +64,7 @@ export const addcourseReducer = (state = {}, action) => {
   }
 };
 
-export const updatecourseReducer = (
+const updatecourseReducer = (
   state = {
     success: false,
   },
@@ -98,7 +102,7 @@ export const updatecourseReducer = (
   }
 };
 
-export const deletecourseReducer = (state = {}, action) => {
+const deletecourseReducer = (state = {}, action) => {
   switch (action.type) {
     case courseActionTypes.DELETE_COURSE_REQUEST:
       return {
@@ -121,6 +125,57 @@ export const deletecourseReducer = (state = {}, action) => {
         success: false,
       };
     default:
-      return {};
+      return state;
   }
 };
+
+const selectCourseReducer = (
+  state = {
+    course: null,
+  },
+  action
+) => {
+  switch (action.type) {
+    case courseActionTypes.SELECT_COURSE_REQUEST:
+      return {
+        loading: true,
+        success: false,
+      };
+    case courseActionTypes.SELECT_COURSE_SUCCESS:
+      return {
+        loading: false,
+        course: action.payload,
+      };
+    case courseActionTypes.SELECT_COURSE_FAILED:
+      return {
+        success: false,
+        loading: false,
+        error: action.payload,
+      };
+    case courseActionTypes.RESET_SELECT_COURSE:
+      return {
+        success: false,
+      };
+    default:
+      return state;
+  }
+};
+
+const coursePersistConfig = {
+  key: "course",
+  storage,
+  whitelist: [""],
+};
+
+const courseReducers = persistReducer(
+  coursePersistConfig,
+  combineReducers({
+    coursesList: coursesListReducer,
+    selectCourse: selectCourseReducer,
+    addCourse: addcourseReducer,
+    updateCourse: updatecourseReducer,
+    deleteCourse: deletecourseReducer,
+  })
+);
+
+export default courseReducers;

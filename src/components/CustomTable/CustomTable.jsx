@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Table } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Message from "../Message";
 import AsyncComponent from "../Utils/AsyncComponent";
@@ -20,6 +20,7 @@ const searchData = (data, searchTxt) => {
 /**
  *
  * @param {*} loadDateAction an action to dispatch
+ * @param moreRows add more row to the paginator
  */
 const CustomTable = ({
   columns,
@@ -31,9 +32,9 @@ const CustomTable = ({
   success,
   deleteHandler,
   listData,
+  moreRows = 0,
 }) => {
   const { t } = useTranslation();
-
   const [currentPage, setCurrentPage] = useState(1);
   const page_rows_count = useSelector(
     (state) => state.core.login.page_rows_count
@@ -48,10 +49,16 @@ const CustomTable = ({
   };
   useEffect(() => {
     setPaginatedData(
-      paginate(currentData, currentPage, page_rows_count).results
+      paginate(currentData, currentPage, page_rows_count + moreRows).results
     );
-  }, [data, setPaginatedData, currentData, currentPage, page_rows_count]);
-  const dispatch = useDispatch();
+  }, [
+    data,
+    setPaginatedData,
+    currentData,
+    currentPage,
+    page_rows_count,
+    moreRows,
+  ]);
   useEffect(() => {
     setCurrentData(data);
   }, [data]);
@@ -66,7 +73,7 @@ const CustomTable = ({
           <Table striped hover bordered responsive className="mt-3">
             <thead>
               <tr>
-                <th>#</th>
+                <th>{t("Name")}</th>
                 {columns.map((col, idx) => (
                   <th key={idx}>
                     {t(col[0].toUpperCase() + col.substring(1))}
@@ -86,7 +93,7 @@ const CustomTable = ({
                   <tr key={idx + 1}>
                     <TableTD>
                       <Link to={`/${detailEndpoint}/${row._id}`}>
-                        {row._id}
+                        {row.name}
                       </Link>
                     </TableTD>
                     {columns.map(
@@ -102,6 +109,7 @@ const CustomTable = ({
                         )
                     )}
                     <ActionsTD
+                      id={row._id}
                       deleteHandler={() => {
                         deleteHandler(row._id);
                       }}
@@ -115,6 +123,7 @@ const CustomTable = ({
         </div>
         <div style={{ position: "relative", bottom: "0" }}>
           <CustomPaginator
+            moreRows={moreRows}
             dataLength={currentData.length}
             currentPage={currentPage}
             onChangeHandler={(e) => {

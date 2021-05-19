@@ -2,19 +2,26 @@ import React from "react";
 import { Button, Image } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { LinkContainer } from "react-router-bootstrap";
+import { loadImageUrl } from "../../utils/utils";
 
 export const TableTD = ({ cellData, children, alt }) => {
-  const imageType = /jpg|jpeg|png/;
+  const imageType = /jpg|jpeg|png|PNG|JPG|JPEG/;
   return (
     <td className="align-middle text-center">
-      {cellData instanceof Boolean ? (
+      {typeof cellData === "boolean" ? (
         cellData ? (
           <i className="fas fa-check" style={{ color: "#22DD86" }}></i>
         ) : (
           <i className="fa fa-times" style={{ color: "#fc9f9f" }}></i>
         )
       ) : imageType.test(cellData) ? (
-        <Image alt={alt} rounded fluid width="45px" src={cellData} />
+        <Image
+          alt={alt}
+          rounded
+          fluid
+          width="45px"
+          src={loadImageUrl(cellData)}
+        />
       ) : (
         children
       )}

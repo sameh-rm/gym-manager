@@ -52,7 +52,6 @@ export const BrandContainer = styled.div`
     padding-top: 0.5rem;
   }
   .burger {
-    width: 50px;
     border-radius: 10px;
     font-size: 1.8rem;
 

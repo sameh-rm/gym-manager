@@ -6,7 +6,10 @@ const loginRequired = expressAsyncHandler(async (req, res, next) => {
   if (token.startsWith("Bearer")) {
     try {
       token = token.split(" ")[1];
-      const verifiedToken = jwt.verify(token, process.env.JWT_SECRET);
+      const verifiedToken = jwt.verify(
+        token,
+        process.env.JWT_SECRET || "SYtCRYKIuoxmggxPebjy"
+      );
       req.user = await User.findById(verifiedToken.id).select("-password");
       next();
     } catch (error) {

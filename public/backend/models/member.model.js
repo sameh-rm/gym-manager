@@ -7,50 +7,6 @@ const memberSchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
-    courses: [
-      {
-        name: {
-          type: String,
-          required: true,
-        },
-        period: {
-          type: Number,
-          required: true,
-        },
-        plan: {
-          //Daily or monthly
-          type: String,
-          required: true,
-        },
-        started_at: {
-          type: Date,
-          required: true,
-        },
-        ends_at: {
-          type: Date,
-          required: true,
-        },
-        price: {
-          type: Number,
-          required: true,
-        },
-        confirmed: {
-          type: Boolean,
-          required: true,
-          default: false,
-        },
-        status: {
-          type: Boolean,
-          required: true,
-          default: true,
-        },
-        Course: {
-          type: mongoose.Schema.Types.ObjectId,
-          required: true,
-          ref: "Course",
-        },
-      },
-    ],
     personalAddress: {
       address: {
         type: String,
@@ -58,13 +14,15 @@ const memberSchema = mongoose.Schema(
       },
       city: {
         type: String,
-        required: true,
         default: "المنشية",
       },
-      country: {
+      center: {
         type: String,
-        required: true,
-        default: "Egypt",
+        default: "الخانكة",
+      },
+      governorate: {
+        type: String,
+        default: "قليوبية",
       },
     },
     name: {
@@ -75,7 +33,6 @@ const memberSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-
     nationalId: {
       type: String,
       required: true,
@@ -93,17 +50,79 @@ const memberSchema = mongoose.Schema(
     image: {
       type: String,
     },
-    balance: {
-      type: Number,
-      required: true,
-      default: 0.0,
-    },
     isActive: {
       type: Boolean,
       required: true,
       default: true,
     },
+    subscriptions: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Membership",
+        },
+        type: {
+          // "Memebership" || "course",
+          type: String,
+          required: true,
+        },
+        courses: [],
+        name: {
+          type: String,
+          required: true,
+        },
+        description: {
+          type: String,
+          required: true,
+        },
+        period: {
+          type: Number,
+          required: true,
+        },
+        // plan: {
+        //   type: String,
+        //   required: true,
+        //   //"month" || "day",
+        // },
+        price: {
+          type: Number,
+          required: true,
+          default: 0.0,
+        },
+        paid: {
+          type: Number,
+          required: true,
+          default: 0.0,
+        },
+        isActive: {
+          type: Boolean,
+          required: true,
+          default: true,
+        },
+        started_at: {
+          type: Date,
+          required: true,
+          default: Date.now(),
+        },
+        ends_at: {
+          type: Date,
+          required: true,
+        },
+        confirmed: {
+          type: Boolean,
+          required: true,
+          default: false,
+        },
+        payment_status: {
+          // paid, notPaid,
+          type: Boolean,
+          required: true,
+          default: true,
+        },
+      },
+    ],
   },
+
   {
     timestamps: true,
   }

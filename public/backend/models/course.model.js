@@ -35,14 +35,15 @@ const courseSchema = mongoose.Schema(
       required: true,
       default: 60,
     },
-    period: {
-      type: Number,
-      required: true,
-    },
     isActive: {
       type: Boolean,
       required: true,
       default: true,
+    },
+    membership: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
+      ref: "Membership",
     },
   },
   {

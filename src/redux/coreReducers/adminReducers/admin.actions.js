@@ -39,79 +39,83 @@ export const listAllUsers = (page, limit) => async (dispatch, getState) => {
   }
 };
 
-export const addUser = ({
-  name,
-  image,
-  username,
-  password,
-  isAdmin,
-  permissions,
-  permissionGroups,
-}) => async (dispatch, getState) => {
-  try {
-    dispatch(requestAction(adminActionTypes.CREATE_USER_REQUEST));
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${getState().core.login.userInfo.token}`,
-      },
-    };
-    const { data } = await request.post(
-      "/api/users",
-      {
-        name,
-        image,
-        username,
-        password,
-        isAdmin,
-        // permissions,
-        // permissionGroups,
-      },
-      config
-    );
-    dispatch(successAction(adminActionTypes.CREATE_USER_SUCCESS, data));
-  } catch (error) {
-    dispatch(failedAction(adminActionTypes.CREATE_USER_FAILED, error));
-  }
-};
+export const addUser =
+  ({
+    name,
+    image,
+    username,
+    password,
+    isAdmin,
+    permissions,
+    permissionGroups,
+  }) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch(requestAction(adminActionTypes.CREATE_USER_REQUEST));
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${getState().core.login.userInfo.token}`,
+        },
+      };
+      const { data } = await request.post(
+        "/api/users",
+        {
+          name,
+          image,
+          username,
+          password,
+          isAdmin,
+          // permissions,
+          // permissionGroups,
+        },
+        config
+      );
+      dispatch(successAction(adminActionTypes.CREATE_USER_SUCCESS, data));
+    } catch (error) {
+      dispatch(failedAction(adminActionTypes.CREATE_USER_FAILED, error));
+    }
+  };
 
-export const updateUser = ({
-  id,
-  name,
-  image,
-  username,
-  password,
-  isAdmin,
-  permissions,
-  permissionGroups,
-}) => async (dispatch, getState) => {
-  console.log(permissions, permissionGroups);
-  try {
-    dispatch(requestAction(adminActionTypes.UPDATE_USER_REQUEST));
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${getState().core.login.userInfo.token}`,
-      },
-    };
-    const { data } = await request.put(
-      `/api/users/${id}`,
-      {
-        name,
-        image,
-        username,
-        password,
-        isAdmin,
-        // permissions,
-        // permissionGroups,
-      },
-      config
-    );
-    dispatch(successAction(adminActionTypes.UPDATE_USER_SUCCESS, data));
-  } catch (error) {
-    dispatch(failedAction(adminActionTypes.UPDATE_USER_FAILED, error));
-  }
-};
+export const updateUser =
+  ({
+    id,
+    name,
+    image,
+    username,
+    password,
+    isAdmin,
+    permissions,
+    permissionGroups,
+  }) =>
+  async (dispatch, getState) => {
+    console.log(permissions, permissionGroups);
+    try {
+      dispatch(requestAction(adminActionTypes.UPDATE_USER_REQUEST));
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${getState().core.login.userInfo.token}`,
+        },
+      };
+      const { data } = await request.put(
+        `/api/users/${id}`,
+        {
+          name,
+          image,
+          username,
+          password,
+          isAdmin,
+          // permissions,
+          // permissionGroups,
+        },
+        config
+      );
+      dispatch(successAction(adminActionTypes.UPDATE_USER_SUCCESS, data));
+    } catch (error) {
+      dispatch(failedAction(adminActionTypes.UPDATE_USER_FAILED, error));
+    }
+  };
 
 export const deleteUser = (id) => async (dispatch, getState) => {
   try {
@@ -150,3 +154,7 @@ export const login = (username, password) => async (dispatch, getState) => {
     dispatch(failedAction(adminActionTypes.LOGIN_FAILED, error));
   }
 };
+
+export const logout = () => ({
+  type: adminActionTypes.LOGOUT,
+});

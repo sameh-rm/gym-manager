@@ -1,4 +1,8 @@
+import { combineReducers } from "redux";
+import persistReducer from "redux-persist/es/persistReducer";
 import { memberActionTypes } from "./member.actionTypes";
+import storage from "redux-persist/lib/storage";
+import { loadImageUrl } from "../../utils/utils";
 
 const initState = {
   membersList: [],
@@ -29,32 +33,55 @@ export const membersListReducer = (state = initState, action) => {
       return state;
   }
 };
-
-export const addmemberReducer = (state = {}, action) => {
+const initAddMemberState = {
+  memberToCreate: {
+    name: "",
+    phone: "",
+    nationalId: "",
+    age: 0,
+    tall: 0,
+    weight: 0,
+    image: loadImageUrl("/uploads/person-sample.jpg"),
+    personalAddress: {
+      address: "",
+      city: "المنشية",
+      center: "الخانكة",
+      governorate: "القليوبية",
+    },
+  },
+};
+export const addmemberReducer = (state = initAddMemberState, action) => {
   switch (action.type) {
+    case memberActionTypes.INIT_MEMBER:
+      return {
+        memberToCreate: action.payload,
+      };
     case memberActionTypes.CREATE_MEMBER_REQUEST:
       return {
+        memberToCreate: state.memberToCreate,
         createdmember: {},
         loading: true,
       };
     case memberActionTypes.CREATE_MEMBER_SUCCESS:
       return {
+        memberToCreate: state.memberToCreate,
+
         createdmember: action.payload,
         loading: false,
         success: true,
       };
     case memberActionTypes.CREATE_MEMBER_FAILED:
       return {
+        memberToCreate: state.memberToCreate,
+
         error: action.payload,
         loading: false,
         success: false,
 
         createdmember: {},
       };
-    case "RESET_ADD_MEMBER_FORM":
-      return {
-        success: false,
-      };
+    case memberActionTypes.RESET_ADD_MEMBER:
+      return {};
     default:
       return state;
   }
@@ -124,3 +151,54 @@ export const deletememberReducer = (state = {}, action) => {
       return {};
   }
 };
+
+const selectMemberReducer = (
+  state = {
+    member: null,
+  },
+  action
+) => {
+  switch (action.type) {
+    case memberActionTypes.SELECT_MEMBER_REQUEST:
+      return {
+        loading: true,
+        success: false,
+      };
+    case memberActionTypes.SELECT_MEMBER_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        member: action.payload,
+      };
+    case memberActionTypes.SELECT_MEMBER_FAILED:
+      return {
+        success: false,
+        loading: false,
+        error: action.payload,
+      };
+    case memberActionTypes.RESET_SELECT_MEMBER:
+      return {
+        success: false,
+      };
+    default:
+      return state;
+  }
+};
+
+const memberPersistConfig = {
+  key: "member",
+  storage,
+  whitelist: [""],
+};
+const memberReducers = persistReducer(
+  memberPersistConfig,
+  combineReducers({
+    membersList: membersListReducer,
+    updateMember: updatememberReducer,
+    addMember: addmemberReducer,
+    deleteMember: deletememberReducer,
+    selectMember: selectMemberReducer,
+  })
+);
+
+export default memberReducers;

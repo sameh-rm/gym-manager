@@ -25,24 +25,30 @@ const CustomPaginator = ({
   currentPage,
   dataLength,
   onChangeHandler,
-  pageNumbers,
+  moreRows,
   setCurrentPage,
 }) => {
   const page_rows_count = useSelector(
     (state) => state.core.login.page_rows_count
   );
-  const lastPage = Math.ceil(dataLength / page_rows_count);
-  console.log(dataLength);
+  const lastPage = Math.ceil(dataLength / (page_rows_count + moreRows));
   return (
     <Pagination>
       {currentPage > 1 && (
         <>
-          <Pagination.First onClick={() => setCurrentPage(1)} />
-          <Pagination.Prev onClick={() => setCurrentPage(currentPage - 1)} />
+          <Pagination.First
+            style={{ margin: ".06rem" }}
+            onClick={() => setCurrentPage(1)}
+          />
+          <Pagination.Prev
+            style={{ margin: ".06rem" }}
+            onClick={() => setCurrentPage(currentPage - 1)}
+          />
         </>
       )}
       {lastPage > 1 && (
         <Pagination.Item
+          style={{ margin: ".06rem" }}
           onClick={onChangeHandler}
           active={currentPage === first}
         >
@@ -59,6 +65,7 @@ const CustomPaginator = ({
           {lastPage > currentPage + 2 && <Pagination.Ellipsis />}
 
           <Pagination.Item
+            style={{ margin: ".06rem" }}
             active={currentPage === lastPage}
             onClick={onChangeHandler}
           >
@@ -68,8 +75,14 @@ const CustomPaginator = ({
       )}
       {currentPage < lastPage && (
         <>
-          <Pagination.Next onClick={() => setCurrentPage(currentPage + 1)} />
-          <Pagination.Last onClick={() => setCurrentPage(lastPage)} />
+          <Pagination.Next
+            style={{ margin: ".06rem" }}
+            onClick={() => setCurrentPage(currentPage + 1)}
+          />
+          <Pagination.Last
+            style={{ margin: ".06rem" }}
+            onClick={() => setCurrentPage(lastPage)}
+          />
         </>
       )}
     </Pagination>

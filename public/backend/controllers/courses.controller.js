@@ -27,6 +27,7 @@ const createCourse = expressAsyncHandler(async (req, res) => {
         monthlyPrice: createdCourse.monthlyPrice,
         daysPerMonth: createdCourse.daysPerMonth,
         minutesPerTime: createdCourse.minutesPerTime,
+        plan: createdCourse.plan,
         period: createdCourse.period,
         isActive: createdCourse.isActive,
         createdAt: createdCourse.createdAt,
@@ -49,6 +50,7 @@ const getCourseById = expressAsyncHandler(async (req, res) => {
       monthlyPrice: course.monthlyPrice,
       daysPerMonth: course.daysPerMonth,
       minutesPerTime: course.minutesPerTime,
+      plan: course.plan,
       period: course.period,
       isActive: course.isActive,
       createdAt: course.createdAt,
@@ -70,6 +72,7 @@ const updateCourse = expressAsyncHandler(async (req, res) => {
     daysPerMonth,
     minutesPerTime,
     period,
+    plan,
     isActive,
   } = req.body;
   const course = await Course.findById(courseId);
@@ -81,6 +84,7 @@ const updateCourse = expressAsyncHandler(async (req, res) => {
     course.daysPerMonth = daysPerMonth || course.daysPerMonth;
     course.minutesPerTime = minutesPerTime || course.minutesPerTime;
     course.period = period || course.period;
+    course.plan = plan || course.plan;
     course.isActive = isActive;
     course.user = req.user || course.user;
   } else {
@@ -102,6 +106,7 @@ const updateCourse = expressAsyncHandler(async (req, res) => {
         monthlyPrice: updatedCourse.monthlyPrice,
         daysPerMonth: updatedCourse.daysPerMonth,
         minutesPerTime: updatedCourse.minutesPerTime,
+        plan: updatedCourse.plan,
         period: updatedCourse.period,
         isActive: updatedCourse.isActive,
         createdAt: updatedCourse.createdAt,
@@ -114,7 +119,7 @@ const deleteCourse = expressAsyncHandler(async (req, res) => {
   const course = await Course.findById(req.params.id);
   if (course) {
     await course.remove();
-    res.status(200).res.json({ message: "Deleted Successfully!" });
+    res.status(200).json({ message: "Deleted Successfully!" });
   } else {
     res.status(404);
     throw new Error("Not Found");

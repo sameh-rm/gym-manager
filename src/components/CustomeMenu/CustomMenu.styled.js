@@ -26,10 +26,7 @@ const largeMenu = () => {
 const drawMenu = (parentElement, size, height) => {
   //   const height = mRef ? mRef : 0;
   const { top, bottom, left, right } = getParentBounds(parentElement) || [
-    70,
-    0,
-    10,
-    0,
+    70, 0, 10, 0,
   ];
   const sizes = {
     sm: 230,
@@ -73,7 +70,6 @@ const getParentBounds = (parentElement) =>
   parentElement && parentElement.getBoundingClientRect();
 
 export const CustomMenuContainer = styled.div`
-  cursor: pointer;
   z-index: 5000;
 
   border-radius: 5px !important;

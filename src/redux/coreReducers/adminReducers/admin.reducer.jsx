@@ -116,7 +116,7 @@ export const deleteUserReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
-    case "RESET":
+    case "RESET_DELETE_USER":
       return {
         success: false,
       };
@@ -124,6 +124,7 @@ export const deleteUserReducer = (state = {}, action) => {
       return {};
   }
 };
+
 const page_rows_count = 5;
 export const loginReducer = (state = {}, action) => {
   switch (action.type) {
@@ -146,6 +147,9 @@ export const loginReducer = (state = {}, action) => {
         error: action.payload,
         loading: false,
       };
+
+    case adminActionTypes.LOGOUT:
+      return {};
     default:
       return state;
   }

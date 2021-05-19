@@ -13,14 +13,14 @@ const express = require("express");
 
 const router = express.Router();
 router
-  .route("/:id")
-  .get(loginRequired, adminRequired, getCourseById)
-  .delete(loginRequired, adminRequired, deleteCourse);
-
-router
   .route("/")
   .get(loginRequired, getAllCourses)
-  .post(loginRequired, adminRequired, createCourse)
-  .put(loginRequired, adminRequired, updateCourse);
+  .post(loginRequired, adminRequired, createCourse);
+
+router
+  .route("/:id")
+  .get(loginRequired, adminRequired, getCourseById)
+  .put(loginRequired, adminRequired, updateCourse)
+  .delete(loginRequired, adminRequired, deleteCourse);
 
 module.exports = router;

@@ -10,7 +10,6 @@ const FormItem = (props) => {
     placeholder,
     required,
     children,
-    icon,
     className,
   } = props;
   return (

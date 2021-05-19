@@ -13,7 +13,7 @@ import {
  * @returns
  */
 const CustomMenu = ({
-  description = "Lorem ipsum dolor sit amet.",
+  description,
   header = "Menu Header",
   bg_color = "rgba(48, 167, 236, 0.5)",
   size = "sm",
@@ -31,7 +31,6 @@ const CustomMenu = ({
     setParentElement(mRef.current.parentElement);
     setHeight(mRef.current.scrollHeight - 8);
     function handleClickOutside(event) {
-      console.log(mRef.current.contains(event.target));
       if (
         mRef.current &&
         !mRef.current.contains(event.target) &&
@@ -73,17 +72,7 @@ const CustomMenu = ({
               </MenuHeaderContainer>
             </div>
           </CardHeaderContainer>
-          <Card.Body>
-            <h3>asd</h3>
-            <h3>asd</h3>
-            <h3>asd</h3>
-            <h3>asd</h3>
-            <h3>asd</h3>
-            <h3>asd</h3>
-            <h3>asd</h3>
-            <h3>asd</h3>
-            <h3>asd</h3>
-          </Card.Body>
+          <Card.Body>{children}</Card.Body>
           <Card.Footer className="bg-white text-center">
             Menu Footer
           </Card.Footer>

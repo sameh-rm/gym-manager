@@ -31,10 +31,9 @@ const membershipSchema = mongoose.Schema(
           required: true,
           ref: "User",
         },
-        course: {
-          type: mongoose.Schema.Types.ObjectId,
+        name: {
+          type: String,
           required: true,
-          ref: "Course",
         },
         daysPerMonth: {
           type: Number,
@@ -63,9 +62,20 @@ const membershipSchema = mongoose.Schema(
         period: {
           type: Number,
           required: true,
+          default: 1,
+        },
+        plan: {
+          type: String,
+          required: true,
+          default: "شهرى",
         },
       },
     ],
+    isActive: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
   },
   {
     timestamps: true,

@@ -6,6 +6,7 @@ const Message = ({ variant, children }) => {
   const [show, setShow] = useState(true);
   return show ? (
     <Alert
+      dismissible
       onClose={() => setShow(false)}
       variant={variant}
       dir={i18n.dir()}

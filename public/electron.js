@@ -14,7 +14,14 @@ let mainWindow;
 
 function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({ width: 800, height: 600, minWidth: 800 });
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    minWidth: 800,
+    autoHideMenuBar: true,
+    // titleBarStyle: "hidden",
+    // frame: false,
+  });
 
   // and load the index.html of the app.
   const startUrl =

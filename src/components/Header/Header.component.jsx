@@ -1,8 +1,10 @@
 import React from "react";
 import { useState } from "react";
+import { Col, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
+import { logout } from "../../redux/coreReducers/adminReducers/admin.actions";
 import {
   navCollapse,
   selectItem,
@@ -11,12 +13,13 @@ import CustomMenu from "../CustomeMenu/CustomMenu";
 import { BrandContainer } from "./Header.styles";
 import "./header.styles.scss";
 const Header = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
   const collapse = useSelector((state) => state.core.sidenav.collapse);
   const [userInfoExpanded, setUserInfoExpanded] = useState(false);
   const [alarmMenuExpanded, setAlarmMenuExpanded] = useState(false);
+
   const expandHandler = (target) => {
     switch (target) {
       case "userInfo":
@@ -63,17 +66,23 @@ const Header = () => {
         </div>
 
         <div
-          className="float-left relative pointer"
+          className="float-left relative "
           onClick={() => expandHandler("userInfo")}
         >
-          UserInfo
+          <span className="pointer"> UserInfo</span>
           <i className="fas fa-user"> </i>
           <CustomMenu
             expand={userInfoExpanded}
             expandHandler={setUserInfoExpanded}
-            header={<h3>left</h3>}
-            size="lg"
-          />
+            header={<h3>{t("UserInfo")}</h3>}
+            size="sm"
+          >
+            <Col className="w-100">
+              <Row className="pointer" onClick={() => dispatch(logout())}>
+                Logout
+              </Row>
+            </Col>
+          </CustomMenu>
         </div>
       </div>
     </header>

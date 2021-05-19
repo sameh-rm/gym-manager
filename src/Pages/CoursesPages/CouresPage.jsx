@@ -21,24 +21,36 @@ const CoursePage = ({ history, location }) => {
   const { coursesList, loading, error } = useSelector(
     (state) => state.course.coursesList
   );
+  const courseCreatedSuccess = useSelector(
+    (state) => state.course.addCourse.success
+  );
+  const courseEditedSuccess = useSelector(
+    (state) => state.course.updateCourse.success
+  );
   const deleteHandler = (id) => {
     if (window.confirm(t("Are you sure?"))) {
       dispatch(deleteCourse(id));
       setDeletedSuccess(t("Course Was Deleted Successfully!"));
     }
   };
+
+  const [createdSuccess, setCreatedSuccess] = useState(false);
+  const [editedSuccess, setEditedSuccess] = useState(false);
   useEffect(() => {
     dispatch(listAllCourses());
-  }, [dispatch, deletedSuccess]);
+    if (courseCreatedSuccess || courseEditedSuccess) {
+      dispatch({ type: "RESET_COURSE_FORM" });
+      dispatch({ type: "RESET_ADD_COURSE_FORM" });
+      setCreatedSuccess(courseCreatedSuccess);
+      setEditedSuccess(courseEditedSuccess);
+    }
+  }, [dispatch, deletedSuccess, courseCreatedSuccess, courseEditedSuccess]);
   const columns = [
-    "name",
     "description",
     "dailyPrice",
     "monthlyPrice",
     "daysPerMonth",
     "minutesPerTime",
-    "period",
-    "isActive",
   ];
 
   return (
@@ -48,6 +60,7 @@ const CoursePage = ({ history, location }) => {
           <Col>
             <h2>{t("Courses List")}</h2>
           </Col>
+
           <Col className="align-content-center">
             <LinkContainer to="/courses/add">
               <Button className="float-left my-4" variant="dark">
@@ -56,6 +69,17 @@ const CoursePage = ({ history, location }) => {
             </LinkContainer>
           </Col>
         </Row>
+        {createdSuccess ? (
+          <Message variant="success">
+            {t("Course Was Created Successfully!")}
+          </Message>
+        ) : (
+          editedSuccess && (
+            <Message variant="success">
+              {t("Course Was Updated Successfully!")}
+            </Message>
+          )
+        )}
         {deletedSuccess && (
           <Message variant="info">{t("Item Was Deleted Successfully")}</Message>
         )}
@@ -70,6 +94,7 @@ const CoursePage = ({ history, location }) => {
             loading={loading}
             error={error}
             editEndpoint="courses"
+            detailEndpoint="courses"
             listData={listAllCourses}
           />
         </Row>
