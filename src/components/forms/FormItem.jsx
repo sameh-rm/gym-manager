@@ -1,17 +1,16 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 
-const FormItem = (props) => {
-  const {
-    title,
-    value,
-    onChangeHandler,
-    type,
-    placeholder,
-    required,
-    children,
-    className,
-  } = props;
+const FormItem = ({
+  title,
+  value,
+  onChangeHandler,
+  type,
+  placeholder,
+  required,
+  children,
+  className,
+}) => {
   return (
     <Form.Group
       controlId={title ? title.toLowerCase() : placeholder.toLowerCase()}

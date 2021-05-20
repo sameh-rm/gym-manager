@@ -114,7 +114,7 @@ export const updatememberReducer = (
 
         updatedmember: {},
       };
-    case "RESET_MEMBER_FORM":
+    case memberActionTypes.RESET_EDIT_MEMBER:
       return {
         success: false,
         updatedmember: action.payload,

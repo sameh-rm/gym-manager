@@ -13,6 +13,12 @@ const expIncSchema = mongoose.Schema(
       required: true,
       default: 0.0,
     },
+    model: {
+      type: String,
+    },
+    ref: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
   },
   { timestamp: true }
 );

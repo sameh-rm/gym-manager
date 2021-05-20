@@ -14,12 +14,9 @@ import { useParams } from "react-router";
 import { LinkContainer } from "react-router-bootstrap";
 import MainContainer from "../../components/MainContainer/MainContainer";
 import AsyncComponent from "../../components/Utils/AsyncComponent";
-import {
-  listAllMembers,
-  selectMember,
-} from "../../redux/memberReducers/member.actions";
+import { selectMember } from "../../redux/memberReducers/member.actions";
 import { memberActionTypes } from "../../redux/memberReducers/member.actionTypes";
-import CustomTable from "../../components/CustomTable/CustomTable";
+import SubsTable from "../../components/CustomTable/SubsTable";
 const MemberProfilePage = () => {
   const { t } = useTranslation();
   const { id } = useParams();
@@ -31,7 +28,6 @@ const MemberProfilePage = () => {
   const [currentMemberShip, setCurrentMemberShip] = useState([]);
   const [subscriptions, setSubscriptions] = useState([]);
   const columns = [
-    "name",
     "description",
     "startedAt",
     "endsAt",
@@ -164,14 +160,13 @@ const MemberProfilePage = () => {
                 </Row>
                 <Row className="py-4">
                   {subscriptions && (
-                    <CustomTable
+                    <SubsTable
                       columns={columns}
                       data={subscriptions}
                       loading={loading}
                       error={error}
                       editEndpoint="subscriptions"
                       moreRows={3}
-                      noActions
                     />
                   )}
                 </Row>

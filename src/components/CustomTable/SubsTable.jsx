@@ -1,14 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { Badge, Container, Row, Table } from "react-bootstrap";
+import { Badge, Button, Container, Row, Table } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Message from "../Message";
 import AsyncComponent from "../Utils/AsyncComponent";
-import { TableTD, ActionsTD } from "./CustomTD";
+import { TableTD } from "./CustomTD";
 import TableSearch from "./TableSearch";
 import CustomPaginator from "./CustomPaginator";
 import { paginate } from "../../utils/utils";
+import { LinkContainer } from "react-router-bootstrap";
+import PaymentModal from "./PaymentModal";
+
+export const ActionsTD = ({ children, deleteHandler, id, editEndpoint }) => {
+  const { t } = useTranslation();
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  return (
+    <td className="align-middle">
+      <PaymentModal
+        handleClose={handleClose}
+        handleShow={handleShow}
+        show={show}
+      />
+
+      <Button
+        onClick={deleteHandler}
+        variant="danger"
+        className="table-action-btn mx-2 px-2"
+        title={t("Delete")}
+      >
+        <i className="fas fa-trash"></i>
+      </Button>
+    </td>
+  );
+};
 
 const searchData = (data, searchTxt) => {
   const results = data.filter(
@@ -22,7 +50,7 @@ const searchData = (data, searchTxt) => {
  * @param {*} loadDateAction an action to dispatch
  * @param moreRows add more row to the paginator
  */
-const CustomTable = ({
+const SubsTable = ({
   columns,
   data,
   editEndpoint,
@@ -92,9 +120,7 @@ const CustomTable = ({
                 paginatedData.map((row, idx) => (
                   <tr key={idx + 1}>
                     <TableTD>
-                      <Link to={`/${editEndpoint}/${row._id}/detail`}>
-                        {row.name}
-                      </Link>
+                      <Link to={`/${editEndpoint}/${row._id}`}>{row.name}</Link>
                       <Row className="px-2">
                         {row.type === "Membership" && (
                           <Badge variant="warning">{t("Membership")}</Badge>
@@ -146,4 +172,4 @@ const CustomTable = ({
   );
 };
 
-export default CustomTable;
+export default SubsTable;

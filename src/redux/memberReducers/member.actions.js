@@ -101,7 +101,7 @@ export const updateMember =
     tall,
     weight,
     phone,
-    nationalID,
+    nationalId,
     personalAddress,
     isActive,
   }) =>
@@ -124,7 +124,7 @@ export const updateMember =
           tall,
           weight,
           phone,
-          nationalID,
+          nationalId,
           personalAddress,
           isActive,
         },

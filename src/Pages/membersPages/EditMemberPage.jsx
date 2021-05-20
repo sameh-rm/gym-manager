@@ -19,7 +19,7 @@ const AddMemberPage = ({ history }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { member, loading, error, success } = useSelector(
+  const { member, loading, error } = useSelector(
     (state) => state.member.selectMember
   );
   const {
@@ -34,9 +34,6 @@ const AddMemberPage = ({ history }) => {
 
   useEffect(() => {
     if (updateSuccess) {
-      dispatch({ type: memberActionTypes.RESET_SELECT_MEMBER });
-
-      dispatch({ type: memberActionTypes.RESET_EDIT_MEMBER });
       history.push("/members");
     }
   }, [dispatch, updateSuccess, history]);
@@ -67,7 +64,7 @@ const AddMemberPage = ({ history }) => {
             loading={loading || updateLoading}
           >
             <Container>
-              <EditMemberForm />
+              <EditMemberForm member={member} loading={loading} error={error} />
             </Container>
           </AsyncComponent>
         </Row>

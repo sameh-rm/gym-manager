@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const ExpInc = require("./expInc.model");
 
 const memberSchema = mongoose.Schema(
   {
@@ -127,7 +128,11 @@ const memberSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+// memberSchema.pre("save", async function (next) {
+//   ExpInc.create({description:``,value:})
 
+//   next();
+// });
 const Member = mongoose.model("Member", memberSchema);
 
 module.exports = Member;

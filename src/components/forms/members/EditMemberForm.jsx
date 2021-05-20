@@ -10,41 +10,33 @@ import FormContainer from "../FormContainer";
 import FormItem from "../FormItem";
 import AsyncComponent from "../../Utils/AsyncComponent";
 import { updateMember } from "../../../redux/memberReducers/member.actions";
-const EditMemberForm = () => {
+const EditMemberForm = ({ member, loading, error }) => {
   const { id } = useParams();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const uploadFileHandler = async (e) => {
     uploadImage(e, setUploading, setImage);
   };
-  const { member, loading, error } = useSelector(
-    (state) => state.member.selectMember
-  );
 
-  const [name, setName] = useState(member && (member.name || ""));
-  const [age, setAge] = useState(member && (member.age || 0));
-  const [nationalId, setNationalId] = useState(
-    member && (member.nationalId || "")
-  );
-  const [phone, setPhone] = useState(member && (member.phone || ""));
-  const [tall, setTall] = useState(member && (member.tall || 0));
-  const [weight, setWeight] = useState(member && (member.weight || 0));
+  const [name, setName] = useState(member ? member.name : "");
+  const [age, setAge] = useState(member ? member.age : 0);
+  const [nationalId, setNationalId] = useState(member ? member.nationalId : "");
+  const [phone, setPhone] = useState(member ? member.phone : "");
+  const [tall, setTall] = useState(member ? member.tall : 0);
+  const [weight, setWeight] = useState(member ? member.weight : 0);
   const [address, setAddress] = useState(
-    member && (member.personalAddress.address || "")
+    member ? member.personalAddress.address : ""
   );
-  const [city, setCity] = useState(
-    member && (member.personalAddress.city || "")
-  );
+  const [city, setCity] = useState(member ? member.personalAddress.city : "");
   const [center, setCenter] = useState(
-    member && (member.personalAddress.center || "")
+    member ? member.personalAddress.center : ""
   );
   const [governorate, setGovernorate] = useState(
-    member && (member.personalAddress.governorate || "")
+    member ? member.personalAddress.governorate : ""
   );
-  const [isActive, setIsActive] = useState(member && (member.isActive || true));
+  const [isActive, setIsActive] = useState(member ? member.isActive : true);
   const [image, setImage] = useState(
-    member &&
-      (loadImageUrl(member.image) || loadImageUrl("/uploads/person-sample.jpg"))
+    member ? member.image : loadImageUrl("/uploads/person-sample.jpg")
   );
   const [uploading, setUploading] = useState(false);
 

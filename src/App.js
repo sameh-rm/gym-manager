@@ -50,9 +50,13 @@ function App({ history }) {
           />
 
           <Route exact path="/members" component={MembersPage} />
-          <Route path="/members/add" component={AddMemberPage} />
-          <Route path="/members/:id/edit" component={EditMemberPage} />
-          <Route exact path="/members/:id" component={MemberProfilePage} />
+          <Route exact path="/members/add" component={AddMemberPage} />
+          <Route exact path="/members/:id/edit" component={EditMemberPage} />
+          <Route
+            exact
+            path="/members/:id/detail"
+            component={MemberProfilePage}
+          />
           {/* <Route render={() => <Redirect to="/" />} /> */}
         </Switch>
       </ErrorBoundary>

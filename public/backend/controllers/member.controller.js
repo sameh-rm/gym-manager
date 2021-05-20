@@ -1,6 +1,7 @@
 const expressAsyncHandler = require("express-async-handler");
 const Member = require("../models/member.model.js");
 const { paginateResults } = require("../middlewares/pagination.Middlewares.js");
+const ExpInc = require("../models/expInc.model.js");
 
 const getAllMembers = expressAsyncHandler(async (req, res) => {
   const members = await Member.find({}).limit(req.limit).skip(req.startIndex);
@@ -10,7 +11,6 @@ const getAllMembers = expressAsyncHandler(async (req, res) => {
 });
 
 const subscribed = (member) => {
-  console.log(member.memberships);
   var paid = member.paid;
   member.subscriptions.forEach((sub) => {
     if (paid > 0) {
@@ -51,6 +51,16 @@ const subscribed = (member) => {
   // }
   return member;
 };
+const saveMemberPayment = async (member, paidValue) => {
+  return await ExpInc.create({
+    description: `تم دفع ${paidValue}جنيه من حساب إشترك ${member.name}`,
+    value: paidValue,
+    ref: member._id,
+    model: "Member",
+    user: member.user,
+  });
+};
+
 const createMember = expressAsyncHandler(async (req, res) => {
   const member = req.body;
   const memberExists = await Member.findOne({ nationalId: member.nationalId });
@@ -58,14 +68,16 @@ const createMember = expressAsyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("another member with the same National ID Exists");
   } else {
-    console.log(member);
+    const paidValue = member.paid;
     const subscribedMember = subscribed(member);
 
     const createdMember = await Member.create({
       ...subscribedMember,
       user: req.user,
     });
-
+    if (paidValue > 0) {
+      const paiedMember = await saveMemberPayment(createdMember, paidValue);
+    }
     if (createdMember) {
       res.status(201).json({
         _id: createdMember._id,
@@ -122,13 +134,12 @@ const updateMember = expressAsyncHandler(async (req, res) => {
     tall,
     weight,
     phone,
-    nationalID,
+    nationalId,
     isActive,
     personalAddress,
   } = req.body;
 
   const member = await Member.findById(memberId);
-
   if (member) {
     member.name = name || member.name;
     member.image = image || member.image;
@@ -136,15 +147,15 @@ const updateMember = expressAsyncHandler(async (req, res) => {
     member.tall = tall || member.tall;
     member.weight = weight || member.weight;
     member.phone = phone || member.phone;
-    member.nationalID = nationalID || member.nationalID;
+    member.nationalId = nationalId || member.nationalId;
     member.personalAddress = personalAddress || member.personalAddress;
     member.isActive = isActive;
     member.user = req.user || member.user;
   } else {
     res.status(404);
   }
-
-  const updatedMember = await member.save();
+  delete member.__id;
+  const updatedMember = await Member.updateOne({ _id: memberId }, member);
   if (!updatedMember) {
     res.status(400);
     throw new Error("invalid request body");

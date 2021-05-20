@@ -17,7 +17,6 @@ import AsyncComponent from "../../components/Utils/AsyncComponent";
 const MembersPage = ({ history, location }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [deletedSuccess, setDeletedSuccess] = useState();
   useEffect(() => {
     dispatch(selectItemByUrl(location.pathname));
   }, [dispatch, location]);
@@ -30,6 +29,10 @@ const MembersPage = ({ history, location }) => {
   const memberUpdateSuccess = useSelector(
     (state) => state.member.updateMember.success
   );
+  const memberDeletedSuccess = useSelector(
+    (state) => state.member.deleteMember.success
+  );
+  const [deletedSuccess, setDeletedSuccess] = useState();
   const [createdSuccess, setCreatedSuccess] = useState(false);
   const [editedSuccess, setEditedSuccess] = useState(false);
   const deleteHandler = (id) => {
@@ -46,12 +49,19 @@ const MembersPage = ({ history, location }) => {
     if (memberCreatedSuccess || memberUpdateSuccess || deletedSuccess) {
       setCreatedSuccess(memberCreatedSuccess);
       setEditedSuccess(memberUpdateSuccess);
-      setDeletedSuccess(false);
+      setDeletedSuccess(memberDeletedSuccess);
       dispatch(listAllMembers());
       dispatch({ type: memberActionTypes.RESET_ADD_MEMBER });
       dispatch({ type: memberActionTypes.RESET_SELECT_MEMBER });
+      dispatch({ type: memberActionTypes.RESET_EDIT_MEMBER });
     }
-  }, [dispatch, memberCreatedSuccess, memberUpdateSuccess, deletedSuccess]);
+  }, [
+    dispatch,
+    memberCreatedSuccess,
+    memberDeletedSuccess,
+    memberUpdateSuccess,
+    deletedSuccess,
+  ]);
 
   const columns = ["image", "nationalId", "age", "tall"];
 

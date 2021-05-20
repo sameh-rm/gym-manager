@@ -35,7 +35,7 @@ export const optionsToCourses = (options) => {
         option.value.plan === "شهرى"
           ? option.value.monthlyPrice * option.value.period
           : option.value.dailyPrice * option.value.period,
-      endsAt: courseEndDate.substring(0, 10),
+      endsAt: courseEndDate,
     });
   });
   console.log("optionsToCourses", courses);
@@ -60,7 +60,7 @@ export const optionsToMemberShipCourses = (membership) => {
   const outCourses = [];
   const startDate = moment();
   const endDate = moment(startDate).add(membership.period, "month");
-  membership.endsAt = endDate.substring(0, 10);
+  membership.endsAt = endDate;
   membership.courses &&
     memberCourses(membership.courses, outCourses, membership);
 
@@ -95,7 +95,7 @@ export const memberCourses = (courses, outCourses, membership) => {
             course.plan === "شهرى"
               ? course.monthlyPrice * course.period
               : course.dailyPrice * course.period,
-          endsAt: courseEndDate.substring(0, 10),
+          endsAt: courseEndDate,
         })
       : outCourses.push({
           ...course,
@@ -103,7 +103,7 @@ export const memberCourses = (courses, outCourses, membership) => {
             course.plan === "شهرى"
               ? course.monthlyPrice * course.period
               : course.dailyPrice * course.period,
-          endsAt: courseEndDate.substring(0, 10),
+          endsAt: courseEndDate,
         });
   });
   return outCourses;
@@ -120,7 +120,7 @@ export const toSubscription = (target) => {
           ...course,
           type: "Course",
           price: course.monthlyPrice,
-          endsAt: courseEndDate.substring(0, 10),
+          endsAt: courseEndDate,
         });
     });
   } else {
@@ -130,7 +130,7 @@ export const toSubscription = (target) => {
         ...target,
         type: "Membership",
         plan: "شهرى",
-        endsAt: courseEndDate.substring(0, 10),
+        endsAt: courseEndDate,
       });
   }
 
