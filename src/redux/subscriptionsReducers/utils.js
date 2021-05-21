@@ -41,13 +41,13 @@ export const optionsToCourses = (options) => {
   console.log("optionsToCourses", courses);
   return courses;
 };
-export const buildSubscriptions = (membership, courses, isAdmin) => {
+export const buildSubscriptions = (membership, courses) => {
   const subs = [];
   if (membership) {
-    subs.push(...toSubscription(membership, isAdmin));
+    subs.push(...toSubscription(membership));
   }
   if (courses) {
-    subs.push(...toSubscription(courses, isAdmin));
+    subs.push(...toSubscription(courses));
   }
   return subs;
 };
@@ -109,7 +109,7 @@ export const memberCourses = (courses, outCourses, membership) => {
   return outCourses;
 };
 
-export const toSubscription = (target, isAdmin) => {
+export const toSubscription = (target) => {
   const out = [];
   const startDate = moment();
   if (Array.isArray(target)) {
@@ -121,7 +121,6 @@ export const toSubscription = (target, isAdmin) => {
           type: "Course",
           price: course.monthlyPrice,
           endsAt: courseEndDate,
-          paymentStatus: isAdmin,
         });
     });
   } else {

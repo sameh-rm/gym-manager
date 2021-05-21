@@ -1,7 +1,6 @@
 const e = require("express");
 const expressAsyncHandler = require("express-async-handler");
 const Membership = require("../models/membership.model.js");
-const Course = require("../models/course.model.js");
 
 const getAllMemberships = expressAsyncHandler(async (req, res) => {
   const memberships = await Membership.find({})

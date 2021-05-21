@@ -14,7 +14,10 @@ import { useParams } from "react-router";
 import { LinkContainer } from "react-router-bootstrap";
 import MainContainer from "../../components/MainContainer/MainContainer";
 import AsyncComponent from "../../components/Utils/AsyncComponent";
-import { selectMember } from "../../redux/memberReducers/member.actions";
+import {
+  listMemberSubscriptions,
+  selectMember,
+} from "../../redux/memberReducers/member.actions";
 import { memberActionTypes } from "../../redux/memberReducers/member.actionTypes";
 import SubsTable from "../../components/CustomTable/SubsTable";
 const MemberProfilePage = () => {
@@ -24,36 +27,32 @@ const MemberProfilePage = () => {
   const { member, loading, error } = useSelector(
     (state) => state.member.selectMember
   );
+  const {
+    subscriptionList,
+    loading: loadingSubs,
+    error: errorSubs,
+  } = useSelector((state) => state.member.memberSubsList);
 
   const [currentMemberShip, setCurrentMemberShip] = useState([]);
-  const [subscriptions, setSubscriptions] = useState([]);
-  const columns = [
-    "description",
-    "startedAt",
-    "endsAt",
-    "confirmed",
-    "paymentStatus",
-  ];
+  const columns = ["description", "startedAt", "endsAt",   "paymentStatus"];
   useEffect(() => {
+    dispatch(listMemberSubscriptions(id));
     dispatch(selectMember(id));
+    // @TODO load member's subscriptions
     return () => {
       dispatch({ type: memberActionTypes.RESET_SELECT_MEMBER });
     };
   }, [id, dispatch]);
 
   useEffect(() => {
-    const membership =
-      member && member.subscriptions
-        ? member.subscriptions.find(
-            (sub) =>
-              sub.type === "Membership" && sub.endsAt > new Date().toISOString()
-          )
-        : [];
+    const membership = subscriptionList
+      ? subscriptionList.find(
+          (sub) =>
+            sub.type === "Membership" && sub.endsAt > new Date().toISOString()
+        )
+      : {};
     setCurrentMemberShip(membership);
-    if (member) {
-      setSubscriptions(member.subscriptions);
-    }
-  }, [member]);
+  }, [subscriptionList]);
 
   return (
     <MainContainer>
@@ -76,10 +75,13 @@ const MemberProfilePage = () => {
           style={{ height: "calc(100vh - 250px)", overflow: "scroll" }}
         >
           <hr />
-          <AsyncComponent loading={loading} error={error}>
+          <AsyncComponent
+            loading={loading || loadingSubs}
+            error={error || errorSubs}
+          >
             {member && (
               <Container>
-                <Row className="pt-2">
+                <Row className="p-5">
                   <Col md={8}>
                     <Row>
                       <Col md={6}>
@@ -110,15 +112,15 @@ const MemberProfilePage = () => {
                       </Col>
                     </Row>
                     <Row className="pt-5">
-                      <Col md={4}>
+                      <Col md={3}>
                         {t("Age")}:{" "}
                         <span className="text-black-50">{member.age}</span>
                       </Col>
-                      <Col md={4}>
+                      <Col md={3}>
                         {t("Tall")}:{" "}
                         <span className="text-black-50">{member.tall}</span>
                       </Col>
-                      <Col md={4}>
+                      <Col md={6}>
                         {t("Weight")}:{" "}
                         <span className="text-black-50">{member.weight}</span>
                       </Col>
@@ -159,10 +161,10 @@ const MemberProfilePage = () => {
                   </Col>
                 </Row>
                 <Row className="py-4">
-                  {subscriptions && (
+                  {subscriptionList && (
                     <SubsTable
                       columns={columns}
-                      data={subscriptions}
+                      data={subscriptionList}
                       loading={loading}
                       error={error}
                       editEndpoint="subscriptions"

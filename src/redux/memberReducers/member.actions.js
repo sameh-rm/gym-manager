@@ -25,6 +25,33 @@ export const failedAction = (actionType, payload) => ({
       : payload.message,
 });
 
+export const listMemberSubscriptions =
+  (id, page, limit) => async (dispatch, getState) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${getState().core.login.userInfo.token}`,
+        },
+      };
+      dispatch(
+        requestAction(memberActionTypes.MEMBER_SUBSCRIPTIONS_LIST_REQUEST)
+      );
+      const { data } = await request.get(
+        `/api/members/${id}/subscriptions?page=${page}&limit=${limit}`,
+        config
+      );
+      console.log(data);
+      dispatch(
+        successAction(memberActionTypes.MEMBER_SUBSCRIPTIONS_LIST_SUCCESS, data)
+      );
+    } catch (error) {
+      dispatch(
+        failedAction(memberActionTypes.MEMBER_SUBSCRIPTIONS_LIST_FAILED, error)
+      );
+    }
+  };
+
 export const listAllMembers = (page, limit) => async (dispatch, getState) => {
   try {
     const config = {
@@ -60,7 +87,11 @@ export const addMember = (member) => async (dispatch, getState) => {
   } = member;
   try {
     const courses = optionsToCourses(coursesValues);
-    const subscriptions = buildSubscriptions(membershipValue.value, courses);
+    const subscriptions = buildSubscriptions(
+      membershipValue.value,
+      courses,
+      getState().core.login.userInfo.isAdmin
+    );
 
     dispatch(requestAction(memberActionTypes.CREATE_MEMBER_REQUEST));
     const config = {

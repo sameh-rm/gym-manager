@@ -13,11 +13,22 @@ const expIncSchema = mongoose.Schema(
       required: true,
       default: 0.0,
     },
-    model: {
-      type: String,
-    },
-    ref: {
+    member: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "Member",
+    },
+    inOut: {
+      // Income / Expenses
+      type: String,
+      required: true,
+    },
+    subscription: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Subscription",
+    },
+    confirmed: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamp: true }

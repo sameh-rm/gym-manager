@@ -2,6 +2,17 @@ const expressAsyncHandler = require("express-async-handler");
 const Member = require("../models/member.model.js");
 const { paginateResults } = require("../middlewares/pagination.Middlewares.js");
 const ExpInc = require("../models/expInc.model.js");
+const Subscription = require("../models/subscription.model.js");
+const { db } = require("../models/subscription.model.js");
+
+const getSubscriptionsByMemberId = expressAsyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const subs = await Subscription.find({ member: id })
+    .limit(req.limit)
+    .skip(req.startIndex);
+  res.status(200);
+  res.json({ results: subs });
+});
 
 const getAllMembers = expressAsyncHandler(async (req, res) => {
   const members = await Member.find({}).limit(req.limit).skip(req.startIndex);
@@ -10,9 +21,10 @@ const getAllMembers = expressAsyncHandler(async (req, res) => {
   res.json({ results: members });
 });
 
-const subscribed = (member) => {
-  var paid = member.paid;
-  member.subscriptions.forEach((sub) => {
+const subscribed = async (member, paidValue) => {
+  var paid = paidValue;
+  await member.subscriptions.forEach(async (sub) => {
+    delete sub._id;
     if (paid > 0) {
       if (paid >= sub.price && sub.price !== sub.paid) {
         sub.paid = sub.price;
@@ -23,41 +35,24 @@ const subscribed = (member) => {
         paid = 0;
         sub.paymentStatus = false;
       }
+      await saveMemberPayment(member, paid, member.user, sub);
     } else {
       sub.paymentStatus = false;
     }
   });
 
-  // if (paid > 0) {
-  //   if (
-  //     paid >= member.memberships[0].price &&
-  //     member.memberships[0].price !== member.memberships[0].paid
-  //   ) {
-  //     member.memberships[0].paid = member.memberships[0].price;
-  //     paid -= member.memberships[0].price;
-  //   } else {
-  //     member.memberships[0].paid = paid;
-  //     paid = 0;
-  //   }
-  //   member.courses.forEach((course) => {
-  //     if (!course.membership && course.paid === 0 && paid > 0) {
-  //       if (course.paid <= paid) {
-  //         course.paid = paid;
-  //       } else {
-  //         course.paid = course.price;
-  //       }
-  //     }
-  //   });
-  // }
   return member;
 };
-const saveMemberPayment = async (member, paidValue) => {
+const saveMemberPayment = async (member, paidValue, user, sub) => {
+  if (paidValue <= 0) return null;
   return await ExpInc.create({
-    description: `تم دفع ${paidValue}جنيه من حساب إشترك ${member.name}`,
+    description: `تم دفع ${paidValue} بواسطة ${member.name} من حساب الإشتراك ${sub.name}`,
+    inOut: "IN",
     value: paidValue,
-    ref: member._id,
-    model: "Member",
+    member: member._id,
     user: member.user,
+    subscription: sub,
+    confirmed: user.isAdmin,
   });
 };
 
@@ -69,32 +64,44 @@ const createMember = expressAsyncHandler(async (req, res) => {
     throw new Error("another member with the same National ID Exists");
   } else {
     const paidValue = member.paid;
-    const subscribedMember = subscribed(member);
-
-    const createdMember = await Member.create({
-      ...subscribedMember,
-      user: req.user,
-    });
-    if (paidValue > 0) {
-      const paiedMember = await saveMemberPayment(createdMember, paidValue);
-    }
-    if (createdMember) {
-      res.status(201).json({
-        _id: createdMember._id,
-        user: createdMember.user,
-        name: createdMember.name,
-        image: createdMember.image,
-        age: createdMember.age,
-        tall: createdMember.tall,
-        weight: createdMember.weight,
-        phone: createdMember.phone,
-        personalAddress: createdMember.personalAddress,
-        nationalId: createdMember.nationalId,
-        subscriptions: createdMember.subscriptions,
-        updatedAt: createdMember.updatedAt,
-        createdAt: createdMember.createdAt,
+    const session = await db.startSession();
+    await session.withTransaction(async () => {
+      const createdMember = await Member.create({
+        ...member,
+        user: req.user,
       });
-    }
+      const subscribedMember = await subscribed(
+        { _id: createdMember._id, user: req.user, ...member },
+        paidValue
+      );
+      const createdSubs = await Subscription.insertMany(
+        subscribedMember.subscriptions.map((sub) => {
+          return {
+            ...sub,
+            user: req.user,
+            member: createdMember,
+          };
+        })
+      );
+      if (createdMember) {
+        res.status(201).json({
+          _id: createdMember._id,
+          user: createdMember.user,
+          name: createdMember.name,
+          image: createdMember.image,
+          age: createdMember.age,
+          tall: createdMember.tall,
+          weight: createdMember.weight,
+          phone: createdMember.phone,
+          personalAddress: createdMember.personalAddress,
+          nationalId: createdMember.nationalId,
+          subscriptions: createdMember.subscriptions,
+          updatedAt: createdMember.updatedAt,
+          createdAt: createdMember.createdAt,
+        });
+      }
+    });
+    session.endSession();
   }
 });
 
@@ -197,4 +204,5 @@ module.exports = {
   getMemberById,
   updateMember,
   deleteMember,
+  getSubscriptionsByMemberId,
 };

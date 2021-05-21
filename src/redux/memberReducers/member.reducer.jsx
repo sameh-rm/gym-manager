@@ -7,6 +7,31 @@ import { loadImageUrl } from "../../utils/utils";
 const initState = {
   membersList: [],
 };
+const memberSubscriptionsListReducer = (state = initState, action) => {
+  switch (action.type) {
+    case memberActionTypes.MEMBER_SUBSCRIPTIONS_LIST_REQUEST:
+      return {
+        subscriptionList: [],
+        loading: true,
+      };
+    case memberActionTypes.MEMBER_SUBSCRIPTIONS_LIST_SUCCESS:
+      return {
+        subscriptionList: action.payload.results,
+        prev: action.payload.prev,
+        next: action.payload.next,
+        loading: false,
+      };
+    case memberActionTypes.MEMBER_SUBSCRIPTIONS_LIST_FAILED:
+      return {
+        error: action.payload,
+        loading: false,
+        subscriptionList: [],
+      };
+
+    default:
+      return state;
+  }
+};
 
 export const membersListReducer = (state = initState, action) => {
   switch (action.type) {
@@ -198,6 +223,7 @@ const memberReducers = persistReducer(
     addMember: addmemberReducer,
     deleteMember: deletememberReducer,
     selectMember: selectMemberReducer,
+    memberSubsList: memberSubscriptionsListReducer,
   })
 );
 

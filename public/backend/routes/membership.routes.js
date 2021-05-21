@@ -5,6 +5,7 @@ const {
   updateMembership,
   deleteMembership,
 } = require("../controllers/membership.controller.js");
+
 const {
   loginRequired,
   adminRequired,

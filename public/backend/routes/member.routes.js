@@ -5,6 +5,7 @@ const {
   getMemberById,
   updateMember,
   deleteMember,
+  getSubscriptionsByMemberId,
 } = require("../controllers/member.controller.js");
 const {
   loginRequired,
@@ -17,6 +18,10 @@ router
   .route("/")
   .get(loginRequired, adminRequired, getAllMembers)
   .post(loginRequired, adminRequired, createMember);
+
+router
+  .route("/:id/subscriptions")
+  .get(loginRequired, getSubscriptionsByMemberId);
 
 router
   .route("/:id")
