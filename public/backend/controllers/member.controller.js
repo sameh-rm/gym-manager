@@ -8,6 +8,7 @@ const { db } = require("../models/subscription.model.js");
 const getSubscriptionsByMemberId = expressAsyncHandler(async (req, res) => {
   const id = req.params.id;
   const subs = await Subscription.find({ member: id })
+    .sort("-createdAt")
     .limit(req.limit)
     .skip(req.startIndex);
   res.status(200);
@@ -24,7 +25,7 @@ const getAllMembers = expressAsyncHandler(async (req, res) => {
 const subscribed = async (member, paidValue) => {
   var paid = paidValue;
   await member.subscriptions.forEach(async (sub) => {
-    delete sub._id;
+    // delete sub._id;
     if (paid > 0) {
       if (paid >= sub.price && sub.price !== sub.paid) {
         sub.paid = sub.price;
@@ -35,7 +36,7 @@ const subscribed = async (member, paidValue) => {
         paid = 0;
         sub.paymentStatus = false;
       }
-      await saveMemberPayment(member, paid, member.user, sub);
+      await saveMemberPayment(member, member.user, sub);
     } else {
       sub.paymentStatus = false;
     }
@@ -43,12 +44,12 @@ const subscribed = async (member, paidValue) => {
 
   return member;
 };
-const saveMemberPayment = async (member, paidValue, user, sub) => {
-  if (paidValue <= 0) return null;
+const saveMemberPayment = async (member, user, sub) => {
+  if (sub.paid <= 0) return null;
   return await ExpInc.create({
-    description: `تم دفع ${paidValue} بواسطة ${member.name} من حساب الإشتراك ${sub.name}`,
+    description: `تم دفع ${sub.paid} بواسطة ${member.name} من حساب الإشتراك ${sub.name}`,
     inOut: "IN",
-    value: paidValue,
+    value: sub.paid,
     member: member._id,
     user: member.user,
     subscription: sub,
@@ -76,6 +77,7 @@ const createMember = expressAsyncHandler(async (req, res) => {
       );
       const createdSubs = await Subscription.insertMany(
         subscribedMember.subscriptions.map((sub) => {
+          delete sub._id;
           return {
             ...sub,
             user: req.user,

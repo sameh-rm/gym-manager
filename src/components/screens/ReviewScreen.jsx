@@ -115,7 +115,11 @@ const ReviewScreen = ({
                       <Col>{course.daysPerMonth}</Col>
                       <Col>{course.minutesPerTime}</Col>
                       <Col>{course.plan || "شهرى"}</Col>
-                      <Col>{course.period || 1}</Col>
+                      <Col>
+                        {course.membership
+                          ? membership.period
+                          : course.period || 1}
+                      </Col>
                       <Col>
                         {course.membership
                           ? "..."

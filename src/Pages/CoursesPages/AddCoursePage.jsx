@@ -26,7 +26,7 @@ const AddCoursePage = ({ history }) => {
 
         <Row
           className="hide-scrollbar"
-          style={{ height: "calc(100vh - 250px)", overflow: "scroll" }}
+          style={{ maxHeight: "calc(100vh - 250px)", overflow: "scroll" }}
         >
           <CourseForm history={history} />
         </Row>

@@ -20,6 +20,7 @@ const FormCoursesMenu = ({
   editable,
   selectable,
   membership,
+  membershipPart,
 }) => {
   const { t } = useTranslation();
   return (
@@ -53,6 +54,12 @@ const FormCoursesMenu = ({
                 isMulti
                 menuPosition="fixed"
                 placeholder={t("Select Courses")}
+                filterOption={(option, raw) => {
+                  const exist = coursesValues.find(
+                    (o) => o.label === option.label
+                  );
+                  return exist ? undefined : option;
+                }}
                 onChange={(e) => {
                   setCoursesValues(e);
                 }}
@@ -81,7 +88,7 @@ const FormCoursesMenu = ({
             <Col>{t("Description")}</Col>
             <Col>{t("DaysPerMonth")}</Col>
             <Col>{t("MinutesPerTime")}</Col>
-            {editable ? <Col md={3}>{t("Plan")}</Col> : <Col>{t("Plan")}</Col>}
+            <Col>{t("Plan")}</Col>
             <Col>{t("Period")}</Col>
           </Row>
         </ListGroup.Item>
@@ -96,7 +103,8 @@ const FormCoursesMenu = ({
                 option={option}
                 setCoursesValues={setCoursesValues}
                 coursesValues={coursesValues}
-                editable={editable}
+                editable
+                membership={membershipValue.value}
               />
             );
           })

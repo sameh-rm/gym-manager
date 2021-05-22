@@ -1,11 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Col, Form, Image, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import { useParams } from "react-router";
-import { memberActionTypes } from "../../../redux/memberReducers/member.actionTypes";
 
-import { loadImageUrl, uploadImage } from "../../../utils/utils";
+import { uploadImage } from "../../../utils/utils";
 import Loader from "../../Loader";
 import FormItem from "../FormItem";
 

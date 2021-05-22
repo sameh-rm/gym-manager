@@ -36,9 +36,13 @@ export const sidebarItems = [
         url: "/memberships/add",
         icon: <i className="fad fa-layer-plus"></i>,
       },
-      {
-        title: "_",
-      },
+    ],
+  },
+  {
+    title: "Courses",
+    expanded: true,
+    icon: <i className="fal fa-id-card-alt"></i>,
+    subitems: [
       {
         title: "Courses List",
         url: "/courses",

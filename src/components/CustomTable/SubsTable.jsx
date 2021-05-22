@@ -9,22 +9,20 @@ import { TableTD } from "./CustomTD";
 import TableSearch from "./TableSearch";
 import CustomPaginator from "./CustomPaginator";
 import { paginate } from "../../utils/utils";
-import { LinkContainer } from "react-router-bootstrap";
 import PaymentModal from "./PaymentModal";
 
-export const ActionsTD = ({ children, deleteHandler, id, editEndpoint }) => {
+export const ActionsTD = ({
+  children,
+  deleteHandler,
+  id,
+  editEndpoint,
+  subscription,
+}) => {
   const { t } = useTranslation();
-  const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   return (
     <td className="align-middle">
-      <PaymentModal
-        handleClose={handleClose}
-        handleShow={handleShow}
-        show={show}
-      />
+      {!subscription.paymentStatus && <PaymentModal subId={subscription._id} />}
 
       <Button
         onClick={deleteHandler}
@@ -148,6 +146,7 @@ const SubsTable = ({
                           deleteHandler(row._id);
                         }}
                         editEndpoint={editEndpoint}
+                        subscription={row}
                       />
                     )}
                   </tr>

@@ -86,7 +86,7 @@ const CourseForm = ({ history }) => {
   }, [dispatch, id, courseToEdit, success, createdCourse]);
 
   return (
-    <FormContainer fullSize>
+    <FormContainer>
       <Form onSubmit={submitHandler}>
         <Row>
           <Col>

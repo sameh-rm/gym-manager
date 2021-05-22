@@ -111,7 +111,7 @@ const AddMemberPage = ({ history }) => {
 
         <Row
           className="hide-scrollbar"
-          style={{ height: "calc(100vh - 250px)", overflow: "scroll" }}
+          style={{ maxHeight: "calc(100vh - 250px)", overflow: "scroll" }}
         >
           <Container>
             <MultiStepForm
@@ -161,6 +161,7 @@ const AddMemberPage = ({ history }) => {
                 Courses: (
                   <FormCoursesMenu
                     membership
+                    membershipPart
                     selectable
                     title={t("Select Courses")}
                     coursesAsOptions={coursesToOptions(coursesList)}

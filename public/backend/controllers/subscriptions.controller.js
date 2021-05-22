@@ -1,5 +1,7 @@
 const expressAsyncHandler = require("express-async-handler");
+const { isValidObjectId } = require("mongoose");
 const ExpInc = require("../models/expInc.model");
+const Member = require("../models/member.model");
 const Subscription = require("../models/subscription.model");
 
 const getAllSubscriptions = expressAsyncHandler(async (req, res) => {
@@ -13,15 +15,16 @@ const getAllSubscriptions = expressAsyncHandler(async (req, res) => {
 
 const createSubscription = expressAsyncHandler(async (req, res) => {
   const sub = req.body;
-
+  // console.log(sub);
   const createdSubscription = await Subscription.create({
     ...sub,
     user: req.user,
+    paymentStatus: sub.paid === sub.price,
   });
   const payment = await saveMemberPayment(
-    sub.member,
     createdSubscription.paid,
-    req.user
+    req.user,
+    sub
   );
 
   if (createdSubscription) {
@@ -69,38 +72,37 @@ const getSubscriptionById = expressAsyncHandler(async (req, res) => {
   }
 });
 
-const saveMemberPayment = async (member, paidValue, user, sub) => {
+const saveMemberPayment = async (paidValue, user, sub) => {
+  // const member = sub.member;
+  const member = sub.member;
+
   if (paidValue <= 0) return null;
-  return await ExpInc.create({
+  const createdPayment = await ExpInc.create({
     description: `تم دفع ${paidValue} بواسطة ${member.name} من حساب الإشتراك ${sub.name}`,
     inOut: "IN",
     value: paidValue,
-    member: member,
-    user: member.user,
-    subscription: sub,
+    user: user._id,
+    subscription: sub._id,
     confirmed: user.isAdmin,
-  });
+  }).catch((err) => console.log(err));
+
+  return createdPayment;
 };
 
 const updateSubscription = expressAsyncHandler(async (req, res) => {
   const subId = req.params.id;
-  const { paid, isActive, paymentStatus } = req.body;
+  const { paid, isActive } = req.body;
   const sub = await Subscription.findById(subId);
   if (sub) {
     sub.paid = sub.paid + paid || sub.paid;
     sub.isActive = isActive || sub.isActive;
-    sub.paymentStatus = paymentStatus || sub.paymentStatus;
+    sub.paymentStatus = sub.paid === sub.price;
   } else {
     res.status(404);
   }
 
   const updatedSubscription = await sub.save();
-  const payment = await saveMemberPayment(
-    updatedSubscription.member,
-    paid,
-    req.user,
-    updatedSubscription
-  );
+  const payment = await saveMemberPayment(paid, req.user, updatedSubscription);
   if (!updatedSubscription) {
     res.status(400);
     throw new Error("invalid request body");

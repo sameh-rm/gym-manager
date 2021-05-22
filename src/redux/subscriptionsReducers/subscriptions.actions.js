@@ -1,5 +1,6 @@
 import { request } from "../../utils/request";
-import { subscriptionActionTypes } from "./subscription.actionTypes";
+import { listMemberSubscriptions } from "../memberReducers/member.actions";
+import { subscriptionActionTypes } from "./subscriptions.actionTypes";
 
 export const requestAction = (actionType) => ({
   type: actionType,
@@ -100,7 +101,7 @@ export const addSubscription = (subscription) => async (dispatch, getState) => {
 };
 
 export const updateSubscription =
-  ({ id, paid, isActive, paymentStatus }) =>
+  ({ id, paid, isActive }) =>
   async (dispatch, getState) => {
     try {
       dispatch(
@@ -117,12 +118,14 @@ export const updateSubscription =
         {
           paid,
           isActive,
-          paymentStatus,
         },
         config
       );
       dispatch(
         successAction(subscriptionActionTypes.UPDATE_SUBSCRIPTION_SUCCESS, data)
+      );
+      dispatch(
+        listMemberSubscriptions(getState().member.selectMember.member._id)
       );
     } catch (error) {
       dispatch(

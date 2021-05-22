@@ -20,6 +20,7 @@ import {
 } from "../../redux/memberReducers/member.actions";
 import { memberActionTypes } from "../../redux/memberReducers/member.actionTypes";
 import SubsTable from "../../components/CustomTable/SubsTable";
+import SubscriptionModal from "../../components/CustomTable/subscriptionModal";
 const MemberProfilePage = () => {
   const { t } = useTranslation();
   const { id } = useParams();
@@ -34,11 +35,10 @@ const MemberProfilePage = () => {
   } = useSelector((state) => state.member.memberSubsList);
 
   const [currentMemberShip, setCurrentMemberShip] = useState([]);
-  const columns = ["description", "startedAt", "endsAt",   "paymentStatus"];
+  const columns = ["description", "startedAt", "endsAt", "paymentStatus"];
   useEffect(() => {
     dispatch(listMemberSubscriptions(id));
     dispatch(selectMember(id));
-    // @TODO load member's subscriptions
     return () => {
       dispatch({ type: memberActionTypes.RESET_SELECT_MEMBER });
     };
@@ -72,7 +72,7 @@ const MemberProfilePage = () => {
         </Row>
         <Row
           className="hide-scrollbar"
-          style={{ height: "calc(100vh - 250px)", overflow: "scroll" }}
+          style={{ maxHeight: "calc(100vh - 250px)", overflow: "scroll" }}
         >
           <hr />
           <AsyncComponent
@@ -112,15 +112,15 @@ const MemberProfilePage = () => {
                       </Col>
                     </Row>
                     <Row className="pt-5">
-                      <Col md={3}>
+                      <Col md={4}>
                         {t("Age")}:{" "}
                         <span className="text-black-50">{member.age}</span>
                       </Col>
-                      <Col md={3}>
+                      <Col md={4}>
                         {t("Tall")}:{" "}
                         <span className="text-black-50">{member.tall}</span>
                       </Col>
-                      <Col md={6}>
+                      <Col md={4}>
                         {t("Weight")}:{" "}
                         <span className="text-black-50">{member.weight}</span>
                       </Col>
@@ -159,6 +159,9 @@ const MemberProfilePage = () => {
                       <Image fluid src={member.image} alt={member.name} />
                     </Row>
                   </Col>
+                </Row>
+                <Row>
+                  <SubscriptionModal />
                 </Row>
                 <Row className="py-4">
                   {subscriptionList && (

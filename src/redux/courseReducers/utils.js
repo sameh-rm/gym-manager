@@ -6,10 +6,12 @@ import moment from "moment";
  */
 export const coursesToOptions = (coursesList) => {
   const options = [];
-
-  coursesList.forEach((course) =>
-    options.push({ value: course, label: course.name })
-  );
+  console.log(coursesList);
+  if (coursesList) {
+    coursesList.forEach((course) =>
+      options.push({ value: course, label: course.name })
+    );
+  }
   return options;
 };
 /**
@@ -58,24 +60,13 @@ export const buildSubscriptions = (membership, courses, isAdmin) => {
  */
 export const optionsToMemberShipCourses = (membership) => {
   const outCourses = [];
-  const startDate = moment();
-  const endDate = moment(startDate).add(membership.period, "month");
-  membership.endsAt = endDate;
-  membership.courses &&
-    memberCourses(membership.courses, outCourses, membership);
-
-  // membership.courses.forEach((course) => {
-  //   const courseEndDate = moment(startDate).add(
-  //     course.period,
-  //     course.plan === "شهرى" ? "month" : "day"
-  //   );
-  //   courses.push({
-  //     ...course,
-  //     membership: membership._id,
-  //     price: course.plan === "شهرى" ? course.monthlyPrice : course.dailyPrice,
-  //     ends_at: courseEndDate,
-  //   });
-  // });
+  if (membership) {
+    const startDate = moment();
+    const endDate = moment(startDate).add(membership.period, "month");
+    membership.endsAt = endDate;
+    membership.courses &&
+      memberCourses(membership.courses, outCourses, membership);
+  }
   return outCourses;
 };
 
@@ -115,21 +106,25 @@ export const toSubscription = (target, isAdmin) => {
   if (Array.isArray(target)) {
     target.forEach((course) => {
       const courseEndDate = moment(startDate).add(course.period, "month");
-      course.membership ??
-        out.push({
-          ...course,
-          type: "Course",
-          price: course.monthlyPrice,
-          endsAt: courseEndDate,
-          paymentStatus: isAdmin,
-        });
+      if (course.period > 0)
+        course.membership ??
+          out.push({
+            ...course,
+            type: "Course",
+            price: course.monthlyPrice * course.period,
+            period: course.period,
+            endsAt: courseEndDate,
+            paymentStatus: isAdmin,
+          });
     });
   } else {
     const courseEndDate = moment(startDate).add(target.period, "month");
+
     target &&
       out.push({
         ...target,
         type: "Membership",
+        period: target.period,
         plan: "شهرى",
         endsAt: courseEndDate,
       });

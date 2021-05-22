@@ -31,7 +31,10 @@ const expIncSchema = mongoose.Schema(
       default: false,
     },
   },
-  { timestamp: true }
+
+  {
+    timestamps: true,
+  }
 );
 
 const ExpInc = mongoose.model("ExpInc", expIncSchema);

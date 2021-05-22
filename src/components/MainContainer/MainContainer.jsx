@@ -28,7 +28,7 @@ const MainContainer = ({ children }) => {
           <div className="flex">
             <Sidebar />
             <div className="main">
-              <main className="p-3 pagesContainer">{children}</main>
+              <main className="p-3 pagesContainer h-100">{children}</main>
               <Footer />
             </div>
           </div>
