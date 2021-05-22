@@ -54,7 +54,11 @@ const CourseListItem = ({
                 placeholder={t("Period")}
                 onChangeHandler={(e) => {
                   changeTableValues(idx, "period", e);
-                  setCoursesValues([...coursesValues]);
+                  if (Array.isArray(coursesValues)) {
+                    setCoursesValues([...coursesValues]);
+                  } else {
+                    setCoursesValues([coursesValues]);
+                  }
                   setPeriod(e);
                 }}
                 required

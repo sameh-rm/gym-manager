@@ -56,15 +56,20 @@ const SubscriptionModal = ({ className }) => {
     if (type.value && coursesValues && membershipValue && value) {
       const startDate = moment();
       const endDate = moment(startDate).add(membershipValue.period, "month");
+      console.log(membershipValue);
       dispatch(
         addSubscription({
           member: member,
           type: type.value,
-          courses: optionsToCourses(coursesValues),
+          courses: optionsToCourses(
+            Array.isArray(coursesValues) ? coursesValues : [coursesValues]
+          ),
           name: membershipValue.name,
           description: membershipValue.description,
-          period: membershipValue.period,
-          price: membershipValue.price,
+          period: coursesValues[0] ? coursesValues[0].value.period : 1,
+          price: membershipValue.monthlyPrice
+            ? membershipValue.monthlyPrice * (membershipValue.period || 1)
+            : membershipValue.price,
           paid: value,
           endsAt: endDate,
         })
@@ -81,6 +86,7 @@ const SubscriptionModal = ({ className }) => {
     setType(options[0]);
     setOption({});
     setCoursesValues([]);
+    setValue(0);
   }, [show]);
 
   useEffect(() => {

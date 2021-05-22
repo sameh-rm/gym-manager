@@ -34,10 +34,16 @@ const SubscriptionForm = ({
   const { t } = useTranslation();
   const [period, setPeriod] = useState(1);
   const valueValidation = (e) => {
-    console.log(e, membershipValue);
-    console.log(e, coursesValues);
-    if (Number(e) > Number(membershipValue.price)) {
-      setValue(membershipValue.price);
+    if (
+      Number(e) > Number(membershipValue.price) ||
+      Number(e) > Number(membershipValue.monthlyPrice)
+    ) {
+      setValue(
+        !membershipValue.monthlyPrice
+          ? membershipValue.price
+          : Number(membershipValue.monthlyPrice) *
+              Number(coursesValues[0] ? coursesValues[0].value.period : 1)
+      );
     } else {
       setValue(Number(e));
     }
@@ -89,6 +95,12 @@ const SubscriptionForm = ({
                     placeholder={`${t("Select")} ${type.label}`}
                     onChange={(e) => {
                       setMembershipValues(e.value);
+                      setMembershipValues({
+                        ...e.value,
+                        price: e.value.price
+                          ? e.value.price
+                          : e.value.monthlyPrice,
+                      });
                       setOption(e);
                     }}
                   />
@@ -98,7 +110,15 @@ const SubscriptionForm = ({
             <Col md={6}>
               <Row>
                 <Col className="pb-4">{t("Price")} : </Col>
-                <Col className="pb-4">{membershipValue.price || 0}</Col>
+                <Col className="pb-4">
+                  {console.log(coursesValues)}
+                  {membershipValue.monthlyPrice
+                    ? membershipValue.monthlyPrice *
+                      (coursesValues[0]
+                        ? Number(coursesValues[0].value.period)
+                        : 1)
+                    : membershipValue.price || 0}
+                </Col>
               </Row>
               <Row>
                 <Col>{t("Paid")} : </Col>
@@ -134,7 +154,6 @@ const SubscriptionForm = ({
           <ListGroup.Item disabled>{t(type.value)}</ListGroup.Item>
         ) : Array.isArray(coursesValues) ? (
           coursesValues.map((option, idx) => {
-            console.log(option);
             return (
               <CourseListItem
                 key={idx + 1}
