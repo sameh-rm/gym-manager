@@ -104,5 +104,14 @@
   "EndsAt": "ت.الإنتهاء",
   "StartedAt": "ت.البداية",
   "Paid": "المدفوع",
-  "Select": "إختر"
+  "Select": "إختر",
+  "Subscribe": "إشترك",
+  "Pay": "دفع",
+  "Add Subscription": "تسجيل إشتراك",
+  "Member Profile": "بيانات المشترك",
+  "Close": "إغلاق",
+  "Paid Value": "المبلغ المدفوع",
+  "Subscription Type": "نوع الإشتراك",
+  "Select Type": "إختر نوع الإشتراك",
+  "Please fill all fields!": "تأكد من ملئ كافة الحقول"
 }

@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Col, Form, ListGroup, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 import Select from "react-select";
 import {
   coursesToOptions,
@@ -33,8 +32,10 @@ const SubscriptionForm = ({
   setValue,
 }) => {
   const { t } = useTranslation();
+  const [period, setPeriod] = useState(1);
   const valueValidation = (e) => {
-    console.log(e, membershipValue.price);
+    console.log(e, membershipValue);
+    console.log(e, coursesValues);
     if (Number(e) > Number(membershipValue.price)) {
       setValue(membershipValue.price);
     } else {
@@ -43,7 +44,7 @@ const SubscriptionForm = ({
   };
   useEffect(() => {
     if (option && type.value === options[1].value) {
-      setCoursesValues([option]);
+      setCoursesValues(option);
     } else {
       option &&
         setCoursesValues([
@@ -87,7 +88,6 @@ const SubscriptionForm = ({
                     menuPosition="fixed"
                     placeholder={`${t("Select")} ${type.label}`}
                     onChange={(e) => {
-                      console.log(e);
                       setMembershipValues(e.value);
                       setOption(e);
                     }}
@@ -132,8 +132,9 @@ const SubscriptionForm = ({
         </ListGroup.Item>
         {coursesValues.length === 0 ? (
           <ListGroup.Item disabled>{t(type.value)}</ListGroup.Item>
-        ) : (
+        ) : Array.isArray(coursesValues) ? (
           coursesValues.map((option, idx) => {
+            console.log(option);
             return (
               <CourseListItem
                 key={idx + 1}
@@ -146,6 +147,18 @@ const SubscriptionForm = ({
               />
             );
           })
+        ) : (
+          <CourseListItem
+            key={1}
+            idx={0}
+            option={option}
+            setCoursesValues={setCoursesValues}
+            coursesValues={coursesValues}
+            editable={type.value === options[1].value}
+            membership={membershipValue}
+            period={period}
+            setPeriod={setPeriod}
+          />
         )}
       </ListGroup>
     </>

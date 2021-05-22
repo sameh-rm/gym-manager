@@ -160,9 +160,7 @@ const MemberProfilePage = () => {
                     </Row>
                   </Col>
                 </Row>
-                <Row>
-                  <SubscriptionModal />
-                </Row>
+
                 <Row className="py-4">
                   {subscriptionList && (
                     <SubsTable

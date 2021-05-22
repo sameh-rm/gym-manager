@@ -14,8 +14,9 @@ import {
 import { listAllMemberShips } from "../../redux/memberShipReducers/membership.actions";
 import { addSubscription } from "../../redux/subscriptionsReducers/subscriptions.actions";
 import SubscriptionForm from "../forms/SubscriptionForm";
+import Message from "../Message";
 
-const SubscriptionModal = () => {
+const SubscriptionModal = ({ className }) => {
   const { t } = useTranslation();
   const { id } = useParams();
   const [show, setShow] = useState(false);
@@ -50,6 +51,7 @@ const SubscriptionModal = () => {
 
   const [type, setType] = useState(options[0]);
   const [option, setOption] = useState();
+  const [validationError, setvalidationError] = useState();
   const handleSubmit = (e) => {
     if (type.value && coursesValues && membershipValue && value) {
       const startDate = moment();
@@ -69,7 +71,9 @@ const SubscriptionModal = () => {
       );
       dispatch(listMemberSubscriptions(member._id));
       handleClose();
+      setvalidationError();
     } else {
+      setvalidationError(t("Please fill all fields!"));
     }
   };
   useEffect(() => {
@@ -87,14 +91,15 @@ const SubscriptionModal = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <div className={`${className}`}>
       <Button variant="primary" onClick={handleShow} title={t("Pay")}>
-        <i className="fal fa-money-bill-alt"></i>
+        {t("Add Subscription")}
       </Button>
 
       <Modal size="lg" show={show} onHide={handleClose} centered>
         <Modal.Header>
           <Modal.Title>{t("Add Subscription")}</Modal.Title>
+          {validationError && <Message>{validationError}</Message>}
         </Modal.Header>
         <Modal.Body className="text-right">
           <SubscriptionForm
@@ -119,15 +124,15 @@ const SubscriptionModal = () => {
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleSubmit}>
-            {t("subscribe")}
+          <Button type="submit" variant="primary" onClick={handleSubmit}>
+            {t("Subscribe")}
           </Button>
           <Button variant="secondary" onClick={handleClose}>
             {t("Close")}
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 };
 

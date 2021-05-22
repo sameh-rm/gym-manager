@@ -6,7 +6,6 @@ import moment from "moment";
  */
 export const coursesToOptions = (coursesList) => {
   const options = [];
-  console.log(coursesList);
   if (coursesList) {
     coursesList.forEach((course) =>
       options.push({ value: course, label: course.name })

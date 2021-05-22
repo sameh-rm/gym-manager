@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Badge, Button, Container, Row, Table } from "react-bootstrap";
+import { Badge, Button, Col, Container, Row, Table } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ import TableSearch from "./TableSearch";
 import CustomPaginator from "./CustomPaginator";
 import { paginate } from "../../utils/utils";
 import PaymentModal from "./PaymentModal";
+import SubscriptionModal from "./subscriptionModal";
 
 export const ActionsTD = ({
   children,
@@ -94,7 +95,18 @@ const SubsTable = ({
         {success && (
           <Message variant="info">{t("Item Was Deleted Successfully")}</Message>
         )}
-        <TableSearch searchTxt={searchTxt} searchHandler={searchHandler} />
+        <Row>
+          <Col md={8}>
+            <TableSearch
+              searchTxt={searchTxt}
+              searchHandler={searchHandler}
+              searchSize={8}
+            />
+          </Col>
+          <Col>
+            <SubscriptionModal className="float-left" />
+          </Col>
+        </Row>
         <div className="hide-scrollbar" style={{ height: "550px" }}>
           <Table striped hover bordered responsive className="mt-3">
             <thead>

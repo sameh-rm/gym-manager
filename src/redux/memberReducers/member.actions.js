@@ -41,7 +41,6 @@ export const listMemberSubscriptions =
         `/api/members/${id}/subscriptions?page=${page}&limit=${limit}`,
         config
       );
-      console.log(data);
       dispatch(
         successAction(memberActionTypes.MEMBER_SUBSCRIPTIONS_LIST_SUCCESS, data)
       );
