@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { LinkContainer } from "react-router-bootstrap";
 import FormCoursesMenu from "../../components/forms/courses/FormCoursesMenu";
+import MembershipCourses from "../../components/forms/courses/MembershipCourses";
 import MembershipForm from "../../components/forms/membership/MembershipForm";
 import MainContainer from "../../components/MainContainer/MainContainer";
 import MultiStepForm from "../../components/MultiStepForm/MultiStepForm";
@@ -154,7 +155,7 @@ const AddMembershipPage = ({ history }) => {
                   />
                 ),
                 Courses: (
-                  <FormCoursesMenu
+                  <MembershipCourses
                     selectable
                     editable
                     title={t("Select Courses")}
@@ -163,7 +164,7 @@ const AddMembershipPage = ({ history }) => {
                     coursesValues={coursesValues}
                   >
                     Courses
-                  </FormCoursesMenu>
+                  </MembershipCourses>
                 ),
               }}
             />

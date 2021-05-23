@@ -20,7 +20,6 @@ import {
 } from "../../redux/memberReducers/member.actions";
 import { memberActionTypes } from "../../redux/memberReducers/member.actionTypes";
 import SubsTable from "../../components/CustomTable/SubsTable";
-import SubscriptionModal from "../../components/CustomTable/subscriptionModal";
 const MemberProfilePage = () => {
   const { t } = useTranslation();
   const { id } = useParams();
@@ -162,8 +161,9 @@ const MemberProfilePage = () => {
                 </Row>
 
                 <Row className="py-4">
-                  {subscriptionList && (
+                  {member && subscriptionList && (
                     <SubsTable
+                      member={member}
                       columns={columns}
                       data={subscriptionList}
                       loading={loading}

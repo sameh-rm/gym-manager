@@ -95,11 +95,11 @@ const ReviewScreen = ({
               <Row className="px-1">
                 <Col>{t("Name")}</Col>
                 <Col md={3}>{t("Description")}</Col>
-                <Col>{t("DaysPerMonth")}</Col>
-                <Col>{t("MinutesPerTime")}</Col>
+                <Col>{t("Price")}</Col>
+                {/* <Col>{t("MinutesPerTime")}</Col> */}
                 <Col>{t("Plan")}</Col>
                 <Col>{t("Period")}</Col>
-                <Col>{t("Price")}</Col>
+                <Col>{t("SubTotal")}</Col>
               </Row>
             </ListGroup.Item>
             {!courses || courses.length === 0 ? (
@@ -112,8 +112,8 @@ const ReviewScreen = ({
                     <Row className="px-1">
                       <Col>{course.name}</Col>
                       <Col md={3}>{course.description}</Col>
-                      <Col>{course.daysPerMonth}</Col>
-                      <Col>{course.minutesPerTime}</Col>
+                      <Col>{course.monthlyPrice}</Col>
+                      {/* <Col>{course.minutesPerTime}</Col> */}
                       <Col>{course.plan || "شهرى"}</Col>
                       <Col>
                         {course.membership

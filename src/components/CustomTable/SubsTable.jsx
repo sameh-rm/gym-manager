@@ -10,7 +10,7 @@ import TableSearch from "./TableSearch";
 import CustomPaginator from "./CustomPaginator";
 import { paginate } from "../../utils/utils";
 import PaymentModal from "./PaymentModal";
-import SubscriptionModal from "./subscriptionModal";
+import SubscriptionModal from "../forms/subscription/SubscriptionModal";
 
 export const ActionsTD = ({
   children,
@@ -60,6 +60,7 @@ const SubsTable = ({
   listData,
   moreRows = 0,
   noActions,
+  member,
 }) => {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
@@ -74,6 +75,7 @@ const SubsTable = ({
     setSearchTxt(e);
     setCurrentData(searchData(data, e));
   };
+
   useEffect(() => {
     setPaginatedData(
       paginate(currentData, currentPage, page_rows_count + moreRows).results
@@ -104,7 +106,7 @@ const SubsTable = ({
             />
           </Col>
           <Col>
-            <SubscriptionModal className="float-left" />
+            <SubscriptionModal member={member} className="float-left" />
           </Col>
         </Row>
         <div className="hide-scrollbar" style={{ height: "550px" }}>

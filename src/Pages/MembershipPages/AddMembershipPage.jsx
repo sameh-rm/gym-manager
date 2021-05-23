@@ -3,7 +3,7 @@ import { Col, Button, Container, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
-import FormCoursesMenu from "../../components/forms/courses/FormCoursesMenu";
+import MembershipCourses from "../../components/forms/courses/MembershipCourses";
 import MembershipForm from "../../components/forms/membership/MembershipForm";
 import MainContainer from "../../components/MainContainer/MainContainer";
 import MultiStepForm from "../../components/MultiStepForm/MultiStepForm";
@@ -114,9 +114,8 @@ const AddMembershipPage = ({ history }) => {
                   />
                 ),
                 Courses: (
-                  <FormCoursesMenu
+                  <MembershipCourses
                     selectable
-                    editable
                     title={t("Select Courses")}
                     coursesAsOptions={coursesToOptions(coursesList)}
                     setCoursesValues={setCoursesValues}

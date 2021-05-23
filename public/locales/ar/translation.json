@@ -113,5 +113,7 @@
   "Paid Value": "المبلغ المدفوع",
   "Subscription Type": "نوع الإشتراك",
   "Select Type": "إختر نوع الإشتراك",
-  "Please fill all fields!": "تأكد من ملئ كافة الحقول"
+  "Please fill all fields!": "تأكد من ملئ كافة الحقول",
+  "SubTotal": "إجمالى",
+  "Subscription": "إشتراك"
 }

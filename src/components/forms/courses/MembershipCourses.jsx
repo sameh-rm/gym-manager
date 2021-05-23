@@ -6,9 +6,9 @@ import {
   coursesToOptions,
   optionsToMemberShipCourses,
 } from "../../../redux/courseReducers/utils";
-import CourseListItem from "./CourseListItem";
+import MembershipCourseListItem from "./MembershipCourseListItem";
 
-const FormCoursesMenu = ({
+const MembershipCourses = ({
   title,
   maxHeight,
   coursesValues,
@@ -20,6 +20,7 @@ const FormCoursesMenu = ({
   editable,
   selectable,
   membership,
+  membershipPart,
 }) => {
   const { t } = useTranslation();
   return (
@@ -53,6 +54,12 @@ const FormCoursesMenu = ({
                 isMulti
                 menuPosition="fixed"
                 placeholder={t("Select Courses")}
+                filterOption={(option, raw) => {
+                  const exist = coursesValues.find(
+                    (o) => o.label === option.label
+                  );
+                  return exist ? undefined : option;
+                }}
                 onChange={(e) => {
                   setCoursesValues(e);
                 }}
@@ -79,25 +86,25 @@ const FormCoursesMenu = ({
           <Row>
             <Col>{t("Name")}</Col>
             <Col>{t("Description")}</Col>
-            <Col>{t("Price")}</Col>
-            {/* <Col>{t("MinutesPerTime")}</Col> */}
-            {editable ? <Col md={3}>{t("Plan")}</Col> : <Col>{t("Plan")}</Col>}
-            <Col>{t("Period")}</Col>
+            <Col>{t("DaysPerMonth")}</Col>
+            <Col>{t("MinutesPerTime")}</Col>
+            <Col>{t("Plan")}</Col>
+            {/* <Col>{t("Period")}</Col> */}
           </Row>
         </ListGroup.Item>
         {coursesValues.length === 0 ? (
           <ListGroup.Item disabled>{title}</ListGroup.Item>
         ) : (
           coursesValues.map((option, idx) => {
-            console.log(option);
             return (
-              <CourseListItem
+              <MembershipCourseListItem
                 key={idx + 1}
                 idx={idx}
                 option={option}
                 setCoursesValues={setCoursesValues}
                 coursesValues={coursesValues}
-                editable={editable}
+                // editable={editable}
+                // membership={membershipValue.value}
               />
             );
           })
@@ -107,4 +114,4 @@ const FormCoursesMenu = ({
   );
 };
 
-export default FormCoursesMenu;
+export default MembershipCourses;
