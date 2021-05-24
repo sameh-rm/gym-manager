@@ -130,6 +130,10 @@ const updateSubscription = expressAsyncHandler(async (req, res) => {
 
 const deleteSubscription = expressAsyncHandler(async (req, res) => {
   const sub = await Subscription.findById(req.params.id);
+  const expincs = await ExpInc.find({ subscription: sub._id });
+  expincs.forEach(
+    async (expinc) => expinc.confirmed ?? (await expinc.remove())
+  );
   if (sub) {
     await sub.remove();
     res.status(200).json({ message: "Deleted Successfully!" });

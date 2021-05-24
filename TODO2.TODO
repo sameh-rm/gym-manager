@@ -1,4 +1,3 @@
 @TODO
-Recreate the subscription modal
-Recreate the subscription Form
-Recreate the subscription CourseList
+Daily subscription model, endpoint and reducer
+
