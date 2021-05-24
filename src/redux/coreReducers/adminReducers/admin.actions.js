@@ -158,3 +158,18 @@ export const login = (username, password) => async (dispatch, getState) => {
 export const logout = () => ({
   type: adminActionTypes.LOGOUT,
 });
+
+export const selectUser = (id) => async (dispatch, getState) => {
+  try {
+    dispatch(requestAction(adminActionTypes.SELECT_USER_REQUEST));
+    const config = {
+      headers: {
+        authorization: `Bearer ${getState().core.login.userInfo.token}`,
+      },
+    };
+    const { data } = await request.get(`/api/users/${id}`, config);
+    dispatch(successAction(adminActionTypes.SELECT_USER_SUCCESS, data));
+  } catch (error) {
+    dispatch(failedAction(adminActionTypes.SELECT_USER_FAILED, error));
+  }
+};

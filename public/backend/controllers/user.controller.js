@@ -106,10 +106,15 @@ const updateUser = asyncHandler(async (req, res) => {
   } = req.body;
 
   const loggedUser = req.user;
-
+  console.log(req.params.id);
   const user = await User.findById(req.params.id);
-
+  const existed = await User.findOne({ username: username });
   if (user) {
+    if (existed && existed.username !== user.username) {
+      res.status(400);
+
+      throw new Error("Username is used!");
+    }
     user.name = name || user.name;
     user.username = username || user.username;
     user.password = password || user.password;
@@ -149,4 +154,21 @@ const deleteUser = asyncHandler(async (req, res) => {
     throw new Error("Not Found!");
   }
 });
-module.exports = { createUser, getAllUsers, login, updateUser, deleteUser };
+
+const getUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(404);
+    throw new Error("Not Found!");
+  }
+});
+module.exports = {
+  createUser,
+  getAllUsers,
+  login,
+  updateUser,
+  deleteUser,
+  getUserById,
+};

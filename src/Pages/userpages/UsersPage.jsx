@@ -46,13 +46,13 @@ const UsersPage = ({ history, location }) => {
   return (
     <MainContainer>
       <Container className="paper_elevation">
-        <Row>
+        <Row className="paper_elevation mb-4">
           <Col>
             <h2>{t("User List")}</h2>
           </Col>
 
           <Col className="align-content-center">
-            <LinkContainer to="/users/add">
+            <LinkContainer to="/admin/users/add">
               <Button className="float-left my-4" variant="dark">
                 {t("Add User")}
               </Button>
@@ -85,7 +85,7 @@ const UsersPage = ({ history, location }) => {
             deleteHandler={deleteHandler}
             loading={loading}
             error={error}
-            editEndpoint="users"
+            editEndpoint="admin/users"
             listData={listAllUsers}
             moreRows={3}
           />

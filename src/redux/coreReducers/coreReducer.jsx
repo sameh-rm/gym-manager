@@ -7,6 +7,7 @@ import {
   addUserReducer,
   updateUserReducer,
   deleteUserReducer,
+  selectUserReducer,
 } from "./adminReducers/admin.reducer";
 import { sidenavReducer } from "./sidenaveReducer/sideNavReducer";
 
@@ -25,6 +26,7 @@ const coreReducer = persistReducer(
     updateUser: updateUserReducer,
     deleteUser: deleteUserReducer,
     login: loginReducer,
+    selectUser: selectUserReducer,
   })
 );
 

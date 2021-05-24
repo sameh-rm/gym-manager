@@ -154,3 +154,35 @@ export const loginReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const selectUserReducer = (
+  state = {
+    user: null,
+  },
+  action
+) => {
+  switch (action.type) {
+    case adminActionTypes.SELECT_USER_REQUEST:
+      return {
+        loading: true,
+        success: false,
+      };
+    case adminActionTypes.SELECT_USER_SUCCESS:
+      return {
+        loading: false,
+        user: action.payload,
+      };
+    case adminActionTypes.SELECT_USER_FAILED:
+      return {
+        success: false,
+        loading: false,
+        error: action.payload,
+      };
+    case adminActionTypes.RESET_SELECT_USER:
+      return {
+        success: false,
+      };
+    default:
+      return state;
+  }
+};

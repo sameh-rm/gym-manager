@@ -4,6 +4,7 @@ const {
   createUser,
   updateUser,
   deleteUser,
+  getUserById,
   login,
 } = require("../controllers/user.controller.js");
 const {
@@ -20,6 +21,7 @@ router
 
 router
   .route("/:id")
+  .get(loginRequired, getUserById)
   .put(loginRequired, adminRequired, updateUser)
   .delete(loginRequired, adminRequired, deleteUser);
 

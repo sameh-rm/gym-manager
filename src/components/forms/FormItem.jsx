@@ -10,6 +10,7 @@ const FormItem = ({
   required,
   children,
   className,
+  autoComplete,
 }) => {
   return (
     <Form.Group
@@ -17,6 +18,7 @@ const FormItem = ({
     >
       {title && <Form.Label>{title}</Form.Label>}
       <Form.Control
+        autoComplete={autoComplete}
         className={className}
         required={required}
         type={type}
