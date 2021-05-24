@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Alert } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-const Message = ({ variant, children }) => {
+const Message = ({ variant, children, className }) => {
   const { t, i18n } = useTranslation();
   const [show, setShow] = useState(true);
   return show ? (
     <Alert
       dismissible
+      className={className}
       onClose={() => setShow(false)}
       variant={variant}
       dir={i18n.dir()}

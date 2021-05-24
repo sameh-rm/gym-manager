@@ -20,6 +20,8 @@ import {
 } from "../../redux/memberReducers/member.actions";
 import { memberActionTypes } from "../../redux/memberReducers/member.actionTypes";
 import SubsTable from "../../components/CustomTable/SubsTable";
+import { deleteSubscription } from "../../redux/subscriptionsReducers/subscriptions.actions";
+import Message from "../../components/Message";
 const MemberProfilePage = () => {
   const { t } = useTranslation();
   const { id } = useParams();
@@ -32,16 +34,26 @@ const MemberProfilePage = () => {
     loading: loadingSubs,
     error: errorSubs,
   } = useSelector((state) => state.member.memberSubsList);
-
+  const { success: deleteSubSuccess } = useSelector(
+    (state) => state.subscription.deleteSubscription
+  );
   const [currentMemberShip, setCurrentMemberShip] = useState([]);
   const columns = ["description", "startedAt", "endsAt", "paymentStatus"];
+  // const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const deleteHandler = (row_id) => {
+    if (window.confirm(t("Are you sure?"))) {
+      dispatch(deleteSubscription(row_id));
+      // setDeleteSuccess(true);
+    }
+  };
   useEffect(() => {
     dispatch(listMemberSubscriptions(id));
     dispatch(selectMember(id));
+
     return () => {
       dispatch({ type: memberActionTypes.RESET_SELECT_MEMBER });
     };
-  }, [id, dispatch]);
+  }, [id, dispatch, deleteSubSuccess]);
 
   useEffect(() => {
     const membership = subscriptionList
@@ -85,13 +97,13 @@ const MemberProfilePage = () => {
                     <Row>
                       <Col md={6}>
                         {t("Name")}:{" "}
-                        <span className="text-black-50">{member.name}</span>
+                        <span className="text-success">{member.name}</span>
                       </Col>
                     </Row>
                     <Row className="pt-4">
                       <Col md={6}>
                         {t("Membership")}:{" "}
-                        <span className="text-black-50">
+                        <span className="text-success">
                           {currentMemberShip
                             ? currentMemberShip.name
                             : t("None")}
@@ -101,39 +113,39 @@ const MemberProfilePage = () => {
                     <Row className="pt-5">
                       <Col md={6}>
                         {t("NationalId")}:{" "}
-                        <span className="text-black-50">
+                        <span className="text-success">
                           {member.nationalId}
                         </span>
                       </Col>
                       <Col md={6}>
                         {t("Phone")}:{" "}
-                        <span className="text-black-50">{member.phone}</span>
+                        <span className="text-success">{member.phone}</span>
                       </Col>
                     </Row>
                     <Row className="pt-5">
                       <Col md={4}>
                         {t("Age")}:{" "}
-                        <span className="text-black-50">{member.age}</span>
+                        <span className="text-success">{member.age}</span>
                       </Col>
                       <Col md={4}>
                         {t("Tall")}:{" "}
-                        <span className="text-black-50">{member.tall}</span>
+                        <span className="text-success">{member.tall}</span>
                       </Col>
                       <Col md={4}>
                         {t("Weight")}:{" "}
-                        <span className="text-black-50">{member.weight}</span>
+                        <span className="text-success">{member.weight}</span>
                       </Col>
                     </Row>
                     <Row className="pt-5">
                       <Col>
                         {t("Address")}:{" "}
-                        <span className="text-black-50">
+                        <span className="text-success">
                           {member.personalAddress.address}
                         </span>
                       </Col>
                       <Col>
                         {t("City")}:{" "}
-                        <span className="text-black-50">
+                        <span className="text-success">
                           {member.personalAddress.city}
                         </span>
                       </Col>
@@ -141,13 +153,13 @@ const MemberProfilePage = () => {
                     <Row className="pt-3">
                       <Col>
                         {t("Center")}:{" "}
-                        <span className="text-black-50">
+                        <span className="text-success">
                           {member.personalAddress.center}
                         </span>
                       </Col>
                       <Col>
                         {t("Governorate")}:
-                        <span className="text-black-50">
+                        <span className="text-success">
                           {member.personalAddress.governorate}
                         </span>
                       </Col>
@@ -160,12 +172,18 @@ const MemberProfilePage = () => {
                   </Col>
                 </Row>
 
-                <Row className="py-4">
+                <Row className="py-5">
+                  {deleteSubSuccess && (
+                    <Message className="mx-3">
+                      {t("Subscription Deleted!")}
+                    </Message>
+                  )}
                   {member && subscriptionList && (
                     <SubsTable
                       member={member}
                       columns={columns}
                       data={subscriptionList}
+                      deleteHandler={deleteHandler}
                       loading={loading}
                       error={error}
                       editEndpoint="subscriptions"

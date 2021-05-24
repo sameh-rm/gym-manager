@@ -45,11 +45,11 @@ const ReviewScreen = ({
       <Col md={8}>
         <Row>
           <Col md={6}>
-            {t("Name")}: <span className="text-black-50">{name}</span>
+            {t("Name")}: <span className="text-success">{name}</span>
           </Col>
           <Col md={6}>
             {t("Membership")}:{" "}
-            <span className="text-black-50">
+            <span className="text-success">
               {membership ? membership.name : t("None")}
             </span>
           </Col>
@@ -57,36 +57,36 @@ const ReviewScreen = ({
         <Row className="pt-5">
           <Col md={6}>
             {t("NationalId")}:{" "}
-            <span className="text-black-50">{nationalId}</span>
+            <span className="text-success">{nationalId}</span>
           </Col>
           <Col md={6}>
-            {t("Phone")}: <span className="text-black-50">{phone}</span>
+            {t("Phone")}: <span className="text-success">{phone}</span>
           </Col>
         </Row>
         <Row className="pt-5">
           <Col md={4}>
-            {t("Age")}: <span className="text-black-50">{age}</span>
+            {t("Age")}: <span className="text-success">{age}</span>
           </Col>
           <Col md={4}>
-            {t("Tall")}: <span className="text-black-50">{tall}</span>
+            {t("Tall")}: <span className="text-success">{tall}</span>
           </Col>
           <Col md={4}>
-            {t("Weight")}: <span className="text-black-50">{weight}</span>
+            {t("Weight")}: <span className="text-success">{weight}</span>
           </Col>
         </Row>
         <Row className="pt-5">
           <Col>
-            {t("Address")}: <span className="text-black-50">{address}</span>
+            {t("Address")}: <span className="text-success">{address}</span>
           </Col>
           <Col>
-            {t("City")}: <span className="text-black-50">{city}</span>
+            {t("City")}: <span className="text-success">{city}</span>
           </Col>
           <Col>
-            {t("Center")}: <span className="text-black-50">{center}</span>
+            {t("Center")}: <span className="text-success">{center}</span>
           </Col>
           <Col>
             {t("Governorate")}:
-            <span className="text-black-50">{governorate}</span>
+            <span className="text-success">{governorate}</span>
           </Col>
         </Row>
         <Row className="pt-5">

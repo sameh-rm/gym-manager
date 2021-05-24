@@ -46,7 +46,7 @@ const subscribed = async (member, paidValue) => {
 };
 const saveMemberPayment = async (member, user, sub) => {
   if (sub.paid <= 0) return null;
-  return await ExpInc.create({
+  const createdExpinc = await ExpInc.create({
     description: `تم دفع ${sub.paid} بواسطة ${member.name} من حساب الإشتراك ${sub.name}`,
     inOut: "IN",
     value: sub.paid,
@@ -55,6 +55,7 @@ const saveMemberPayment = async (member, user, sub) => {
     subscription: sub,
     confirmed: user.isAdmin,
   });
+  return createdExpinc;
 };
 
 const createMember = expressAsyncHandler(async (req, res) => {

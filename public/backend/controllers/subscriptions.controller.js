@@ -24,7 +24,7 @@ const createSubscription = expressAsyncHandler(async (req, res) => {
   const payment = await saveMemberPayment(
     createdSubscription.paid,
     req.user,
-    sub
+    createdSubscription
   );
 
   if (createdSubscription) {
@@ -75,17 +75,16 @@ const getSubscriptionById = expressAsyncHandler(async (req, res) => {
 const saveMemberPayment = async (paidValue, user, sub) => {
   // const member = sub.member;
   const member = sub.member;
-
   if (paidValue <= 0) return null;
   const createdPayment = await ExpInc.create({
     description: `تم دفع ${paidValue} بواسطة ${member.name} من حساب الإشتراك ${sub.name}`,
     inOut: "IN",
     value: paidValue,
     user: user._id,
+    member: member,
     subscription: sub._id,
     confirmed: user.isAdmin,
   }).catch((err) => console.log(err));
-
   return createdPayment;
 };
 
@@ -135,6 +134,9 @@ const deleteSubscription = expressAsyncHandler(async (req, res) => {
     async (expinc) => expinc.confirmed ?? (await expinc.remove())
   );
   if (sub) {
+    await expincs.forEach(async (e) => {
+      await e.remove();
+    });
     await sub.remove();
     res.status(200).json({ message: "Deleted Successfully!" });
   } else {

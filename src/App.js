@@ -18,6 +18,10 @@ import CoursePage from "./Pages/CoursesPages/CouresPage";
 import AddCoursePage from "./Pages/CoursesPages/AddCoursePage";
 import EditCoursePage from "./Pages/CoursesPages/EditCoursePage";
 
+import ExpIncPage from "./Pages/ExpInc/ExpIncPage";
+import AddExpIncPage from "./Pages/ExpInc/AddExpIncPage";
+import EditExpIncPage from "./Pages/ExpInc/EditExpIncPage";
+
 import MemberShipPage from "./Pages/MembershipPages/MemberShipPage";
 import AddMemberShipPage from "./Pages/MembershipPages/AddMembershipPage";
 import EditMembershipPage from "./Pages/MembershipPages/EditMembershipPage";
@@ -42,6 +46,10 @@ function App({ history }) {
           <Route exact path="/courses" component={CoursePage} />
           <Route exact path="/courses/add" component={AddCoursePage} />
           <Route exact path="/courses/:id/edit" component={EditCoursePage} />
+
+          <Route exact path="/expenses" component={ExpIncPage} />
+          <Route exact path="/expenses/add" component={AddExpIncPage} />
+          <Route exact path="/expenses/:id/edit" component={EditExpIncPage} />
 
           <Route exact path="/memberships" component={MemberShipPage} />
           <Route exact path="/memberships/add" component={AddMemberShipPage} />

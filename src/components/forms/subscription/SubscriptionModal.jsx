@@ -20,7 +20,6 @@ const SubscriptionModal = ({ className, member }) => {
   const handleSubmit = () => {
     const startDate = moment();
     const endsAt = moment(startDate).add(subscription.period, "month");
-    console.log(subscription);
     dispatch(
       addSubscription({
         member: member,
@@ -43,7 +42,7 @@ const SubscriptionModal = ({ className, member }) => {
   return (
     <div className={`${className && className}`}>
       <Button variant="primary" onClick={handleShow} title={t("Pay")}>
-        <i className="fal fa-money-bill-alt"></i>
+        {t("Add Subscription")}
       </Button>
 
       <Modal size="lg" show={show} onHide={handleClose} centered>
