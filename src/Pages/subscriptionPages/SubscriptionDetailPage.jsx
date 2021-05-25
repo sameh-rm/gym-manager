@@ -24,6 +24,8 @@ import { useHistory } from "react-router";
 import { subscriptionActionTypes } from "../../redux/subscriptionsReducers/subscriptions.actionTypes";
 import { formatDate } from "../../utils/utils";
 import PaymentModal from "../../components/CustomTable/PaymentModal";
+import { LinkContainer } from "react-router-bootstrap";
+import { Link } from "react-router-dom";
 const SubscriptionDetailPage = () => {
   const history = useHistory();
   const { t } = useTranslation();
@@ -151,41 +153,23 @@ const SubscriptionDetailPage = () => {
                       <Col>
                         <span className="px-3">{t("Member")}:</span>
 
-                        <span className="text-info">
+                        <Link
+                          to={`/members/${subscription.member._id}/detail`}
+                          className="text-warning"
+                        >
                           {subscription.member.name}
-                        </span>
+                        </Link>
                       </Col>
-                    </Row>
-                    <Row className="pt-5">
-                      {subscription.type === "Membership" &&
-                      subscription.membership ? (
+                      {!subscription.paymentStatus && (
                         <Col md={4}>
-                          <span className="px-3">{t("Membership")}:</span>
-
-                          <span className="text-info">
-                            {subscription.membership.name}
-                          </span>
-                        </Col>
-                      ) : (
-                        subscription.course && (
-                          <Col md={4}>
-                            <span className="px-3">{t("Course")}:</span>
-                            <span className="text-info">
-                              {subscription.course.name}
-                            </span>
-                          </Col>
-                        )
-                      )}
-                      <Col md={4}>
-                        {!subscription.paymentStatus && (
                           <PaymentModal subId={subscription._id} loaded />
-                        )}
-                      </Col>
+                        </Col>
+                      )}
                     </Row>
                   </Col>
                 </Row>
 
-                <Row className="py-5">
+                <Row className="py-3">
                   {deleteSubSuccess && (
                     <Message className="mx-3">
                       {t("Subscription Deleted!")}
@@ -196,7 +180,7 @@ const SubscriptionDetailPage = () => {
                       <h3 className="px-2">{t("Courses")}</h3>
 
                       <div className="w-100 mx-2">
-                        <Table responsive bordered hover>
+                        <Table responsive hover>
                           <thead>
                             <tr>
                               <th>{t("Name")}</th>
@@ -247,7 +231,7 @@ const SubscriptionDetailPage = () => {
               <AsyncComponent loading={loading} error={error}>
                 <h3 className="px-2">{t("Payment History")}</h3>
                 <div className="w-100 mx-2">
-                  <Table responsive bordered hover>
+                  <Table responsive variant="dark" hover>
                     <thead>
                       <tr>
                         <th>{t("Description")}</th>

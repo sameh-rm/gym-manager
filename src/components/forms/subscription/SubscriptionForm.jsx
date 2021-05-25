@@ -91,7 +91,7 @@ const SubscriptionForm = ({ subscription, setsubscription }) => {
       if (subscriptionType.value === subscriptionTypeOptions[0].value) {
         setsubscription({
           ...targetedValue.value,
-          coureses: targetedValue.value.courses || [targetedValue.value],
+          courses: targetedValue.value.courses || [targetedValue.value],
           type: subscriptionType.value,
           period: subscriptionType.value.period || periodValue,
           paid: paidValue,
@@ -99,7 +99,7 @@ const SubscriptionForm = ({ subscription, setsubscription }) => {
       } else {
         setsubscription({
           ...targetedValue.value,
-          coureses: [targetedValue.value],
+          courses: [targetedValue.value],
           paid: paidValue,
           price: targetedValue.value.monthlyPrice * periodValue,
           period: periodValue,
@@ -121,6 +121,7 @@ const SubscriptionForm = ({ subscription, setsubscription }) => {
                 value={subscriptionType}
                 onChange={(option) => {
                   setSubscriptionType(option);
+                  setTargetedValue({});
                 }}
                 menuPosition="fixed"
               />

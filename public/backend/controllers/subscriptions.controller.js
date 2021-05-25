@@ -15,6 +15,7 @@ const getAllSubscriptions = expressAsyncHandler(async (req, res) => {
 
 const createSubscription = expressAsyncHandler(async (req, res) => {
   const sub = req.body;
+  console.log(sub);
   const createdSubscription = await Subscription.create({
     ...sub,
     user: req.user,
@@ -95,10 +96,9 @@ const saveMemberPayment = async (paidValue, user, sub) => {
   // const member = sub.member;
   const member = await Member.findById(sub.member);
 
-  console.log(member, "member");
   if (paidValue <= 0) return null;
   const createdPayment = await ExpInc.create({
-    description: `تم دفع ${paidValue} بواسطة ${member.name} من حساب الإشتراك ${sub.name}`,
+    description: `تم دفع ${paidValue} جنيهاً بواسطة ${member.name} من حساب الإشتراك ${sub.name}`,
     inOut: "IN",
     value: paidValue,
     user: user._id,

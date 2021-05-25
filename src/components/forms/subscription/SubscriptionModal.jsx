@@ -15,7 +15,8 @@ const SubscriptionModal = ({ className, member }) => {
   const [subscription, setsubscription] = useState({});
 
   const { t } = useTranslation();
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const startDate = moment();
     const endsAt = moment(startDate).add(subscription.period, "month");
     dispatch(
