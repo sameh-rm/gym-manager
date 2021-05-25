@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const ExpInc = require("./expInc.model");
 
 const memberSchema = mongoose.Schema(
   {

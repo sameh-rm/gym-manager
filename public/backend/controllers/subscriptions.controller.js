@@ -1,7 +1,5 @@
 const expressAsyncHandler = require("express-async-handler");
-const { isValidObjectId } = require("mongoose");
 const ExpInc = require("../models/expInc.model");
-const Member = require("../models/member.model");
 const Subscription = require("../models/subscription.model");
 
 const getAllSubscriptions = expressAsyncHandler(async (req, res) => {
@@ -47,7 +45,9 @@ const createSubscription = expressAsyncHandler(async (req, res) => {
 });
 
 const getSubscriptionById = expressAsyncHandler(async (req, res) => {
-  const sub = await Subscription.findById(req.params.id);
+  const sub = await (
+    await Subscription.findById(req.params.id)
+  ).populate("member user");
   if (sub) {
     res.status(200);
     res.json({

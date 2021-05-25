@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const expIncSchema = mongoose.Schema(
+const expincSchema = mongoose.Schema(
   {
     description: { type: String, required: true },
     user: {
@@ -17,15 +17,16 @@ const expIncSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Member",
     },
+    subscription: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Subscription",
+    },
     inOut: {
       // Income / Expenses
       type: String,
       required: true,
     },
-    subscription: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Subscription",
-    },
+
     confirmed: {
       type: Boolean,
       default: false,
@@ -37,6 +38,6 @@ const expIncSchema = mongoose.Schema(
   }
 );
 
-const ExpInc = mongoose.model("ExpInc", expIncSchema);
+const ExpInc = mongoose.model("Expinc", expincSchema);
 
 module.exports = ExpInc;

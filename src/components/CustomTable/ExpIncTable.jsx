@@ -61,7 +61,9 @@ const ExpIncTable = ({
   ]);
   useEffect(() => {
     setCurrentData(data);
-  }, [data]);
+    console.log(paginatedData);
+  }, [data, paginatedData]);
+
   return (
     <Container>
       <AsyncComponent loading={loading} error={error}>
@@ -74,11 +76,15 @@ const ExpIncTable = ({
             <thead>
               <tr>
                 <th>{t("Description")}</th>
+                <th>{t("InOut")}</th>
                 {columns.map((col, idx) => (
                   <th key={idx}>
                     {t(col[0].toUpperCase() + col.substring(1))}
                   </th>
                 ))}
+                <th>{t("Member")}</th>
+                <th>{t("Subscription")}</th>
+                <th>{t("User")}</th>
                 {!noActions && <th></th>}
               </tr>
             </thead>
@@ -93,15 +99,10 @@ const ExpIncTable = ({
                   <tr key={idx + 1}>
                     <TableTD>
                       <Link to={`/${editEndpoint}/${row._id}/detail`}>
-                        {row.name}
+                        {row.description}
                       </Link>
-                      <Row className="px-2">
-                        {row.type === "Membership" && (
-                          <Badge variant="warning">{t("Membership")}</Badge>
-                        )}
-                      </Row>
                     </TableTD>
-                    {console.log(Object.keys(row))}
+                    <TableTD>{t(row.inOut)}</TableTD>
                     {columns.map(
                       (k, idx2) =>
                         k !== "_id" && (
@@ -116,6 +117,36 @@ const ExpIncTable = ({
                           </TableTD>
                         )
                     )}
+
+                    <TableTD>
+                      {row.member ? (
+                        <Link to={`/members/${row.member._id}/detail`}>
+                          {row.member.name}
+                        </Link>
+                      ) : (
+                        ""
+                      )}
+                    </TableTD>
+                    <TableTD>
+                      {row.subscription ? (
+                        <Link
+                          to={`/subscriptions/${row.subscription._id}/detail`}
+                        >
+                          {row.subscription.name}
+                        </Link>
+                      ) : (
+                        ""
+                      )}
+                    </TableTD>
+                    <TableTD>
+                      {row.user ? (
+                        <Link to={`/admin/users/${row.user._id}/detail`}>
+                          {row.user.name}
+                        </Link>
+                      ) : (
+                        ""
+                      )}
+                    </TableTD>
                     {!noActions && (
                       <ActionsTD
                         id={row._id}

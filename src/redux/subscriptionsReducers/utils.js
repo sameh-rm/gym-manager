@@ -38,7 +38,6 @@ export const optionsToCourses = (options) => {
       endsAt: courseEndDate,
     });
   });
-  console.log("optionsToCourses", courses);
   return courses;
 };
 export const buildSubscriptions = (membership, courses) => {
@@ -119,16 +118,19 @@ export const toSubscription = (target) => {
         out.push({
           ...course,
           type: "Course",
+          course: course._id,
           price: course.monthlyPrice,
           endsAt: courseEndDate,
         });
     });
   } else {
     const courseEndDate = moment(startDate).add(target.period, "month");
+    console.log(target);
     target &&
       out.push({
         ...target,
         type: "Membership",
+        membership: target._id,
         plan: "شهرى",
         endsAt: courseEndDate,
       });

@@ -1,4 +1,4 @@
-export const expincActionTypes = {
+export const expIncActionTypes = {
   EXPINCS_LIST_REQUEST: "EXPINCS_LIST_REQUEST",
   EXPINCS_LIST_SUCCESS: "EXPINCS_LIST_SUCCESS",
   EXPINCS_LIST_FAILED: "EXPINCS_LIST_FAILED",

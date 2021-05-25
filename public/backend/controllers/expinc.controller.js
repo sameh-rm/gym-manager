@@ -1,10 +1,12 @@
-const e = require("express");
 const expressAsyncHandler = require("express-async-handler");
-const ExpInc = require("../models/expinc.model.js");
+const ExpInc = require("../models/expInc.model.js");
 
 const getAllExpIncs = expressAsyncHandler(async (req, res) => {
-  const expincs = await ExpInc.find({}).limit(req.limit).skip(req.startIndex);
-
+  const expincs = await ExpInc.find({})
+    .limit(req.limit)
+    .skip(req.startIndex)
+    .populate("user member subscription");
+  console.log(expincs);
   res.status(200);
   res.json({ results: expincs });
 });

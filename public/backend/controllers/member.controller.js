@@ -4,6 +4,7 @@ const { paginateResults } = require("../middlewares/pagination.Middlewares.js");
 const ExpInc = require("../models/expInc.model.js");
 const Subscription = require("../models/subscription.model.js");
 const { db } = require("../models/subscription.model.js");
+const mongoose = require("mongoose");
 
 const getSubscriptionsByMemberId = expressAsyncHandler(async (req, res) => {
   const id = req.params.id;
@@ -36,7 +37,6 @@ const subscribed = async (member, paidValue) => {
         paid = 0;
         sub.paymentStatus = false;
       }
-      await saveMemberPayment(member, member.user, sub);
     } else {
       sub.paymentStatus = false;
     }
@@ -44,16 +44,17 @@ const subscribed = async (member, paidValue) => {
 
   return member;
 };
-const saveMemberPayment = async (member, user, sub) => {
+const saveMemberPayment = async (sub) => {
   if (sub.paid <= 0) return null;
+  console.log(sub);
   const createdExpinc = await ExpInc.create({
-    description: `تم دفع ${sub.paid} بواسطة ${member.name} من حساب الإشتراك ${sub.name}`,
+    description: `تم دفع ${sub.paid} بواسطة ${sub.member.name} من حساب الإشتراك ${sub.name}`,
     inOut: "IN",
     value: sub.paid,
-    member: member._id,
-    user: member.user,
+    member: sub.member._id,
+    user: sub.user,
     subscription: sub,
-    confirmed: user.isAdmin,
+    confirmed: sub.user.isAdmin,
   });
   return createdExpinc;
 };
@@ -66,7 +67,7 @@ const createMember = expressAsyncHandler(async (req, res) => {
     throw new Error("another member with the same National ID Exists");
   } else {
     const paidValue = member.paid;
-    const session = await db.startSession();
+    const session = await mongoose.startSession();
     await session.withTransaction(async () => {
       const createdMember = await Member.create({
         ...member,
@@ -76,16 +77,20 @@ const createMember = expressAsyncHandler(async (req, res) => {
         { _id: createdMember._id, user: req.user, ...member },
         paidValue
       );
-      const createdSubs = await Subscription.insertMany(
-        subscribedMember.subscriptions.map((sub) => {
-          delete sub._id;
-          return {
-            ...sub,
-            user: req.user,
-            member: createdMember,
-          };
-        })
-      );
+
+      const createdSubs = subscribedMember.subscriptions.map(async (sub) => {
+        delete sub._id;
+        const created = await Subscription.create({
+          ...sub,
+          user: req.user,
+          member: createdMember,
+        });
+
+        saveMemberPayment(created);
+
+        return created;
+      });
+
       if (createdMember) {
         res.status(201).json({
           _id: createdMember._id,

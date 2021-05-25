@@ -12,6 +12,14 @@ const subscriptionSchema = mongoose.Schema(
       required: true,
       ref: "Member",
     },
+    membership: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Membership",
+    },
+    course: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Course",
+    },
     type: {
       // "Memebership" || "course",
       type: String,

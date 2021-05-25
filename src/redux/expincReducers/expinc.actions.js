@@ -1,5 +1,5 @@
 import { request } from "../../utils/request";
-import { expIncActionTypes } from "./expInc.actionTypes";
+import { expIncActionTypes } from "./expinc.actionTypes";
 
 export const requestAction = (actionType) => ({
   type: actionType,

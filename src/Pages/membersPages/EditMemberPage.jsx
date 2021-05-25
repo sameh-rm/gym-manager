@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { LinkContainer } from "react-router-bootstrap";
+
 import MainContainer from "../../components/MainContainer/MainContainer";
-import { loadImageUrl } from "../../utils/utils";
-import {
-  selectMember,
-  updateMember,
-} from "../../redux/memberReducers/member.actions";
-import { memberActionTypes } from "../../redux/memberReducers/member.actionTypes";
+
+import { selectMember } from "../../redux/memberReducers/member.actions";
+
 import { useParams } from "react-router";
 import EditMemberForm from "../../components/forms/members/EditMemberForm";
 import AsyncComponent from "../../components/Utils/AsyncComponent";
-
-const AddMemberPage = ({ history }) => {
+import { useHistory } from "react-router";
+const AddMemberPage = () => {
+  const history = useHistory();
   const { t } = useTranslation();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -47,11 +45,13 @@ const AddMemberPage = ({ history }) => {
           </Col>
 
           <Col className="align-content-center">
-            <LinkContainer to="/members">
-              <Button className="float-left my-4" variant="dark">
-                {t("Back")}
-              </Button>
-            </LinkContainer>
+            <Button
+              className="float-left my-4"
+              onClick={() => history.goBack()}
+              variant="dark"
+            >
+              {t("Back")}
+            </Button>
           </Col>
         </Row>
 

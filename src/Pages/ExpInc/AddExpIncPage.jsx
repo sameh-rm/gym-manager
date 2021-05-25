@@ -1,12 +1,14 @@
 import React from "react";
 import { Col, Button, Container, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router";
 import { LinkContainer } from "react-router-bootstrap";
 import CourseForm from "../../components/forms/courses/CourseForm";
 import MainContainer from "../../components/MainContainer/MainContainer";
 
-const AddExpIncPage = ({ history }) => {
+const AddExpIncPage = () => {
   const { t } = useTranslation();
+  const history = useHistory();
   return (
     <MainContainer>
       <Container className="paper_elevation">
@@ -16,11 +18,13 @@ const AddExpIncPage = ({ history }) => {
           </Col>
 
           <Col className="align-content-center">
-            <LinkContainer to="/courses">
-              <Button className="float-left my-4" variant="dark">
-                {t("Back")}
-              </Button>
-            </LinkContainer>
+            <Button
+              className="float-left my-4"
+              onClick={() => history.goBack()}
+              variant="dark"
+            >
+              {t("Back")}
+            </Button>
           </Col>
         </Row>
 

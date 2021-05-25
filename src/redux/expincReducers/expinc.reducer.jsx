@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import persistReducer from "redux-persist/es/persistReducer";
-import { expincActionTypes } from "./expinc.actionTypes";
+import { expIncActionTypes } from "./expinc.actionTypes";
 import storage from "redux-persist/lib/storage";
 
 const initState = {
@@ -8,19 +8,19 @@ const initState = {
 };
 const expincsListReducer = (state = initState, action) => {
   switch (action.type) {
-    case expincActionTypes.EXPINCS_LIST_REQUEST:
+    case expIncActionTypes.EXPINCS_LIST_REQUEST:
       return {
         expincsList: [],
         loading: true,
       };
-    case expincActionTypes.EXPINCS_LIST_SUCCESS:
+    case expIncActionTypes.EXPINCS_LIST_SUCCESS:
       return {
         expincsList: action.payload.results,
         prev: action.payload.prev,
         next: action.payload.next,
         loading: false,
       };
-    case expincActionTypes.EXPINCS_LIST_FAILED:
+    case expIncActionTypes.EXPINCS_LIST_FAILED:
       return {
         error: action.payload,
         loading: false,
@@ -34,18 +34,18 @@ const expincsListReducer = (state = initState, action) => {
 
 const addexpincReducer = (state = {}, action) => {
   switch (action.type) {
-    case expincActionTypes.CREATE_EXPINC_REQUEST:
+    case expIncActionTypes.CREATE_EXPINC_REQUEST:
       return {
         createdexpinc: {},
         loading: true,
       };
-    case expincActionTypes.CREATE_EXPINC_SUCCESS:
+    case expIncActionTypes.CREATE_EXPINC_SUCCESS:
       return {
         createdexpinc: action.payload,
         loading: false,
         success: true,
       };
-    case expincActionTypes.CREATE_EXPINC_FAILED:
+    case expIncActionTypes.CREATE_EXPINC_FAILED:
       return {
         error: action.payload,
         loading: false,
@@ -69,19 +69,19 @@ const updateexpincReducer = (
   action
 ) => {
   switch (action.type) {
-    case expincActionTypes.UPDATE_EXPINC_REQUEST:
+    case expIncActionTypes.UPDATE_EXPINC_REQUEST:
       return {
         updatedexpinc: {},
         loading: true,
         success: false,
       };
-    case expincActionTypes.UPDATE_EXPINC_SUCCESS:
+    case expIncActionTypes.UPDATE_EXPINC_SUCCESS:
       return {
         updatedexpinc: action.payload,
         loading: false,
         success: true,
       };
-    case expincActionTypes.UPDATE_EXPINC_FAILED:
+    case expIncActionTypes.UPDATE_EXPINC_FAILED:
       return {
         error: action.payload,
         loading: false,
@@ -102,17 +102,17 @@ const updateexpincReducer = (
 
 const deleteexpincReducer = (state = {}, action) => {
   switch (action.type) {
-    case expincActionTypes.DELETE_EXPINC_REQUEST:
+    case expIncActionTypes.DELETE_EXPINC_REQUEST:
       return {
         loading: true,
         success: false,
       };
-    case expincActionTypes.DELETE_EXPINC_SUCCESS:
+    case expIncActionTypes.DELETE_EXPINC_SUCCESS:
       return {
         loading: false,
         success: true,
       };
-    case expincActionTypes.DELETE_EXPINC_FAILED:
+    case expIncActionTypes.DELETE_EXPINC_FAILED:
       return {
         success: false,
         loading: false,
@@ -134,23 +134,23 @@ const selectCourseReducer = (
   action
 ) => {
   switch (action.type) {
-    case expincActionTypes.SELECT_EXPINC_REQUEST:
+    case expIncActionTypes.SELECT_EXPINC_REQUEST:
       return {
         loading: true,
         success: false,
       };
-    case expincActionTypes.SELECT_EXPINC_SUCCESS:
+    case expIncActionTypes.SELECT_EXPINC_SUCCESS:
       return {
         loading: false,
         expinc: action.payload,
       };
-    case expincActionTypes.SELECT_EXPINC_FAILED:
+    case expIncActionTypes.SELECT_EXPINC_FAILED:
       return {
         success: false,
         loading: false,
         error: action.payload,
       };
-    case expincActionTypes.RESET_SELECT_EXPINC:
+    case expIncActionTypes.RESET_SELECT_EXPINC:
       return {
         success: false,
       };

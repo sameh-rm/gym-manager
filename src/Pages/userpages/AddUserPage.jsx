@@ -4,8 +4,9 @@ import { useTranslation } from "react-i18next";
 import { LinkContainer } from "react-router-bootstrap";
 import AddUserForm from "../../components/forms/users/AddUserForm";
 import MainContainer from "../../components/MainContainer/MainContainer";
-
+import { useHistory } from "react-router";
 const AddUserPage = () => {
+  const history = useHistory();
   const { t } = useTranslation();
   return (
     <MainContainer>
@@ -16,11 +17,13 @@ const AddUserPage = () => {
           </Col>
 
           <Col className="align-content-center">
-            <LinkContainer to="/admin/users">
-              <Button className="float-left my-4" variant="dark">
-                {t("Back")}
-              </Button>
-            </LinkContainer>
+            <Button
+              className="float-left my-4"
+              onClick={() => history.goBack()}
+              variant="dark"
+            >
+              {t("Back")}
+            </Button>
           </Col>
         </Row>
         <Row>

@@ -14,9 +14,11 @@ import { membershipActionTypes } from "../../redux/memberShipReducers/membership
 // Adding a membership comes in two steps
 // step 1: creating a membership
 // step 2: update its list of courses
-const AddMembershipPage = ({ history }) => {
+import { useHistory } from "react-router";
+const AddMembershipPage = () => {
   const { t } = useTranslation();
 
+  const history = useHistory();
   const { error, loading, success } = useSelector(
     (state) => state.membership.addMembership
   );
@@ -35,8 +37,6 @@ const AddMembershipPage = ({ history }) => {
   const [period, setPeriod] = useState(1);
 
   const saveMembership = () => {
-    console.log(name, description, price, period, coursesValues);
-
     dispatch(
       addMembership({
         name,
@@ -77,11 +77,13 @@ const AddMembershipPage = ({ history }) => {
           </Col>
 
           <Col className="align-content-center">
-            <LinkContainer to="/memberships">
-              <Button className="float-left my-4" variant="dark">
-                {t("Back")}
-              </Button>
-            </LinkContainer>
+            <Button
+              className="float-left my-4"
+              onClick={() => history.goBack()}
+              variant="dark"
+            >
+              {t("Back")}
+            </Button>
           </Col>
         </Row>
 

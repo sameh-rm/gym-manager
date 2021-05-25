@@ -119,5 +119,13 @@
   "Select Type": "إختر نوع الإشتراك",
   "Please fill all fields!": "تأكد من ملئ كافة الحقول",
   "SubTotal": "إجمالى",
-  "Subscription": "إشتراك"
+  "Subscription": "إشتراك",
+  "User": "المستخدم",
+  "UpdatedAt": "ت.أخر تعديل",
+  "CreatedAt": "ت.التسجيل",
+  "InOut": "النوع",
+  "IN": "إيرادات",
+  "Out": "مصروفات",
+  "Value": "المبلغ",
+  "User Profile": "بيانات المستخدم"
 }

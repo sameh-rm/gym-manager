@@ -56,6 +56,12 @@ const FormCoursesMenu = ({
                 onChange={(e) => {
                   setCoursesValues(e);
                 }}
+                filterOption={(option, raw) => {
+                  const exist = coursesValues.find(
+                    (o) => o.label === option.label
+                  );
+                  return exist ? undefined : option;
+                }}
               />
             </Form.Group>
           )

@@ -3,6 +3,7 @@ const connectDB = require("./config/db");
 const userRoutes = require("./routes/user.routes.js");
 const memberRoutes = require("./routes/member.routes.js");
 const courseRoutes = require("./routes/course.routes.js");
+const expincRoutes = require("./routes/expinc.routes.js");
 const memberShipRoutes = require("./routes/membership.routes.js");
 const subscriptionsRoutes = require("./routes/subscription.routes.js");
 const uploadRoutes = require("./routes/upload.routes.js");
@@ -27,6 +28,7 @@ app.get("/", (req, res) => res.send("Api running"));
 app.use("/api/users", userRoutes);
 app.use("/api/members", memberRoutes);
 app.use("/api/courses", courseRoutes);
+app.use("/api/expenses", expincRoutes);
 app.use("/api/memberships", memberShipRoutes);
 app.use("/api/subscriptions", subscriptionsRoutes);
 

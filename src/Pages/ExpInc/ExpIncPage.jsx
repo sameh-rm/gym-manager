@@ -10,7 +10,7 @@ import Message from "../../components/Message";
 import {
   deleteExpInc,
   listAllExpIncs,
-} from "../../redux/expincReducers/course.actions";
+} from "../../redux/expincReducers/expinc.actions";
 const CoursePage = ({ history, location }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -18,8 +18,8 @@ const CoursePage = ({ history, location }) => {
   useEffect(() => {
     dispatch(selectItemByUrl(location.pathname));
   }, [dispatch, location]);
-  const { coursesList, loading, error } = useSelector(
-    (state) => state.course.coursesList
+  const { expincsList, loading, error } = useSelector(
+    (state) => state.expinc.expincsList
   );
   const courseCreatedSuccess = useSelector(
     (state) => state.course.addCourse.success
@@ -39,8 +39,8 @@ const CoursePage = ({ history, location }) => {
   useEffect(() => {
     dispatch(listAllExpIncs());
     if (courseCreatedSuccess || courseEditedSuccess) {
-      dispatch({ type: "RESET_COURSE_FORM" });
-      dispatch({ type: "RESET_ADD_COURSE_FORM" });
+      dispatch({ type: "RESET_EXPINC_FORM" });
+      dispatch({ type: "RESET_ADD_EXPINC_FORM" });
       setCreatedSuccess(courseCreatedSuccess);
       setEditedSuccess(courseEditedSuccess);
     }
@@ -48,10 +48,6 @@ const CoursePage = ({ history, location }) => {
   const columns = [
     // "description",
     "value",
-    "inOut",
-    "member",
-    "subscription",
-    "user",
     "createdAt",
     "updatedAt",
     "confirmed",
@@ -93,13 +89,12 @@ const CoursePage = ({ history, location }) => {
         >
           <ExpIncTable
             columns={columns}
-            data={coursesList}
+            data={expincsList}
             deleteHandler={deleteHandler}
             loading={loading}
             error={error}
             editEndpoint="expenses"
             detailEndpoint="expenses"
-            listData={listAllCourses}
           />
         </Row>
       </Container>

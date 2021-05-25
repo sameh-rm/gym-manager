@@ -8,8 +8,9 @@ import MainContainer from "../../components/MainContainer/MainContainer";
 // import { selectExpInc } from "../../redux/courseReducers/course.actions";
 import { courseActionTypes } from "../../redux/courseReducers/course.actionTypes";
 import CourseForm from "../../components/forms/courses/CourseForm";
-
-const EditExpIncPage = ({ history }) => {
+import { useHistory } from "react-router";
+const EditExpIncPage = () => {
+  const history = useHistory();
   const { t } = useTranslation();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -31,11 +32,13 @@ const EditExpIncPage = ({ history }) => {
           </Col>
 
           <Col className="align-content-center">
-            <LinkContainer to="/courses">
-              <Button className="float-left my-4" variant="dark">
-                {t("Back")}
-              </Button>
-            </LinkContainer>
+            <Button
+              className="float-left my-4"
+              onClick={() => history.goBack()}
+              variant="dark"
+            >
+              {t("Back")}
+            </Button>
           </Col>
         </Row>
 
