@@ -127,5 +127,12 @@
   "IN": "إيرادات",
   "Out": "مصروفات",
   "Value": "المبلغ",
-  "User Profile": "بيانات المستخدم"
+  "User Profile": "بيانات المستخدم",
+  "Type": "نوع الإشتراك",
+  "Subscription Profile": "بيانات الإشتراك",
+  "INCOME": "إيرادات",
+  "EXPENSE": "مصروفات",
+  "OUT": "مصروفات",
+  "Add Transaction": "إيرادات / مصروفات",
+  "Payment History": "حركة الدفع"
 }

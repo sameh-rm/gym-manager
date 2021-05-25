@@ -62,7 +62,7 @@ const MemberShipPage = ({ history, location }) => {
 
           <Col className="align-content-center">
             <LinkContainer to="/memberships/add">
-              <Button className="float-left my-4" variant="dark">
+              <Button className="float-left my-4" variant="primary">
                 {t("Add MemberShip")}
               </Button>
             </LinkContainer>

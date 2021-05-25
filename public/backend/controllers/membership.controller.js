@@ -70,7 +70,6 @@ const updateMembership = expressAsyncHandler(async (req, res) => {
   const membershipId = req.params.id;
   const { name, description, price, period, isActive, courses, plan } =
     req.body;
-  console.log(courses);
   const membership = await Membership.findById(membershipId);
   if (membership) {
     membership.name = name || membership.name;

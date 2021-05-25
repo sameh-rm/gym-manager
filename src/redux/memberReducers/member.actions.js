@@ -1,9 +1,5 @@
 import { request } from "../../utils/request";
-import {
-  buildSubscriptions,
-  optionsToCourses,
-  optionsToMemberShipCourses,
-} from "../courseReducers/utils";
+import { buildSubscriptions, optionsToCourses } from "../courseReducers/utils";
 import { memberActionTypes } from "./member.actionTypes";
 
 export const requestAction = (actionType) => ({
@@ -144,7 +140,6 @@ export const updateMember =
           authorization: `Bearer ${getState().core.login.userInfo.token}`,
         },
       };
-      console.log(isActive);
       const { data } = await request.put(
         `/api/members/${id}`,
         {

@@ -4,6 +4,7 @@ const {
   getSubscriptionById,
   updateSubscription,
   deleteSubscription,
+  getExpIncsBySubscriptionId,
 } = require("../controllers/subscriptions.controller.js");
 const {
   loginRequired,
@@ -22,5 +23,6 @@ router
   .get(loginRequired, getSubscriptionById)
   .put(loginRequired, updateSubscription)
   .delete(loginRequired, deleteSubscription);
+router.route("/:id/expenses").get(loginRequired, getExpIncsBySubscriptionId);
 
 module.exports = router;

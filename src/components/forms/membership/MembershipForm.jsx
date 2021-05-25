@@ -33,7 +33,6 @@ const MembershipForm = ({
             value={name}
             placeholder={t("Name")}
             onChangeHandler={(value) => {
-              console.log(value);
               setName(value);
             }}
             required

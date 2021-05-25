@@ -73,7 +73,6 @@ const EditUserForm = () => {
     setIsAdmin(user ? user.isAdmin : false);
   }, [user]);
   useEffect(() => {
-    console.log(success);
     if (success) {
       history.push("/admin/users");
     }

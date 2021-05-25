@@ -75,7 +75,7 @@ const MembersPage = ({ history, location }) => {
 
           <Col className="align-content-center">
             <LinkContainer to="/members/add">
-              <Button className="float-left my-4" variant="dark">
+              <Button className="float-left my-4" variant="primary">
                 {t("Add Member")}
               </Button>
             </LinkContainer>

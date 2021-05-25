@@ -4,10 +4,10 @@ import { useTranslation } from "react-i18next";
 import { LinkContainer } from "react-router-bootstrap";
 import { loadImageUrl } from "../../utils/utils";
 
-export const TableTD = ({ cellData, children, alt }) => {
+export const TableTD = ({ cellData, children, alt, className }) => {
   const imageType = /jpg|jpeg|png|PNG|JPG|JPEG/;
   return (
-    <td className="align-middle text-center">
+    <td className={`align-middle text-center ${className}`}>
       {typeof cellData === "boolean" ? (
         cellData ? (
           <i className="fas fa-check" style={{ color: "#22DD86" }}></i>
@@ -29,18 +29,26 @@ export const TableTD = ({ cellData, children, alt }) => {
   );
 };
 
-export const ActionsTD = ({ children, deleteHandler, id, editEndpoint }) => {
+export const ActionsTD = ({
+  children,
+  deleteHandler,
+  id,
+  editEndpoint,
+  noEdit,
+}) => {
   const { t } = useTranslation();
   return (
     <td className="align-middle">
-      <LinkContainer
-        to={`/${editEndpoint}/${id}/edit`}
-        className="table-action-btn mx-2"
-      >
-        <Button className="btn-sm" variant="light" title={t("Edit")}>
-          <i className="fas fa-edit"></i>
-        </Button>
-      </LinkContainer>
+      {noEdit ?? (
+        <LinkContainer
+          to={`/${editEndpoint}/${id}/edit`}
+          className="table-action-btn mx-2"
+        >
+          <Button className="btn-sm" variant="light" title={t("Edit")}>
+            <i className="fas fa-edit"></i>
+          </Button>
+        </LinkContainer>
+      )}
 
       <Button
         onClick={deleteHandler}

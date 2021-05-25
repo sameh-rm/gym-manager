@@ -127,7 +127,7 @@ const deleteexpincReducer = (state = {}, action) => {
   }
 };
 
-const selectCourseReducer = (
+const selectExpincReducer = (
   state = {
     expinc: null,
   },
@@ -169,10 +169,10 @@ const expincReducers = persistReducer(
   expincPersistConfig,
   combineReducers({
     expincsList: expincsListReducer,
-    selectCourse: selectCourseReducer,
-    addCourse: addexpincReducer,
-    updateCourse: updateexpincReducer,
-    deleteCourse: deleteexpincReducer,
+    selectExpinc: selectExpincReducer,
+    addExpinc: addexpincReducer,
+    updateExpinc: updateexpincReducer,
+    deleteExpinc: deleteexpincReducer,
   })
 );
 

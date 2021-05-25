@@ -95,7 +95,6 @@ const FormCoursesMenu = ({
           <ListGroup.Item disabled>{title}</ListGroup.Item>
         ) : (
           coursesValues.map((option, idx) => {
-            console.log(option);
             return (
               <CourseListItem
                 key={idx + 1}

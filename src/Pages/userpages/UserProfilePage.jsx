@@ -35,7 +35,13 @@ const UserProfilePage = () => {
   return (
     <MainContainer>
       <Container className="paper_elevation overflow-scroll">
-        <Row className="paper_elevation">
+        <Row
+          className="paper_elevation"
+          style={{
+            background: "#87b9f7",
+            color: "#fff",
+          }}
+        >
           <Col>
             <h2>{t("User Profile")}</h2>
           </Col>
@@ -44,7 +50,7 @@ const UserProfilePage = () => {
             <Button
               className="float-left my-4"
               onClick={() => history.goBack()}
-              variant="dark"
+              variant="primary"
             >
               {t("Back")}
             </Button>

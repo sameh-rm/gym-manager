@@ -56,7 +56,6 @@ export const addMembership = (membership) => async (dispatch, getState) => {
         authorization: `Bearer ${getState().core.login.userInfo.token}`,
       },
     };
-    console.log(coursesValues);
     const courses = optionsToCourses(coursesValues);
 
     const { data } = await request.post(

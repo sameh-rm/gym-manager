@@ -89,7 +89,6 @@ export const updateUser =
     permissionGroups,
   }) =>
   async (dispatch, getState) => {
-    console.log(permissions, permissionGroups);
     try {
       dispatch(requestAction(adminActionTypes.UPDATE_USER_REQUEST));
       const config = {

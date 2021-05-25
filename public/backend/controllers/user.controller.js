@@ -40,8 +40,6 @@ const createUser = asyncHandler(async (req, res) => {
     isAdmin,
   });
 
-  console.log(image);
-
   if (user) {
     res.status(201).json({
       _id: user._id,
@@ -83,7 +81,6 @@ const login = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(404);
-    console.log(user);
     throw new Error("wrong username or password");
   }
 });
@@ -106,7 +103,6 @@ const updateUser = asyncHandler(async (req, res) => {
   } = req.body;
 
   const loggedUser = req.user;
-  console.log(req.params.id);
   const user = await User.findById(req.params.id);
   const existed = await User.findOne({ username: username });
   if (user) {

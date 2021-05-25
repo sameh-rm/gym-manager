@@ -70,7 +70,13 @@ const MemberProfilePage = () => {
   return (
     <MainContainer>
       <Container className="paper_elevation overflow-scroll">
-        <Row className="paper_elevation">
+        <Row
+          className="paper_elevation"
+          style={{
+            background: "rgb(67 49 121)",
+            color: "#fff",
+          }}
+        >
           <Col>
             <h2>{t("Member Profile")}</h2>
           </Col>
@@ -79,7 +85,7 @@ const MemberProfilePage = () => {
             <Button
               className="float-left my-4"
               onClick={() => history.goBack()}
-              variant="dark"
+              variant="success"
             >
               {t("Back")}
             </Button>
@@ -100,13 +106,11 @@ const MemberProfilePage = () => {
                   <Col md={8}>
                     <Row>
                       <Col md={6}>
-                        {t("Name")}:{" "}
+                        <span className="px-3">{t("Name")}:</span>
                         <span className="text-success">{member.name}</span>
                       </Col>
-                    </Row>
-                    <Row className="pt-4">
                       <Col md={6}>
-                        {t("Membership")}:{" "}
+                        <span className="px-3">{t("Membership")}:</span>
                         <span className="text-success">
                           {currentMemberShip
                             ? currentMemberShip.name
@@ -116,39 +120,39 @@ const MemberProfilePage = () => {
                     </Row>
                     <Row className="pt-5">
                       <Col md={6}>
-                        {t("NationalId")}:{" "}
+                        <span className="px-3">{t("NationalId")}:</span>
                         <span className="text-success">
                           {member.nationalId}
                         </span>
                       </Col>
                       <Col md={6}>
-                        {t("Phone")}:{" "}
+                        <span className="px-3">{t("Phone")}:</span>
                         <span className="text-success">{member.phone}</span>
                       </Col>
                     </Row>
                     <Row className="pt-5">
                       <Col md={4}>
-                        {t("Age")}:{" "}
+                        <span className="px-3">{t("Age")}:</span>
                         <span className="text-success">{member.age}</span>
                       </Col>
                       <Col md={4}>
-                        {t("Tall")}:{" "}
+                        <span className="px-3">{t("Tall")}:</span>
                         <span className="text-success">{member.tall}</span>
                       </Col>
                       <Col md={4}>
-                        {t("Weight")}:{" "}
+                        <span className="px-3">{t("Weight")}:</span>
                         <span className="text-success">{member.weight}</span>
                       </Col>
                     </Row>
                     <Row className="pt-5">
                       <Col>
-                        {t("Address")}:{" "}
+                        <span className="px-3">{t("Address")}:</span>
                         <span className="text-success">
                           {member.personalAddress.address}
                         </span>
                       </Col>
                       <Col>
-                        {t("City")}:{" "}
+                        <span className="px-3">{t("City")}:</span>
                         <span className="text-success">
                           {member.personalAddress.city}
                         </span>
@@ -156,13 +160,13 @@ const MemberProfilePage = () => {
                     </Row>
                     <Row className="pt-3">
                       <Col>
-                        {t("Center")}:{" "}
+                        <span className="px-3">{t("Center")}:</span>
                         <span className="text-success">
                           {member.personalAddress.center}
                         </span>
                       </Col>
                       <Col>
-                        {t("Governorate")}:
+                        <span className="px-3">{t("Governorate")}:</span>
                         <span className="text-success">
                           {member.personalAddress.governorate}
                         </span>

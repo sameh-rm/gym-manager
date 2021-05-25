@@ -31,7 +31,6 @@ const ReviewScreen = ({
   const courses = memberCourses(optionsToCourses(coursesValues), []);
   const subTotal = courses
     ? courses.reduce((accu, course) => {
-        console.log(course.name, "accu", accu, "price", course.price);
         return course.membership ? accu : Number(accu) + Number(course.price);
       }, 0)
     : 0;

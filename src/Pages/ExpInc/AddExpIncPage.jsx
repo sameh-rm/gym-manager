@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import { LinkContainer } from "react-router-bootstrap";
 import CourseForm from "../../components/forms/courses/CourseForm";
+import ExpIncForm from "../../components/forms/expinc/ExpIncForm";
 import MainContainer from "../../components/MainContainer/MainContainer";
 
 const AddExpIncPage = () => {
@@ -14,14 +15,14 @@ const AddExpIncPage = () => {
       <Container className="paper_elevation">
         <Row className="paper_elevation mb-4">
           <Col>
-            <h2>{t("Add Course")}</h2>
+            <h2>{t("Add Transaction")}</h2>
           </Col>
 
           <Col className="align-content-center">
             <Button
               className="float-left my-4"
               onClick={() => history.goBack()}
-              variant="dark"
+              variant="primary"
             >
               {t("Back")}
             </Button>
@@ -32,7 +33,7 @@ const AddExpIncPage = () => {
           className="hide-scrollbar"
           style={{ maxHeight: "calc(100vh - 250px)", overflow: "scroll" }}
         >
-          <CourseForm history={history} />
+          <ExpIncForm history={history} />
         </Row>
       </Container>
     </MainContainer>

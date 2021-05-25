@@ -1,13 +1,11 @@
 import moment from "moment";
 
 import React, { useState } from "react";
-import { Button, Col, Modal, Row } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { listMemberSubscriptions } from "../../../redux/memberReducers/member.actions";
 import { addSubscription } from "../../../redux/subscriptionsReducers/subscriptions.actions";
-import AsyncComponent from "../../Utils/AsyncComponent";
-import FormItem from "../FormItem";
 import SubscriptionForm from "./SubscriptionForm";
 
 const SubscriptionModal = ({ className, member }) => {

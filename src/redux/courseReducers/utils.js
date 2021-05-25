@@ -45,7 +45,6 @@ export const optionsToCourses = (options) => {
 export const buildSubscriptions = (membership, courses, isAdmin) => {
   const subs = [];
   if (membership) {
-    console.log(membership);
     subs.push(...toSubscription(membership, isAdmin));
   }
   if (courses) {
@@ -72,7 +71,6 @@ export const optionsToMemberShipCourses = (membership) => {
 
 export const memberCourses = (courses, outCourses, membership) => {
   const startDate = moment();
-  console.log(membership);
 
   courses.forEach((course) => {
     const courseEndDate = moment(startDate).add(
@@ -105,7 +103,6 @@ export const memberCourses = (courses, outCourses, membership) => {
 export const toSubscription = (target, isAdmin) => {
   const out = [];
   const startDate = moment();
-  console.log("target", target);
 
   if (Array.isArray(target)) {
     target.forEach((course) => {

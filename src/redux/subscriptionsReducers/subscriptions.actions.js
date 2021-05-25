@@ -101,7 +101,7 @@ export const addSubscription = (subscription) => async (dispatch, getState) => {
 };
 
 export const updateSubscription =
-  ({ id, paid, isActive }) =>
+  ({ id, paid, isActive }, loaded) =>
   async (dispatch, getState) => {
     try {
       dispatch(
@@ -127,6 +127,7 @@ export const updateSubscription =
       dispatch(
         listMemberSubscriptions(getState().member.selectMember.member._id)
       );
+      loaded && dispatch(selectSubscription(id));
     } catch (error) {
       dispatch(
         failedAction(subscriptionActionTypes.UPDATE_SUBSCRIPTION_FAILED, error)
@@ -176,3 +177,34 @@ export const selectSubscription = (id) => async (dispatch, getState) => {
     );
   }
 };
+
+export const selectExpincsOfSubscription =
+  (id) => async (dispatch, getState) => {
+    try {
+      dispatch(
+        requestAction(subscriptionActionTypes.SELECT_EXPINCS_OF_SUB_REQUEST)
+      );
+      const config = {
+        headers: {
+          authorization: `Bearer ${getState().core.login.userInfo.token}`,
+        },
+      };
+      const { data } = await request.get(
+        `/api/subscriptions/${id}/expenses`,
+        config
+      );
+      dispatch(
+        successAction(
+          subscriptionActionTypes.SELECT_EXPINCS_OF_SUB_SUCCESS,
+          data
+        )
+      );
+    } catch (error) {
+      dispatch(
+        failedAction(
+          subscriptionActionTypes.SELECT_EXPINCS_OF_SUB_FAILED,
+          error
+        )
+      );
+    }
+  };

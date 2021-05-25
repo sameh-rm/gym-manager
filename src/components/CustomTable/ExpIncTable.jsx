@@ -15,7 +15,6 @@ const searchData = (data, searchTxt) => {
     (item) =>
       item.description.toLowerCase().includes(searchTxt.toLowerCase()) && item
   );
-  console.log("results", results);
   return results;
 };
 /**
@@ -61,7 +60,6 @@ const ExpIncTable = ({
   ]);
   useEffect(() => {
     setCurrentData(data);
-    console.log(paginatedData);
   }, [data, paginatedData]);
 
   return (
@@ -75,8 +73,8 @@ const ExpIncTable = ({
           <Table striped hover bordered responsive className="mt-3">
             <thead>
               <tr>
-                <th>{t("Description")}</th>
                 <th>{t("InOut")}</th>
+                <th>{t("Description")}</th>
                 {columns.map((col, idx) => (
                   <th key={idx}>
                     {t(col[0].toUpperCase() + col.substring(1))}
@@ -97,12 +95,14 @@ const ExpIncTable = ({
                 paginatedData &&
                 paginatedData.map((row, idx) => (
                   <tr key={idx + 1}>
-                    <TableTD>
-                      <Link to={`/${editEndpoint}/${row._id}/detail`}>
-                        {row.description}
-                      </Link>
+                    <TableTD
+                      className={
+                        row.inOut === "OUT" ? "bg-expense" : "bg-income"
+                      }
+                    >
+                      {t(row.inOut)}
                     </TableTD>
-                    <TableTD>{t(row.inOut)}</TableTD>
+                    <TableTD>{row.description}</TableTD>
                     {columns.map(
                       (k, idx2) =>
                         k !== "_id" && (

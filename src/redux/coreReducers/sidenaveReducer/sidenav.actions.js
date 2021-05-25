@@ -6,7 +6,6 @@ export const setItemHeigt = (selectedItem) => ({
 });
 
 export const selectItem = (selectedItem) => {
-  console.log(selectedItem);
   return {
     type: sidenavActionTypes.SELECT_ITEM,
     payload: selectedItem,

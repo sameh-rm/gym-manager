@@ -50,7 +50,6 @@ const AddUserForm = () => {
     }
   };
   useEffect(() => {
-    console.log(success);
     if (success) {
       history.push("/admin/users");
     }

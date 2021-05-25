@@ -53,8 +53,6 @@ const AddMembershipPage = () => {
   );
 
   const saveMembership = () => {
-    console.log(name, description, price, period, coursesValues);
-
     dispatch(
       addMembership({
         name,
@@ -119,7 +117,7 @@ const AddMembershipPage = () => {
             <Button
               className="float-left my-4"
               onClick={() => history.goBack()}
-              variant="dark"
+              variant="primary"
             >
               {t("Back")}
             </Button>

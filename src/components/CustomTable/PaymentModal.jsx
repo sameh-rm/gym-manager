@@ -10,13 +10,13 @@ import {
 import {
   updateSubscription,
   selectSubscription,
+  selectExpincsOfSubscription,
 } from "../../redux/subscriptionsReducers/subscriptions.actions";
 import FormItem from "../forms/FormItem";
 import AsyncComponent from "../Utils/AsyncComponent";
 
-const PaymentModal = ({ subId }) => {
+const PaymentModal = ({ subId, loaded }) => {
   const { t } = useTranslation();
-  const { id } = useParams();
 
   const [show, setShow] = useState(false);
   const [value, setValue] = useState(0);
@@ -25,8 +25,11 @@ const PaymentModal = ({ subId }) => {
   const { subscription, loading, error } = useSelector(
     (state) => state.subscription.selectSubscription
   );
+  const { success } = useSelector(
+    (state) => state.subscription.updateSubscription
+  );
   const handleShow = () => {
-    dispatch(selectSubscription(subId && subId));
+    loaded ?? dispatch(selectSubscription(subId && subId));
 
     setShow(true);
   };
@@ -37,20 +40,29 @@ const PaymentModal = ({ subId }) => {
       setValue(Number(e));
     }
   };
-  const handleSubmit = (e) => {
-    dispatch(
-      updateSubscription({
-        id: subscription._id,
-        paid: Number(value),
-      })
-    );
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (value > 0)
+      await dispatch(
+        updateSubscription(
+          {
+            id: subscription._id,
+            paid: Number(value),
+          },
+          loaded
+        )
+      );
+    if (loaded) {
+      dispatch(selectExpincsOfSubscription(subId && subId));
+      dispatch(selectSubscription(subId && subId));
+    }
+
     handleClose();
   };
-
   return (
     <>
       <Button variant="primary" onClick={handleShow} title={t("Pay")}>
-        <i className="fal fa-money-bill-alt"></i>
+        {loaded ? t("Pay") : <i className="fal fa-money-bill-alt"></i>}
       </Button>
       {subscription && (
         <Modal show={show} onHide={handleClose} centered>
@@ -73,6 +85,7 @@ const PaymentModal = ({ subId }) => {
               onChangeHandler={valueValidation}
               value={value}
               required
+              type="number"
             />
           </Modal.Body>
           <Modal.Footer>

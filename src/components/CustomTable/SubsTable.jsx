@@ -42,7 +42,6 @@ const searchData = (data, searchTxt) => {
   const results = data.filter(
     (item) => item.name.toLowerCase().includes(searchTxt.toLowerCase()) && item
   );
-  console.log("results", results);
   return results;
 };
 /**
@@ -133,7 +132,9 @@ const SubsTable = ({
                 paginatedData.map((row, idx) => (
                   <tr key={idx + 1}>
                     <TableTD>
-                      <Link to={`/${editEndpoint}/${row._id}`}>{row.name}</Link>
+                      <Link to={`/${editEndpoint}/${row._id}/detail`}>
+                        {row.name}
+                      </Link>
                       <Row className="px-2">
                         {row.type === "Membership" && (
                           <Badge variant="warning">{t("Membership")}</Badge>

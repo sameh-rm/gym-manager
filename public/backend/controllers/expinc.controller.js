@@ -6,14 +6,17 @@ const getAllExpIncs = expressAsyncHandler(async (req, res) => {
     .limit(req.limit)
     .skip(req.startIndex)
     .populate("user member subscription");
-  console.log(expincs);
   res.status(200);
   res.json({ results: expincs });
 });
 
 const createExpInc = expressAsyncHandler(async (req, res) => {
   const expinc = req.body;
-  const createdExpInc = await ExpInc.create({ ...expinc, user: req.user });
+  const createdExpInc = await ExpInc.create({
+    ...expinc,
+    user: req.user,
+    confirmed: req.user.isAdmin,
+  });
   if (createdExpInc) {
     res.status(201).json({
       _id: createdExpInc._id,
@@ -31,7 +34,9 @@ const createExpInc = expressAsyncHandler(async (req, res) => {
 });
 
 const getExpIncById = expressAsyncHandler(async (req, res) => {
-  const expinc = await ExpInc.findById(req.params.id);
+  const expinc = await ExpInc.findById(req.params.id).populate(
+    "user member subscription"
+  );
   if (expinc) {
     res.status(200);
     res.json({

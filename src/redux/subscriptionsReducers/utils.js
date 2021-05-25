@@ -125,7 +125,6 @@ export const toSubscription = (target) => {
     });
   } else {
     const courseEndDate = moment(startDate).add(target.period, "month");
-    console.log(target);
     target &&
       out.push({
         ...target,

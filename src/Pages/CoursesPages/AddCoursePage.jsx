@@ -2,7 +2,6 @@ import React from "react";
 import { Col, Button, Container, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
-import { LinkContainer } from "react-router-bootstrap";
 import CourseForm from "../../components/forms/courses/CourseForm";
 import MainContainer from "../../components/MainContainer/MainContainer";
 
@@ -21,7 +20,7 @@ const AddCoursePage = () => {
             <Button
               className="float-left my-4"
               onClick={() => history.goBack()}
-              variant="dark"
+              variant="primary"
             >
               {t("Back")}
             </Button>

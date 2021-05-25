@@ -42,7 +42,6 @@ const SubscriptionForm = ({ subscription, setsubscription }) => {
   const [targetedOptions, setTargetedOptions] = useState([]);
   const validatePaidValue = (value) => {
     if (targetedValue.value.monthlyPrice) {
-      console.log(targetedValue.value.monthlyPrice, periodValue);
       targetedValue.value.price =
         targetedValue.value.monthlyPrice * periodValue;
     }
@@ -61,7 +60,6 @@ const SubscriptionForm = ({ subscription, setsubscription }) => {
         type: subscriptionType.value,
       });
     }
-    console.log(subscription);
   };
 
   const [subscriptionType, setSubscriptionType] = useState(
@@ -99,7 +97,6 @@ const SubscriptionForm = ({ subscription, setsubscription }) => {
           paid: paidValue,
         });
       } else {
-        console.log(periodValue);
         setsubscription({
           ...targetedValue.value,
           coureses: [targetedValue.value],
@@ -108,7 +105,6 @@ const SubscriptionForm = ({ subscription, setsubscription }) => {
           period: periodValue,
           type: subscriptionType.value,
         });
-        console.log(subscription);
       }
   }, [targetedValue, paidValue]);
 

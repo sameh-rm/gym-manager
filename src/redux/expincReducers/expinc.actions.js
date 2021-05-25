@@ -40,17 +40,7 @@ export const listAllExpIncs = (page, limit) => async (dispatch, getState) => {
 };
 
 export const addExpInc = (expInc) => async (dispatch, getState) => {
-  const {
-    description,
-    value,
-    inOut,
-    member,
-    subscription,
-    user,
-    createdAt,
-    updatedAt,
-    confirmed,
-  } = expInc;
+  const { description, value, inOut } = expInc;
   try {
     dispatch(requestAction(expIncActionTypes.CREATE_EXPINC_REQUEST));
     const config = {
@@ -65,12 +55,6 @@ export const addExpInc = (expInc) => async (dispatch, getState) => {
         description,
         value,
         inOut,
-        member,
-        subscription,
-        user,
-        createdAt,
-        updatedAt,
-        confirmed,
       },
       config
     );

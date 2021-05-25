@@ -168,3 +168,15 @@ footer {
 .searchTxtInput {
   border-radius: 5px;
 }
+.bg-income {
+  background-color: #28a745;
+  color: white;
+}
+.bg-expense {
+  background-color: #dc3545;
+  color: white;
+}
+
+a {
+  color: #007bff;
+}

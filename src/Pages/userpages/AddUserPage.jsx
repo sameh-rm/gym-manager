@@ -20,7 +20,7 @@ const AddUserPage = () => {
             <Button
               className="float-left my-4"
               onClick={() => history.goBack()}
-              variant="dark"
+              variant="primary"
             >
               {t("Back")}
             </Button>

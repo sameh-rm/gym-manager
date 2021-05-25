@@ -14,7 +14,6 @@ const searchData = (data, searchTxt) => {
   const results = data.filter(
     (item) => item.name.toLowerCase().includes(searchTxt.toLowerCase()) && item
   );
-  console.log("results", results);
   return results;
 };
 /**

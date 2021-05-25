@@ -57,3 +57,7 @@ export const paginate = (data, pageNum, limitNum) => {
 export const loadImageUrl = (imageUrl) => {
   return `${url}${imageUrl}`;
 };
+
+export const formatDate = (date) => {
+  return date.replace("T", "  ").substring(0, 17);
+};

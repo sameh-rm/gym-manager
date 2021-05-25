@@ -25,9 +25,6 @@ const MembersTable = ({ history }) => {
   };
   useEffect(() => {
     dispatch(listAllMembers());
-    return () => {
-      console.log("useEffect Returned");
-    };
   }, [dispatch]);
   const columns = ["image", "name", "age", "tall", "nationalId"];
 

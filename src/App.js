@@ -28,6 +28,7 @@ import EditMembershipPage from "./Pages/MembershipPages/EditMembershipPage";
 import Switch from "react-bootstrap/esm/Switch";
 import MemberProfilePage from "./Pages/membersPages/MemberProfilePage";
 import UserProfilePage from "./Pages/userpages/UserProfilePage";
+import SubscriptionDetailPage from "./Pages/subscriptionPages/SubscriptionDetailPage";
 
 function App({ history }) {
   const { i18n } = useTranslation();
@@ -71,6 +72,11 @@ function App({ history }) {
             exact
             path="/members/:id/detail"
             component={MemberProfilePage}
+          />
+          <Route
+            exact
+            path="/subscriptions/:id/detail"
+            component={SubscriptionDetailPage}
           />
           {/* <Route render={() => <Redirect to="/" />} /> */}
         </Switch>

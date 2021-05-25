@@ -9,6 +9,7 @@ import MainContainer from "../../components/MainContainer/MainContainer";
 import { courseActionTypes } from "../../redux/courseReducers/course.actionTypes";
 import CourseForm from "../../components/forms/courses/CourseForm";
 import { useHistory } from "react-router";
+import ExpIncForm from "../../components/forms/expinc/ExpIncForm";
 const EditExpIncPage = () => {
   const history = useHistory();
   const { t } = useTranslation();
@@ -35,7 +36,7 @@ const EditExpIncPage = () => {
             <Button
               className="float-left my-4"
               onClick={() => history.goBack()}
-              variant="dark"
+              variant="primary"
             >
               {t("Back")}
             </Button>
@@ -46,7 +47,7 @@ const EditExpIncPage = () => {
           className="hide-scrollbar"
           style={{ maxHeight: "calc(100vh - 250px)", overflow: "scroll" }}
         >
-          <CourseForm history={history} />
+          <ExpIncForm history={history} />
         </Row>
       </Container>
     </MainContainer>

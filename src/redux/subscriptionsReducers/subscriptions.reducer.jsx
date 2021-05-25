@@ -160,6 +160,38 @@ const selectSubscriptionReducer = (
   }
 };
 
+const selectExpincsOfSubscriptionReducer = (
+  state = {
+    expincs: null,
+  },
+  action
+) => {
+  switch (action.type) {
+    case subscriptionActionTypes.SELECT_EXPINCS_OF_SUB_REQUEST:
+      return {
+        loading: true,
+        success: false,
+      };
+    case subscriptionActionTypes.SELECT_EXPINCS_OF_SUB_SUCCESS:
+      return {
+        loading: false,
+        expincs: action.payload.results,
+      };
+    case subscriptionActionTypes.SELECT_EXPINCS_OF_SUB_FAILED:
+      return {
+        success: false,
+        loading: false,
+        error: action.payload,
+      };
+    case subscriptionActionTypes.RESET_SELECT_EXPINCS_OF_SUB:
+      return {
+        success: false,
+      };
+    default:
+      return state;
+  }
+};
+
 const subscriptionPersistConfig = {
   key: "subscription",
   storage,
@@ -174,6 +206,7 @@ const subscriptionReducers = persistReducer(
     addSubscription: addsubscriptionReducer,
     updateSubscription: updatesubscriptionReducer,
     deleteSubscription: deletesubscriptionReducer,
+    selectExpincsOfSubscription: selectExpincsOfSubscriptionReducer,
   })
 );
 

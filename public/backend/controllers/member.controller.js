@@ -46,7 +46,6 @@ const subscribed = async (member, paidValue) => {
 };
 const saveMemberPayment = async (sub) => {
   if (sub.paid <= 0) return null;
-  console.log(sub);
   const createdExpinc = await ExpInc.create({
     description: `تم دفع ${sub.paid} بواسطة ${sub.member.name} من حساب الإشتراك ${sub.name}`,
     inOut: "IN",

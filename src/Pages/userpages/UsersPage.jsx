@@ -53,7 +53,7 @@ const UsersPage = ({ history, location }) => {
 
           <Col className="align-content-center">
             <LinkContainer to="/admin/users/add">
-              <Button className="float-left my-4" variant="dark">
+              <Button className="float-left my-4" variant="primary">
                 {t("Add User")}
               </Button>
             </LinkContainer>
