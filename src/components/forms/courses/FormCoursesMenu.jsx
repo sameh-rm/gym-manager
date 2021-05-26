@@ -32,19 +32,23 @@ const FormCoursesMenu = ({
             options={membershipsAsOptions}
             value={membershipValue}
             menuPosition="fixed"
+            isClearable
             placeholder={t("Select Membership")}
             onChange={(e) => {
               setMembershipValues(e);
-              setCoursesValues([
-                ...coursesToOptions(optionsToMemberShipCourses(e.value)),
-              ]);
+              if (e) {
+                setCoursesValues([
+                  ...coursesToOptions(optionsToMemberShipCourses(e.value)),
+                ]);
+              } else {
+                setCoursesValues([]);
+              }
             }}
           />
         </Form.Group>
       )}
       {membership
-        ? membershipValue &&
-          selectable && (
+        ? selectable && (
             <Form.Group controlId="Courses">
               <Form.Label>{t("Courses")}</Form.Label>
               <Select

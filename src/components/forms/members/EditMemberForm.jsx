@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Button, Col, Form, Image, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 
 import { loadImageUrl, uploadImage } from "../../../utils/utils";
@@ -10,6 +10,7 @@ import FormContainer from "../FormContainer";
 import FormItem from "../FormItem";
 import AsyncComponent from "../../Utils/AsyncComponent";
 import { updateMember } from "../../../redux/memberReducers/member.actions";
+import Select from "react-select";
 const EditMemberForm = ({ member, loading, error }) => {
   const { id } = useParams();
   const { t } = useTranslation();
@@ -19,6 +20,7 @@ const EditMemberForm = ({ member, loading, error }) => {
   };
 
   const [name, setName] = useState(member ? member.name : "");
+  const [gender, setGender] = useState(member ? member.gender : "");
   const [age, setAge] = useState(member ? member.age : 0);
   const [nationalId, setNationalId] = useState(member ? member.nationalId : "");
   const [phone, setPhone] = useState(member ? member.phone : "");
@@ -48,6 +50,7 @@ const EditMemberForm = ({ member, loading, error }) => {
         name,
         age,
         nationalId,
+        gender,
         phone,
         tall,
         weight,
@@ -57,7 +60,15 @@ const EditMemberForm = ({ member, loading, error }) => {
       })
     );
   };
+  const genderOptions = useMemo(
+    () => [
+      { label: t("Male"), value: "MALE" },
+      { label: t("Female"), value: "FEMALE" },
+    ],
+    [t]
+  );
 
+  const [genderValue, setGenderValue] = useState(genderOptions[0]);
   return (
     <FormContainer fullSize>
       <Form className="pt-3" onSubmit={submitHandler}>
@@ -105,6 +116,20 @@ const EditMemberForm = ({ member, loading, error }) => {
                   key="nationalId"
                 />
               </Col>
+              <Form.Group controlId="Gender">
+                <Form.Label>{t("Gender")}</Form.Label>
+                <Select
+                  options={genderOptions}
+                  value={genderValue}
+                  isMulti
+                  menuPosition="fixed"
+                  placeholder={t("Select Gender")}
+                  onChange={(e) => {
+                    setGenderValue(e);
+                    setGender(e.value);
+                  }}
+                />
+              </Form.Group>
               <Col>
                 <FormItem
                   title={t("Phone")}

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Col, Form, Image, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import Select from "react-select";
 
 import { uploadImage } from "../../../utils/utils";
 import Loader from "../../Loader";
@@ -11,6 +12,8 @@ const AddMemberForm = ({
   setName,
   image,
   setImage,
+  gender,
+  setGender,
   age,
   setAge,
   nationalId,
@@ -36,7 +39,15 @@ const AddMemberForm = ({
   const uploadFileHandler = async (e) => {
     uploadImage(e, setUploading, setImage);
   };
+  const genderOptions = useMemo(
+    () => [
+      { label: t("Male"), value: "MALE" },
+      { label: t("Female"), value: "FEMALE" },
+    ],
+    [t]
+  );
 
+  const [genderValue, setGenderValue] = useState(genderOptions[0]);
   return (
     <>
       <Row>
@@ -69,6 +80,21 @@ const AddMemberForm = ({
                 type="text"
                 key="nationalId"
               />
+            </Col>
+            <Col>
+              <Form.Group controlId="Gender">
+                <Form.Label>{t("Gender")}</Form.Label>
+                <Select
+                  options={genderOptions}
+                  value={genderValue}
+                  menuPosition="fixed"
+                  placeholder={t("Select Gender")}
+                  onChange={(e) => {
+                    setGenderValue(e);
+                    setGender(e.value);
+                  }}
+                />
+              </Form.Group>
             </Col>
             <Col>
               <FormItem

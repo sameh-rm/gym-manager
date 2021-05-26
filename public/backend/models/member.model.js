@@ -50,6 +50,10 @@ const memberSchema = mongoose.Schema(
     image: {
       type: String,
     },
+    gender: {
+      type: String,
+      default: "MALE",
+    },
     isActive: {
       type: Boolean,
       required: true,

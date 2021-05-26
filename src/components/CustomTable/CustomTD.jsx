@@ -35,20 +35,32 @@ export const ActionsTD = ({
   id,
   editEndpoint,
   noEdit,
+  editIcon,
+  editHandler,
 }) => {
   const { t } = useTranslation();
   return (
     <td className="align-middle">
-      {noEdit ?? (
-        <LinkContainer
-          to={`/${editEndpoint}/${id}/edit`}
-          className="table-action-btn mx-2"
-        >
-          <Button className="btn-sm" variant="light" title={t("Edit")}>
-            <i className="fas fa-edit"></i>
+      {noEdit ??
+        (editIcon ? (
+          <Button
+            onClick={editHandler}
+            variant="info"
+            className="table-action-btn btn-sm mx-2"
+            title={t("Confirm")}
+          >
+            {editIcon}
           </Button>
-        </LinkContainer>
-      )}
+        ) : (
+          <LinkContainer
+            to={`/${editEndpoint}/${id}/edit`}
+            className="table-action-btn mx-2"
+          >
+            <Button className="btn-sm" variant="info" title={t("Edit")}>
+              <i className="fas fa-edit"></i>
+            </Button>
+          </LinkContainer>
+        ))}
 
       <Button
         onClick={deleteHandler}

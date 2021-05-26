@@ -50,7 +50,7 @@ const MemberShipPage = ({ history, location }) => {
     memberShipUpdateSuccess,
     deletedSuccess,
   ]);
-  const columns = ["name", "description", "period", "price"];
+  const columns = ["description", "period", "price"];
 
   return (
     <MainContainer>
@@ -89,6 +89,7 @@ const MemberShipPage = ({ history, location }) => {
           style={{ maxHeight: "calc(100vh - 250px)", overflow: "scroll" }}
         >
           <CustomTable
+            noDetails
             columns={columns}
             data={membershipsList}
             deleteHandler={deleteHandler}

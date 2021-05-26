@@ -5,25 +5,26 @@ const smallMenu = () => {
   return css`
     width: 230px;
 
-    font-size: 1rem !important;
+    font-size: 0.8rem !important;
   `;
 };
 const mediumMenu = () => {
   return css`
     width: 280px;
-    font-size: 1.3rem !important;
+    font-size: 0.8rem !important;
   `;
 };
 const largeMenu = () => {
   return css`
     width: 360px;
-    font-size: 1.3rem;
+    font-size: 1rem;
     .header_description {
-      font-size: 1.1rem;
+      font-size: 0.8rem;
     }
   `;
 };
 const drawMenu = (parentElement, size, height) => {
+  console.log(height);
   //   const height = mRef ? mRef : 0;
   const { top, bottom, left, right } = getParentBounds(parentElement) || [
     70, 0, 10, 0,
@@ -71,8 +72,9 @@ const getParentBounds = (parentElement) =>
 
 export const CustomMenuContainer = styled.div`
   z-index: 5000;
-
+  background: white;
   border-radius: 5px !important;
+
   position: absolute;
   ${({ parentElement, size, height }) => drawMenu(parentElement, size, height)}
   ${({ size }) =>

@@ -59,7 +59,6 @@ const SubscriptionDetailPage = () => {
       dispatch({ type: subscriptionActionTypes.RESET_SELECT_EXPINCS_OF_SUB });
     };
   }, [id, dispatch, deleteSubSuccess]);
-  console.log(subscription);
   return (
     <MainContainer>
       <Container className="paper_elevation overflow-scroll">
@@ -85,7 +84,7 @@ const SubscriptionDetailPage = () => {
           </Col>
         </Row>
         <Row
-          className="hide-scrollbar"
+          className="hide-scrollbar mx-4"
           style={{ maxHeight: "calc(100vh - 250px)", overflow: "scroll" }}
         >
           <hr />
@@ -208,11 +207,7 @@ const SubscriptionDetailPage = () => {
                                   </td>
                                   <td>{course.description}</td>
                                   <td>{course.plan || "شهرى"}</td>
-                                  <td>
-                                    {subscription.membership
-                                      ? subscription.membership.period
-                                      : course.period}
-                                  </td>
+                                  <td>{subscription.period}</td>
                                   <td>{course.price || course.monthlyPrice}</td>
                                 </tr>
                               );
@@ -231,7 +226,7 @@ const SubscriptionDetailPage = () => {
               <AsyncComponent loading={loading} error={error}>
                 <h3 className="px-2">{t("Payment History")}</h3>
                 <div className="w-100 mx-2">
-                  <Table responsive variant="dark" hover>
+                  <Table responsive variant="light" hover>
                     <thead>
                       <tr>
                         <th>{t("Description")}</th>

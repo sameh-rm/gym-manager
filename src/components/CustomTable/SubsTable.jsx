@@ -119,6 +119,8 @@ const SubsTable = ({
                     {t(col[0].toUpperCase() + col.substring(1))}
                   </th>
                 ))}
+                <th>{t("Remains")}</th>
+
                 {!noActions && <th></th>}
               </tr>
             </thead>
@@ -155,6 +157,7 @@ const SubsTable = ({
                           </TableTD>
                         )
                     )}
+                    <TableTD>{row.price - row.paid}</TableTD>
                     {!noActions && (
                       <ActionsTD
                         id={row._id}

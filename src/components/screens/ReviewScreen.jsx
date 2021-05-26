@@ -27,7 +27,7 @@ const ReviewScreen = ({
   setPayment,
 }) => {
   const { t } = useTranslation();
-  const membership = membershipValue.value;
+  const membership = membershipValue && membershipValue.value;
   const courses = memberCourses(optionsToCourses(coursesValues), []);
   const subTotal = courses
     ? courses.reduce((accu, course) => {

@@ -43,6 +43,7 @@ const AddMemberPage = () => {
   const [age, setAge] = useState(0);
   const [nationalId, setNationalId] = useState("");
   const [phone, setPhone] = useState("");
+  const [gender, setGender] = useState(t("Male"));
   const [tall, setTall] = useState("");
   const [weight, setWeight] = useState("");
   const [address, setAddress] = useState("ش 10");
@@ -60,6 +61,7 @@ const AddMemberPage = () => {
       addMember({
         name,
         age,
+        gender,
         nationalId,
         phone,
         tall,
@@ -136,6 +138,8 @@ const AddMemberPage = () => {
                     // state props
                     name={name}
                     setName={setName}
+                    gender={gender}
+                    setGender={setGender}
                     image={image}
                     setImage={setImage}
                     age={age}

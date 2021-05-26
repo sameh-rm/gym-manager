@@ -32,6 +32,8 @@ const ExpIncTable = ({
   deleteHandler,
   moreRows = 0,
   noActions,
+  editIcon,
+  editHandler,
 }) => {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
@@ -154,6 +156,11 @@ const ExpIncTable = ({
                           deleteHandler(row._id);
                         }}
                         editEndpoint={editEndpoint}
+                        editIcon={editIcon}
+                        editHandler={() => {
+                          console.log(row._id);
+                          editHandler(row._id);
+                        }}
                       />
                     )}
                   </tr>

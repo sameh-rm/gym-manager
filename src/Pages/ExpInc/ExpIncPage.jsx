@@ -58,13 +58,13 @@ const CoursePage = ({ history, location }) => {
       <Container className="paper_elevation">
         <Row className="paper_elevation mb-4">
           <Col>
-            <h2>{t("Courses List")}</h2>
+            <h2>{t("Transaction")}</h2>
           </Col>
 
           <Col className="align-content-center">
-            <LinkContainer to="/courses/add">
+            <LinkContainer to="/expenses/add">
               <Button className="float-left my-4" variant="primary">
-                {t("Add Course")}
+                {t("Add")}
               </Button>
             </LinkContainer>
           </Col>

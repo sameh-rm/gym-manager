@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
-import {
-  listMemberSubscriptions,
-  selectMember,
-} from "../../redux/memberReducers/member.actions";
+
 import {
   updateSubscription,
   selectSubscription,

@@ -88,6 +88,7 @@ const CoursePage = ({ history, location }) => {
           style={{ maxHeight: "calc(100vh - 250px)", overflow: "scroll" }}
         >
           <CustomTable
+            noDetails
             columns={columns}
             data={coursesList}
             deleteHandler={deleteHandler}

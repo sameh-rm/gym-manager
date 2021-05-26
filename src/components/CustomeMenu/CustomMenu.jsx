@@ -22,14 +22,15 @@ const CustomMenu = ({
   expandHandler,
   children,
   parentRef,
+  footer,
 }) => {
   const mRef = useRef();
   const [parentElement, setParentElement] = useState();
-  const [height, setHeight] = useState(0);
 
   useEffect(() => {
     setParentElement(mRef.current.parentElement);
-    setHeight(mRef.current.scrollHeight - 8);
+    console.log(mRef.current.parentElement, "");
+    console.log("mRef.current", mRef);
     function handleClickOutside(event) {
       if (
         mRef.current &&
@@ -45,7 +46,7 @@ const CustomMenu = ({
       // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [expandHandler]);
+  }, [expandHandler, mRef]);
 
   return (
     <div>
@@ -55,9 +56,9 @@ const CustomMenu = ({
         size={size}
         className="p-0 paper_elevation"
         ref={mRef}
-        height={height}
+        height={size === "sm" ? 200 : size === "md" ? 250 : 350}
       >
-        <Card className="rounded">
+        <Card className="rounded h-100">
           <CardHeaderContainer
             parentRef={parentRef}
             imageUrl={image}
@@ -72,10 +73,10 @@ const CustomMenu = ({
               </MenuHeaderContainer>
             </div>
           </CardHeaderContainer>
-          <Card.Body>{children}</Card.Body>
-          <Card.Footer className="bg-white text-center">
-            Menu Footer
-          </Card.Footer>
+          <Card.Body className="hide-scrollbar" style={{ Height: "80%" }}>
+            {children}
+          </Card.Body>
+          <Card.Footer className="bg-white text-center">{footer}</Card.Footer>
         </Card>
       </CustomMenuContainer>
     </div>

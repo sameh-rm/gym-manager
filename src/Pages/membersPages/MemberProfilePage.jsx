@@ -40,7 +40,13 @@ const MemberProfilePage = () => {
     (state) => state.subscription.deleteSubscription
   );
   const [currentMemberShip, setCurrentMemberShip] = useState([]);
-  const columns = ["description", "startedAt", "endsAt", "paymentStatus"];
+  const columns = [
+    "description",
+    "startedAt",
+    "endsAt",
+    "price",
+    "paymentStatus",
+  ];
   // const [deleteSuccess, setDeleteSuccess] = useState(false);
   const deleteHandler = (row_id) => {
     if (window.confirm(t("Are you sure?"))) {

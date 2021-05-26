@@ -29,6 +29,7 @@ import Switch from "react-bootstrap/esm/Switch";
 import MemberProfilePage from "./Pages/membersPages/MemberProfilePage";
 import UserProfilePage from "./Pages/userpages/UserProfilePage";
 import SubscriptionDetailPage from "./Pages/subscriptionPages/SubscriptionDetailPage";
+import UnConfirmedExpincPage from "./Pages/ExpInc/UnConfirmedExpIncPage";
 
 function App({ history }) {
   const { i18n } = useTranslation();
@@ -56,6 +57,11 @@ function App({ history }) {
           <Route exact path="/expenses" component={ExpIncPage} />
           <Route exact path="/expenses/add" component={AddExpIncPage} />
           <Route exact path="/expenses/:id/edit" component={EditExpIncPage} />
+          <Route
+            exact
+            path="/expenses/unconfirmed"
+            component={UnConfirmedExpincPage}
+          />
 
           <Route exact path="/memberships" component={MemberShipPage} />
           <Route exact path="/memberships/add" component={AddMemberShipPage} />

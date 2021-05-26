@@ -134,5 +134,18 @@
   "EXPENSE": "مصروفات",
   "OUT": "مصروفات",
   "Add Transaction": "إيرادات / مصروفات",
-  "Payment History": "حركة الدفع"
+  "Transaction": "إيرادات / مصروفات",
+  "Payment History": "حركة الدفع",
+  "Remains": "المتبقى",
+  "Gender": "النوع",
+  "Male": "ذكر",
+  "Female": "أنثى",
+  "another member with the same National ID Exists": "الرقم القومى مستخدم بالفعل",
+  "Select Gender": "إختر النوع",
+  "Member Was Created Successfully!": "تم تسجيل المشترك بنجاح!",
+  "Add": "إضافة",
+  "UnConfirmedSubs": "مراجعة الإشتراكات",
+  "Show All": "عرض الكل",
+  "UnConfirmedList": "مراجعة الإشتراكات",
+  "Confirm": "تأكيد"
 }

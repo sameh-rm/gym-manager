@@ -32,6 +32,32 @@ const expincsListReducer = (state = initState, action) => {
   }
 };
 
+const listUnConfirmedReducer = (state = initState, action) => {
+  switch (action.type) {
+    case expIncActionTypes.EXPINCS_UNCONFIRMED_LIST_REQUEST:
+      return {
+        listUnConfirmed: [],
+        loading: true,
+      };
+    case expIncActionTypes.EXPINCS_UNCONFIRMED_LIST_SUCCESS:
+      return {
+        listUnConfirmed: action.payload.results,
+        prev: action.payload.prev,
+        next: action.payload.next,
+        loading: false,
+      };
+    case expIncActionTypes.EXPINCS_UNCONFIRMED_LIST_FAILED:
+      return {
+        error: action.payload,
+        loading: false,
+        listUnConfirmed: [],
+      };
+
+    default:
+      return state;
+  }
+};
+
 const addexpincReducer = (state = {}, action) => {
   switch (action.type) {
     case expIncActionTypes.CREATE_EXPINC_REQUEST:
@@ -173,6 +199,7 @@ const expincReducers = persistReducer(
     addExpinc: addexpincReducer,
     updateExpinc: updateexpincReducer,
     deleteExpinc: deleteexpincReducer,
+    listUnConfirmed: listUnConfirmedReducer,
   })
 );
 

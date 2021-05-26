@@ -103,7 +103,6 @@ export const memberCourses = (courses, outCourses, membership) => {
 export const toSubscription = (target, isAdmin) => {
   const out = [];
   const startDate = moment();
-
   if (Array.isArray(target)) {
     target.forEach((course) => {
       const courseEndDate = moment(startDate).add(course.period, "month");
@@ -112,6 +111,7 @@ export const toSubscription = (target, isAdmin) => {
           out.push({
             ...course,
             type: "Course",
+            courses: [course],
             price: course.monthlyPrice * course.period,
             period: course.period,
             endsAt: courseEndDate,
@@ -130,6 +130,5 @@ export const toSubscription = (target, isAdmin) => {
         endsAt: courseEndDate,
       });
   }
-
   return out;
 };

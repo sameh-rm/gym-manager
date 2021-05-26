@@ -122,7 +122,6 @@ const updateSubscription = expressAsyncHandler(async (req, res) => {
   }
 
   const updatedSubscription = await sub.save();
-  console.log(updatedSubscription);
   const payment = await saveMemberPayment(paid, req.user, updatedSubscription);
   if ((!updatedSubscription, updatedSubscription)) {
     res.status(400);

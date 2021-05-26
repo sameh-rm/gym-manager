@@ -3,6 +3,17 @@ const ExpInc = require("../models/expInc.model.js");
 
 const getAllExpIncs = expressAsyncHandler(async (req, res) => {
   const expincs = await ExpInc.find({})
+    .sort("-createdAt")
+    .limit(req.limit)
+    .skip(req.startIndex)
+    .populate("user member subscription");
+  res.status(200);
+  res.json({ results: expincs });
+});
+
+const getAllUnConfirmedExpIncs = expressAsyncHandler(async (req, res) => {
+  const expincs = await ExpInc.find({ confirmed: false })
+    .sort("-createdAt")
     .limit(req.limit)
     .skip(req.startIndex)
     .populate("user member subscription");
@@ -57,26 +68,11 @@ const getExpIncById = expressAsyncHandler(async (req, res) => {
   }
 });
 
-const updateExpInc = expressAsyncHandler(async (req, res) => {
+const confirmExpinc = expressAsyncHandler(async (req, res) => {
   const expincId = req.params.id;
-  const {
-    description,
-    dailyPrice,
-    monthlyPrice,
-    daysPerMonth,
-    minutesPerTime,
-    period,
-    plan,
-  } = req.body;
   const expinc = await ExpInc.findById(expincId);
   if (expinc) {
-    expinc.user = description || expinc.user;
-    expinc.description = dailyPrice || expinc.description;
-    expinc.value = monthlyPrice || expinc.value;
-    expinc.member = daysPerMonth || expinc.member;
-    expinc.subscription = minutesPerTime || expinc.subscription;
-    expinc.inOut = period || expinc.inOut;
-    expinc.confirmed = plan || expinc.confirmed;
+    expinc.confirmed = req.user.isAdmin;
   } else {
     res.status(404);
   }
@@ -118,6 +114,7 @@ module.exports = {
   getAllExpIncs,
   createExpInc,
   getExpIncById,
-  updateExpInc,
+  confirmExpinc,
   deleteExpInc,
+  getAllUnConfirmedExpIncs,
 };

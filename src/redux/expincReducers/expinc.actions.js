@@ -39,6 +39,29 @@ export const listAllExpIncs = (page, limit) => async (dispatch, getState) => {
   }
 };
 
+export const listAllUnConfirmed =
+  (page, limit) => async (dispatch, getState) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${getState().core.login.userInfo.token}`,
+        },
+      };
+      dispatch(
+        requestAction(expIncActionTypes.EXPINCS_UNCONFIRMED_LIST_REQUEST)
+      );
+      const { data } = await request.get(`/api/expenses/unconfirmed`, config);
+      dispatch(
+        successAction(expIncActionTypes.EXPINCS_UNCONFIRMED_LIST_SUCCESS, data)
+      );
+    } catch (error) {
+      dispatch(
+        failedAction(expIncActionTypes.EXPINCS_UNCONFIRMED_LIST_FAILED, error)
+      );
+    }
+  };
+
 export const addExpInc = (expInc) => async (dispatch, getState) => {
   const { description, value, inOut } = expInc;
   try {
@@ -64,48 +87,21 @@ export const addExpInc = (expInc) => async (dispatch, getState) => {
   }
 };
 
-export const updateExpInc =
-  ({
-    id,
-    description,
-    value,
-    inOut,
-    member,
-    subscription,
-    user,
-    createdAt,
-    updatedAt,
-    confirmed,
-  }) =>
-  async (dispatch, getState) => {
-    try {
-      dispatch(requestAction(expIncActionTypes.UPDATE_EXPINC_REQUEST));
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${getState().core.login.userInfo.token}`,
-        },
-      };
-      const { data } = await request.put(
-        `/api/expenses/${id}`,
-        {
-          description,
-          value,
-          inOut,
-          member,
-          subscription,
-          user,
-          createdAt,
-          updatedAt,
-          confirmed,
-        },
-        config
-      );
-      dispatch(successAction(expIncActionTypes.UPDATE_EXPINC_SUCCESS, data));
-    } catch (error) {
-      dispatch(failedAction(expIncActionTypes.UPDATE_EXPINC_FAILED, error));
-    }
-  };
+export const confirmExpinc = (id) => async (dispatch, getState) => {
+  try {
+    dispatch(requestAction(expIncActionTypes.UPDATE_EXPINC_REQUEST));
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${getState().core.login.userInfo.token}`,
+      },
+    };
+    const { data } = await request.put(`/api/expenses/${id}`, {}, config);
+    dispatch(successAction(expIncActionTypes.UPDATE_EXPINC_SUCCESS, data));
+  } catch (error) {
+    dispatch(failedAction(expIncActionTypes.UPDATE_EXPINC_FAILED, error));
+  }
+};
 
 export const deleteExpInc = (id) => async (dispatch, getState) => {
   try {

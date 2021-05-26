@@ -28,6 +28,7 @@ const CustomTable = ({
   loading,
   error,
   success,
+  noDetails,
   deleteHandler,
   listData,
   moreRows = 0,
@@ -91,9 +92,13 @@ const CustomTable = ({
                 paginatedData.map((row, idx) => (
                   <tr key={idx + 1}>
                     <TableTD>
-                      <Link to={`/${editEndpoint}/${row._id}/detail`}>
-                        {row.name}
-                      </Link>
+                      {noDetails ? (
+                        row.name
+                      ) : (
+                        <Link to={`/${editEndpoint}/${row._id}/detail`}>
+                          {row.name}
+                        </Link>
+                      )}
                       <Row className="px-2">
                         {row.type === "Membership" && (
                           <Badge variant="warning">{t("Membership")}</Badge>

@@ -78,12 +78,13 @@ export const addMember = (member) => async (dispatch, getState) => {
     membershipValue,
     coursesValues,
     personalAddress,
+    gender,
     payment,
   } = member;
   try {
     const courses = optionsToCourses(coursesValues);
     const subscriptions = buildSubscriptions(
-      membershipValue.value,
+      membershipValue && membershipValue.value,
       courses,
       getState().core.login.userInfo.isAdmin
     );
@@ -108,6 +109,7 @@ export const addMember = (member) => async (dispatch, getState) => {
         nationalId,
         subscriptions,
         personalAddress,
+        gender,
         paid: payment,
       },
       config
@@ -129,6 +131,7 @@ export const updateMember =
     phone,
     nationalId,
     personalAddress,
+    gender,
     isActive,
   }) =>
   async (dispatch, getState) => {
@@ -144,6 +147,7 @@ export const updateMember =
         `/api/members/${id}`,
         {
           name,
+          gender,
           image,
           age,
           tall,
