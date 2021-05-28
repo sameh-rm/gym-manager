@@ -8,6 +8,7 @@ import {
   updateUserReducer,
   deleteUserReducer,
   selectUserReducer,
+  configReducer,
 } from "./adminReducers/admin.reducer";
 import { sidenavReducer } from "./sidenaveReducer/sideNavReducer";
 
@@ -27,6 +28,7 @@ const coreReducer = persistReducer(
     deleteUser: deleteUserReducer,
     login: loginReducer,
     selectUser: selectUserReducer,
+    config: configReducer,
   })
 );
 

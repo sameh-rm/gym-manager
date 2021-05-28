@@ -1,4 +1,5 @@
 import moment from "moment";
+import { addDate } from "../../utils/utils";
 /**
  *
  * @param coursesList list of courses
@@ -20,15 +21,17 @@ export const coursesToOptions = (coursesList) => {
  */
 export const optionsToCourses = (options) => {
   const courses = [];
-  const startDate = moment();
+  // const startDate = moment();
 
   options.forEach((option) => {
     option.value.period = option.value.period ? option.value.period : 1;
     option.value.plan = option.value.plan ? option.value.plan : "شهرى";
-    const courseEndDate = moment(startDate).add(
-      option.value.period,
-      option.value.plan === "شهرى" ? "month" : "day"
-    );
+    const courseEndDate = addDate(option.value.period, "month");
+
+    // const courseEndDate = moment(startDate).add(
+    //   option.value.period,
+    //   option.value.plan === "شهرى" ? "month" : "day"
+    // );
     courses.push({
       ...option.value,
       course: option.value._id,

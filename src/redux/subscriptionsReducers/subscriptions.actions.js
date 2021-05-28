@@ -21,6 +21,149 @@ export const failedAction = (actionType, payload) => ({
       : payload.message,
 });
 
+export const listAllExpiredSubscriptions =
+  (page, limit) => async (dispatch, getState) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${getState().core.login.userInfo.token}`,
+        },
+      };
+      dispatch(
+        requestAction(
+          subscriptionActionTypes.EXPIRED_SUBSCRIPTIONS_LIST_REQUEST
+        )
+      );
+      const { data } = await request.get(
+        `/api/subscriptions/expired?page=${page}&limit=${limit}`,
+        config
+      );
+      dispatch(
+        successAction(
+          subscriptionActionTypes.EXPIRED_SUBSCRIPTIONS_LIST_SUCCESS,
+          data
+        )
+      );
+    } catch (error) {
+      dispatch(
+        failedAction(
+          subscriptionActionTypes.EXPIRED_SUBSCRIPTIONS_LIST_FAILED,
+          error
+        )
+      );
+    }
+  };
+
+export const listAllSubscriptionsInDateRange =
+  (page, limit) => async (dispatch, getState) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${getState().core.login.userInfo.token}`,
+        },
+      };
+      dispatch(
+        requestAction(
+          subscriptionActionTypes.SUBSCRIPTIONS_INDATE_RANGE_REQUEST
+        )
+      );
+
+      const { data } = await request.get(
+        `/api/subscriptions/subs-range?start_date=${
+          getState().core.config.startDate
+        }&end_date=${
+          getState().core.config.endDate
+        }&page=${page}&limit=${limit}`,
+        config
+      );
+
+      dispatch(
+        successAction(
+          subscriptionActionTypes.SUBSCRIPTIONS_INDATE_RANGE_SUCCESS,
+          data
+        )
+      );
+    } catch (error) {
+      dispatch(
+        failedAction(
+          subscriptionActionTypes.SUBSCRIPTIONS_INDATE_RANGE_FAILED,
+          error
+        )
+      );
+    }
+  };
+
+export const listDailySubsInDateRange =
+  (page, limit) => async (dispatch, getState) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${getState().core.login.userInfo.token}`,
+        },
+      };
+      dispatch(
+        requestAction(subscriptionActionTypes.DAILYSUBS_INDATE_RANGE_REQUEST)
+      );
+
+      const { data } = await request.get(
+        `/api/subscriptions/dailysubs-range?start_date=${
+          getState().core.config.startDate
+        }&end_date=${
+          getState().core.config.endDate
+        }&page=${page}&limit=${limit}`,
+        config
+      );
+
+      dispatch(
+        successAction(
+          subscriptionActionTypes.DAILYSUBS_INDATE_RANGE_SUCCESS,
+          data
+        )
+      );
+    } catch (error) {
+      dispatch(
+        failedAction(
+          subscriptionActionTypes.DAILYSUBS_INDATE_RANGE_FAILED,
+          error
+        )
+      );
+    }
+  };
+
+export const listAllUnpaidSubscriptions =
+  (page, limit) => async (dispatch, getState) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${getState().core.login.userInfo.token}`,
+        },
+      };
+      dispatch(
+        requestAction(subscriptionActionTypes.UNPAID_SUBSCRIPTIONS_LIST_REQUEST)
+      );
+      const { data } = await request.get(
+        `/api/subscriptions/unpaid?page=${page}&limit=${limit}`,
+        config
+      );
+      dispatch(
+        successAction(
+          subscriptionActionTypes.UNPAID_SUBSCRIPTIONS_LIST_SUCCESS,
+          data
+        )
+      );
+    } catch (error) {
+      dispatch(
+        failedAction(
+          subscriptionActionTypes.UNPAID_SUBSCRIPTIONS_LIST_FAILED,
+          error
+        )
+      );
+    }
+  };
 export const listAllSubscriptions =
   (page, limit) => async (dispatch, getState) => {
     try {
@@ -46,10 +189,10 @@ export const listAllSubscriptions =
       );
     }
   };
-
 export const addSubscription = (subscription) => async (dispatch, getState) => {
   const {
     member,
+    dailyMember,
     type,
     courses,
     name,
@@ -76,6 +219,7 @@ export const addSubscription = (subscription) => async (dispatch, getState) => {
       "/api/subscriptions",
       {
         member,
+        dailyMember,
         type,
         courses,
         name,

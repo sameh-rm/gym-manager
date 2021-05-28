@@ -72,7 +72,10 @@ const UnConfirmedExpincPage = ({ history, location }) => {
         {deletedSuccess && <Message variant="info">{deletedSuccess}</Message>}
         <Row
           className="hide-scrollbar"
-          style={{ maxHeight: "calc(100vh - 250px)", overflow: "scroll" }}
+          style={{
+            maxHeight: "calc(100vh - 250px)",
+            overflow: "scroll",
+          }}
         >
           {listUnConfirmed && (
             <ExpIncTable

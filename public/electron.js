@@ -18,12 +18,14 @@ function createWindow() {
     width: 800,
     height: 600,
     minWidth: 800,
+    fullscreen: true,
     autoHideMenuBar: true,
     // titleBarStyle: "hidden",
     // frame: false,
   });
 
   // and load the index.html of the app.
+  // require("electron").remote.process.env.TZ = "Africa/Cairo";
   const startUrl =
     process.env.ELECTRON_START_URL ||
     url.format({

@@ -15,16 +15,20 @@ import SubscriptionModal from "../forms/subscription/SubscriptionModal";
 export const ActionsTD = ({
   children,
   deleteHandler,
+  noDelete,
   id,
   editEndpoint,
   subscription,
+  listData,
 }) => {
   const { t } = useTranslation();
   const { userInfo } = useSelector((state) => state.core.login);
   return (
     <td className="align-middle">
-      {!subscription.paymentStatus && <PaymentModal subId={subscription._id} />}
-      {userInfo && userInfo.isAdmin && (
+      {!subscription.paymentStatus && (
+        <PaymentModal listData={listData} subId={subscription._id} />
+      )}
+      {!noDelete && userInfo && userInfo.isAdmin && (
         <Button
           onClick={deleteHandler}
           variant="danger"
@@ -60,7 +64,10 @@ const SubsTable = ({
   listData,
   moreRows = 0,
   noActions,
+  noDelete,
   member,
+  noAdd,
+  withMember,
 }) => {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
@@ -88,6 +95,7 @@ const SubsTable = ({
     page_rows_count,
     moreRows,
   ]);
+
   useEffect(() => {
     setCurrentData(data);
   }, [data]);
@@ -106,7 +114,9 @@ const SubsTable = ({
             />
           </Col>
           <Col>
-            <SubscriptionModal member={member} className="float-left" />
+            {!noAdd && (
+              <SubscriptionModal member={member} className="float-left" />
+            )}
           </Col>
         </Row>
         <div className="hide-scrollbar" style={{ height: "550px" }}>
@@ -120,6 +130,7 @@ const SubsTable = ({
                   </th>
                 ))}
                 <th>{t("Remains")}</th>
+                {withMember && <th>{t("Member")}</th>}
 
                 {!noActions && <th></th>}
               </tr>
@@ -158,8 +169,17 @@ const SubsTable = ({
                         )
                     )}
                     <TableTD>{row.price - row.paid}</TableTD>
+                    {withMember && (
+                      <TableTD>
+                        <Link to={`/members/${row.member._id}/detail`}>
+                          {row.member.name}
+                        </Link>
+                      </TableTD>
+                    )}
                     {!noActions && (
                       <ActionsTD
+                        listData={listData}
+                        noDelete={noDelete}
                         id={row._id}
                         deleteHandler={() => {
                           deleteHandler(row._id);

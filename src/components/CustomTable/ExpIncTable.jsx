@@ -34,6 +34,7 @@ const ExpIncTable = ({
   noActions,
   editIcon,
   editHandler,
+  fontSize,
 }) => {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
@@ -158,7 +159,6 @@ const ExpIncTable = ({
                         editEndpoint={editEndpoint}
                         editIcon={editIcon}
                         editHandler={() => {
-                          console.log(row._id);
                           editHandler(row._id);
                         }}
                       />

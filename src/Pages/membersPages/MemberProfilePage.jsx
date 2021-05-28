@@ -139,15 +139,21 @@ const MemberProfilePage = () => {
                     <Row className="pt-5">
                       <Col md={4}>
                         <span className="px-3">{t("Age")}:</span>
-                        <span className="text-success">{member.age}</span>
+                        <span className="text-success">
+                          {member.age} {t("Year")}
+                        </span>
                       </Col>
                       <Col md={4}>
                         <span className="px-3">{t("Tall")}:</span>
-                        <span className="text-success">{member.tall}</span>
+                        <span className="text-success">
+                          {member.tall} {t("CM")}
+                        </span>
                       </Col>
                       <Col md={4}>
                         <span className="px-3">{t("Weight")}:</span>
-                        <span className="text-success">{member.weight}</span>
+                        <span className="text-success">
+                          {member.weight} {t("KG")}
+                        </span>
                       </Col>
                     </Row>
                     <Row className="pt-5">

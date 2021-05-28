@@ -2,7 +2,8 @@ const expressAsyncHandler = require("express-async-handler");
 const ExpInc = require("../models/expInc.model");
 const Member = require("../models/member.model");
 const Subscription = require("../models/subscription.model");
-
+const moment = require("moment");
+const { fixDate } = require("../utils/date");
 const getAllSubscriptions = expressAsyncHandler(async (req, res) => {
   const subs = await Subscription.find({})
     .populate("user member course membership")
@@ -13,13 +14,87 @@ const getAllSubscriptions = expressAsyncHandler(async (req, res) => {
   res.json({ results: subs });
 });
 
+// returns a list of the new subscriptions added today excluding the dailysubs
+const getAllSubscriptionsInDataRange = expressAsyncHandler(async (req, res) => {
+  const startDate = req.query.start_date;
+  const endDate = req.query.end_date;
+
+  if ((startDate, endDate)) {
+    const subs = await Subscription.find({
+      type: { $ne: "DailySub" },
+      createdAt: {
+        $lte: new Date(endDate),
+        $gte: new Date(startDate),
+      },
+    });
+    res.status(200);
+    console.log(subs);
+    res.json({ results: subs, count: subs.length });
+  } else {
+    res.status(400);
+    throw new Error("Wrong Date Format");
+  }
+  // .populate("user member course membership")
+  // .limit(req.limit)
+  // .skip(req.startIndex);
+});
+
+const getAllDailySubsInDataRange = expressAsyncHandler(async (req, res) => {
+  const startDate = req.query.start_date;
+  const endDate = req.query.end_date;
+
+  if ((startDate, endDate)) {
+    const subs = await Subscription.find({
+      type: { $eq: "DailySub" },
+      createdAt: {
+        $lte: new Date(endDate),
+        $gte: new Date(startDate),
+      },
+    });
+    res.status(200);
+    console.log(subs);
+    res.json({ results: subs, count: subs.length });
+  } else {
+    res.status(400);
+    throw new Error("Wrong Date Format");
+  }
+  // .populate("user member course membership")
+  // .limit(req.limit)
+  // .skip(req.startIndex);
+});
+
+const getAllExpiredSubscriptions = expressAsyncHandler(async (req, res) => {
+  const subs = await Subscription.find({
+    type: { $ne: "DailySub" },
+    endsAt: {
+      $lte: new Date(),
+    },
+  })
+    .populate("user member course membership")
+    .limit(req.limit)
+    .skip(req.startIndex);
+
+  res.status(200);
+  res.json({ results: subs });
+});
+const getAllUnpaidSubscriptions = expressAsyncHandler(async (req, res) => {
+  const subs = await Subscription.find({
+    type: { $ne: "DailySub" },
+    paymentStatus: false,
+  })
+    .populate("user member course membership")
+    .limit(req.limit)
+    .skip(req.startIndex);
+
+  res.status(200);
+  res.json({ results: subs });
+});
 const createSubscription = expressAsyncHandler(async (req, res) => {
   const sub = req.body;
-  console.log(sub);
   const createdSubscription = await Subscription.create({
     ...sub,
     user: req.user,
-    paymentStatus: sub.paid === sub.price,
+    paymentStatus: Number(sub.paid) === Number(sub.price),
   });
 
   const payment = await saveMemberPayment(
@@ -94,15 +169,19 @@ const getExpIncsBySubscriptionId = expressAsyncHandler(async (req, res) => {
 
 const saveMemberPayment = async (paidValue, user, sub) => {
   // const member = sub.member;
-  const member = await Member.findById(sub.member);
-
+  var member = {};
+  if (sub.type !== "DailySub") {
+    member = await Member.findById(sub.member);
+  }
   if (paidValue <= 0) return null;
   const createdPayment = await ExpInc.create({
-    description: `تم دفع ${paidValue} جنيهاً بواسطة ${member.name} من حساب الإشتراك ${sub.name}`,
+    description: `تم دفع ${paidValue} جنيهاً بواسطة ${
+      sub.type !== "DailySub" ? member.name : sub.dailyMember
+    } من حساب الإشتراك ${sub.name}`,
     inOut: "IN",
     value: paidValue,
     user: user._id,
-    member: member._id,
+    member: sub.type !== "DailySub" ? member._id : null,
     subscription: sub._id,
     confirmed: user.isAdmin,
   }).catch((err) => console.log(err));
@@ -123,7 +202,7 @@ const updateSubscription = expressAsyncHandler(async (req, res) => {
 
   const updatedSubscription = await sub.save();
   const payment = await saveMemberPayment(paid, req.user, updatedSubscription);
-  if ((!updatedSubscription, updatedSubscription)) {
+  if (!updatedSubscription) {
     res.status(400);
     throw new Error("invalid request body");
   } else {
@@ -175,4 +254,8 @@ module.exports = {
   updateSubscription,
   deleteSubscription,
   getExpIncsBySubscriptionId,
+  getAllExpiredSubscriptions,
+  getAllUnpaidSubscriptions,
+  getAllSubscriptionsInDataRange,
+  getAllDailySubsInDataRange,
 };

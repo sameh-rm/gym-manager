@@ -8,21 +8,9 @@ import { listAllMemberShips } from "../../../redux/memberShipReducers/membership
 import AsyncComponent from "../../Utils/AsyncComponent";
 import FormItem from "../FormItem";
 import { optionsToMemberShipCourses } from "../../../redux/courseReducers/utils";
-const SubscriptionForm = ({ subscription, setsubscription }) => {
+
+const DailySubscriptionForm = ({ subscription, setsubscription }) => {
   const { t } = useTranslation();
-  const subscriptionTypeOptions = useMemo(
-    () => [
-      {
-        label: t("Membership"),
-        value: "Membership",
-      },
-      {
-        label: t("Course"),
-        value: "Course",
-      },
-    ],
-    [t]
-  );
 
   const dispatch = useDispatch();
   useEffect(() => {}, [dispatch]);
@@ -33,55 +21,38 @@ const SubscriptionForm = ({ subscription, setsubscription }) => {
     loading: coursesLoading,
     error: coursesError,
   } = useSelector((state) => state.course.coursesList);
-  const {
-    membershipsAsOptions,
-    loading: membershipLoading,
-    error: membershipError,
-  } = useSelector((state) => state.membership.membershipsList);
-
   const [targetedOptions, setTargetedOptions] = useState([]);
+  const [name, setName] = useState([]);
   const validatePaidValue = (value) => {
-    if (targetedValue.value.monthlyPrice) {
-      targetedValue.value.price =
-        targetedValue.value.monthlyPrice * periodValue;
+    if (targetedValue.value.dailyPrice) {
+      targetedValue.value.price = targetedValue.value.dailyPrice * periodValue;
     }
     if (Number(value) > Number(targetedValue.value.price)) {
       setPaidValue(targetedValue.value.price);
-
       setsubscription({
         ...targetedValue.value,
         paid: targetedValue.value.price,
-        type: subscriptionType.value,
+        type: "DailySub",
+        dailyMember: name,
       });
     } else {
       setPaidValue(value);
       setsubscription({
         ...targetedValue.value,
         paid: value,
-        type: subscriptionType.value,
+        type: "DailySub",
+        dailyMember: name,
       });
     }
   };
 
-  const [subscriptionType, setSubscriptionType] = useState(
-    subscriptionTypeOptions[0]
-  );
   const [coursesData, setCoursesData] = useState([]);
   const [targetedValue, setTargetedValue] = useState({});
   const [periodValue, setPeriodValue] = useState(1);
   const [subtotal, setSubTotal] = useState(0);
   useEffect(() => {
-    setTargetedOptions(
-      subscriptionType.value === subscriptionTypeOptions[1].value
-        ? coursesAsOptions
-        : membershipsAsOptions
-    );
-  }, [
-    subscriptionType,
-    subscriptionTypeOptions,
-    coursesAsOptions,
-    membershipsAsOptions,
-  ]);
+    setTargetedOptions(coursesAsOptions);
+  }, [coursesAsOptions]);
   useEffect(() => {
     dispatch(listAllCourses());
     dispatch(listAllMemberShips());
@@ -89,72 +60,56 @@ const SubscriptionForm = ({ subscription, setsubscription }) => {
 
   useEffect(() => {
     if (targetedValue.value)
-      if (subscriptionType.value === subscriptionTypeOptions[0].value) {
-        setsubscription({
-          ...targetedValue.value,
-          courses: targetedValue.value.courses || [targetedValue.value],
-          type: subscriptionType.value,
-          period: subscriptionType.value.period || periodValue,
-          paid: paidValue,
-        });
-      } else {
-        setsubscription({
-          ...targetedValue.value,
-          courses: [targetedValue.value],
-          paid: paidValue,
-          price: targetedValue.value.monthlyPrice * periodValue,
-          period: periodValue,
-          type: subscriptionType.value,
-        });
-      }
-  }, [targetedValue, paidValue]);
+      setsubscription({
+        ...targetedValue.value,
+        courses: targetedValue.value.courses || [targetedValue.value],
+        type: "DailySub",
+        period: periodValue,
+        paid: paidValue,
+        dailyMember: name,
+      });
+  }, [targetedValue, paidValue, name]);
 
   return (
     <Container>
       <Col md={8} className="mx-auto">
         <Col>
           <Row>
-            <Form.Group className="w-100" controlId="type">
-              <Form.Label>{t("Type")}</Form.Label>
+            <FormItem
+              className="w-100"
+              placeholder={t("Member")}
+              title={t("Name")}
+              required
+              type="text"
+              value={name}
+              onChangeHandler={(val) => {
+                setName(val);
+              }}
+            />
+          </Row>
+          <Row>
+            <Form.Group className="w-100" controlId="target">
+              <Form.Label>{t("Subscription")}</Form.Label>
               <Select
-                placeholder={t("Select Type")}
-                options={subscriptionTypeOptions}
-                value={subscriptionType}
-                onChange={(option) => {
-                  setSubscriptionType(option);
-                  setTargetedValue({});
-                }}
+                options={targetedOptions}
+                value={targetedValue}
                 menuPosition="fixed"
+                onChange={(option) => {
+                  const optionValue = option.value;
+                  setTargetedValue(option);
+                  if (optionValue.courses) {
+                    setSubTotal(optionValue.dailyPrice);
+                    setPaidValue(optionValue.dailyPrice);
+                    setCoursesData(optionsToMemberShipCourses(optionValue));
+                  } else {
+                    setPaidValue(optionValue.dailyPrice);
+                    setSubTotal(optionValue.dailyPrice * periodValue);
+                    setCoursesData([optionValue]);
+                  }
+                }}
               />
             </Form.Group>
           </Row>
-          {
-            <Row>
-              <Form.Group className="w-100" controlId="target">
-                <Form.Label>{t("Subscription")}</Form.Label>
-                <Select
-                  options={targetedOptions}
-                  value={targetedValue}
-                  menuPosition="fixed"
-                  onChange={(option) => {
-                    const optionValue = option.value;
-                    setTargetedValue(option);
-                    if (optionValue.courses) {
-                      setSubTotal(optionValue.price);
-                      setPaidValue(optionValue.price);
-
-                      setCoursesData(optionsToMemberShipCourses(optionValue));
-                    } else {
-                      setSubTotal(optionValue.monthlyPrice * periodValue);
-                      setPaidValue(optionValue.monthlyPrice * periodValue);
-
-                      setCoursesData([optionValue]);
-                    }
-                  }}
-                />
-              </Form.Group>
-            </Row>
-          }
         </Col>
 
         <Col>
@@ -179,10 +134,7 @@ const SubscriptionForm = ({ subscription, setsubscription }) => {
         </Col>
       </Col>
       <Row>
-        <AsyncComponent
-          loading={membershipLoading || coursesLoading}
-          error={membershipError || coursesError}
-        >
+        <AsyncComponent loading={coursesLoading} error={coursesError}>
           <Table responsive bordered hover>
             <thead>
               <tr>
@@ -208,7 +160,7 @@ const SubscriptionForm = ({ subscription, setsubscription }) => {
                       )}
                     </td>
                     <td>{course.description}</td>
-                    <td>{course.plan || "شهرى"}</td>
+                    <td>{course.plan || t("Daily")}</td>
                     <td>
                       {!course.membership ? (
                         <FormItem
@@ -221,16 +173,18 @@ const SubscriptionForm = ({ subscription, setsubscription }) => {
                             if (course.courses) {
                               setSubTotal(course.price * val);
                               setPaidValue(course.price * val);
+
                               setTargetedValue({
                                 ...targetedValue,
                                 price: course.price * val,
                               });
                             } else {
-                              setPaidValue(course.monthlyPrice * val);
-                              setSubTotal(course.monthlyPrice * val);
+                              setSubTotal(course.dailyPrice * val);
+                              setPaidValue(course.dailyPrice * val);
+
                               setTargetedValue({
                                 ...targetedValue,
-                                price: course.monthlyPrice * val,
+                                price: course.dailyPrice * val,
                               });
                             }
                           }}
@@ -239,7 +193,7 @@ const SubscriptionForm = ({ subscription, setsubscription }) => {
                         course.period
                       )}
                     </td>
-                    <td>{course.price || course.monthlyPrice}</td>
+                    <td>{course.price || course.dailyPrice}</td>
                   </tr>
                 );
               })}
@@ -251,4 +205,4 @@ const SubscriptionForm = ({ subscription, setsubscription }) => {
   );
 };
 
-export default SubscriptionForm;
+export default DailySubscriptionForm;

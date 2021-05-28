@@ -24,7 +24,6 @@ const largeMenu = () => {
   `;
 };
 const drawMenu = (parentElement, size, height) => {
-  console.log(height);
   //   const height = mRef ? mRef : 0;
   const { top, bottom, left, right } = getParentBounds(parentElement) || [
     70, 0, 10, 0,

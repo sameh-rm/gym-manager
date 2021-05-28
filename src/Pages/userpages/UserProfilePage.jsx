@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Col, Container, Image, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +6,6 @@ import { useHistory, useParams } from "react-router";
 import MainContainer from "../../components/MainContainer/MainContainer";
 import AsyncComponent from "../../components/Utils/AsyncComponent";
 import { adminActionTypes } from "../../redux/coreReducers/adminReducers/admin.actionTypes";
-import { deleteSubscription } from "../../redux/subscriptionsReducers/subscriptions.actions";
 import { selectUser } from "../../redux/coreReducers/adminReducers/admin.actions";
 const UserProfilePage = () => {
   const history = useHistory();
@@ -17,13 +16,6 @@ const UserProfilePage = () => {
     (state) => state.core.selectUser
   );
 
-  const columns = ["description", "startedAt", "endsAt", "paymentStatus"];
-  const deleteHandler = (row_id) => {
-    if (window.confirm(t("Are you sure?"))) {
-      dispatch(deleteSubscription(row_id));
-      // setDeleteSuccess(true);
-    }
-  };
   useEffect(() => {
     dispatch(selectUser(id));
 

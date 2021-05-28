@@ -14,6 +14,7 @@ const FormItem = ({
 }) => {
   return (
     <Form.Group
+      className={className}
       controlId={title ? title.toLowerCase() : placeholder.toLowerCase()}
     >
       {title && <Form.Label>{title}</Form.Label>}

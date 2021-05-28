@@ -30,6 +30,35 @@ export const usersListReducer = (state = initState, action) => {
   }
 };
 
+export const configReducer = (state = {}, action) => {
+  const date = new Date();
+  const startDate = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    "05",
+    "00",
+    "00"
+  );
+  const endDate = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate() + 1,
+    "05",
+    "59",
+    "59"
+  );
+  switch (action.type) {
+    case adminActionTypes.DATE_RANGE:
+      return {
+        startDate: startDate,
+        endDate: endDate,
+      };
+
+    default:
+      return state;
+  }
+};
 export const addUserReducer = (state = {}, action) => {
   switch (action.type) {
     case adminActionTypes.CREATE_USER_REQUEST:

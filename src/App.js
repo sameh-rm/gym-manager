@@ -1,5 +1,5 @@
-// import { HashRouter as Router, Route } from "react-router-dom";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { HashRouter as Router, Route } from "react-router-dom";
+// import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import ErrorBoundary from "./components/Utils/ErrorBoundary";
 import Dashboard from "./Pages/Dashboard/Dashboard.page";
@@ -30,6 +30,8 @@ import MemberProfilePage from "./Pages/membersPages/MemberProfilePage";
 import UserProfilePage from "./Pages/userpages/UserProfilePage";
 import SubscriptionDetailPage from "./Pages/subscriptionPages/SubscriptionDetailPage";
 import UnConfirmedExpincPage from "./Pages/ExpInc/UnConfirmedExpIncPage";
+import UnpaidSubscriptionsPage from "./Pages/subscriptionPages/UnpaidSubscriptionsPage";
+import ExpiredSubscriptionsPage from "./Pages/subscriptionPages/ExpiredSubscriptionsPage";
 
 function App({ history }) {
   const { i18n } = useTranslation();
@@ -83,6 +85,16 @@ function App({ history }) {
             exact
             path="/subscriptions/:id/detail"
             component={SubscriptionDetailPage}
+          />
+          <Route
+            exact
+            path="/subscriptions/unpaid"
+            component={UnpaidSubscriptionsPage}
+          />
+          <Route
+            exact
+            path="/subscriptions/expired"
+            component={ExpiredSubscriptionsPage}
           />
           {/* <Route render={() => <Redirect to="/" />} /> */}
         </Switch>

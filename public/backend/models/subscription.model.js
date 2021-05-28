@@ -9,7 +9,7 @@ const subscriptionSchema = mongoose.Schema(
     },
     member: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
+      // required: true,
       ref: "Member",
     },
     membership: {
@@ -33,6 +33,9 @@ const subscriptionSchema = mongoose.Schema(
     description: {
       type: String,
       required: true,
+    },
+    dailyMember: {
+      type: String,
     },
     period: {
       type: Number,

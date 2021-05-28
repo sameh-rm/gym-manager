@@ -1,4 +1,8 @@
 import { request } from "../../../utils/request";
+import {
+  listAllSubscriptionsInDateRange,
+  listDailySubsInDateRange,
+} from "../../subscriptionsReducers/subscriptions.actions";
 import { adminActionTypes } from "./admin.actionTypes";
 
 export const requestAction = (actionType) => ({
@@ -39,6 +43,23 @@ export const listAllUsers = (page, limit) => async (dispatch, getState) => {
   }
 };
 
+export const loadConfigs = (page, limit) => async (dispatch, getState) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${getState().core.login.userInfo.token}`,
+      },
+    };
+    await dispatch({ type: adminActionTypes.DATE_RANGE });
+
+    dispatch(listAllSubscriptionsInDateRange());
+
+    dispatch(listDailySubsInDateRange());
+  } catch (error) {
+    dispatch(failedAction(adminActionTypes.USERS_LIST_FAILED, error));
+  }
+};
 export const addUser =
   ({
     name,

@@ -18,12 +18,8 @@ export const SidebarContainer = styled.div`
   color: #fff;
   transition: all 300ms ease-in;
   z-index: 1000;
-  border-top-left-radius: 55px;
-  border-bottom-left-radius: 130px;
   ${({ collapse, dir }) => collapse && collapseCSS(dir)}
   .sidebar_wrapper {
-    border-top-left-radius: 55px;
-    border-bottom-left-radius: 130px;
     background-color: rgba(0, 0, 0, 0.8);
     width: 100%;
     height: 100%;

@@ -29,8 +29,6 @@ const CustomMenu = ({
 
   useEffect(() => {
     setParentElement(mRef.current.parentElement);
-    console.log(mRef.current.parentElement, "");
-    console.log("mRef.current", mRef);
     function handleClickOutside(event) {
       if (
         mRef.current &&
@@ -73,7 +71,10 @@ const CustomMenu = ({
               </MenuHeaderContainer>
             </div>
           </CardHeaderContainer>
-          <Card.Body className="hide-scrollbar" style={{ Height: "80%" }}>
+          <Card.Body
+            className="hide-scrollbar"
+            style={{ Height: "80%", paddingTop: ".6rem" }}
+          >
             {children}
           </Card.Body>
           <Card.Footer className="bg-white text-center">{footer}</Card.Footer>

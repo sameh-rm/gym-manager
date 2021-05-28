@@ -33,6 +33,110 @@ const subscriptionListReducer = (state = initState, action) => {
   }
 };
 
+const subscriptionListInDateRangeReducer = (state = initState, action) => {
+  switch (action.type) {
+    case subscriptionActionTypes.SUBSCRIPTIONS_INDATE_RANGE_REQUEST:
+      return {
+        subscriptionListInDateRange: [],
+        loading: true,
+      };
+    case subscriptionActionTypes.SUBSCRIPTIONS_INDATE_RANGE_SUCCESS:
+      return {
+        subscriptionListInDateRange: action.payload.results,
+        prev: action.payload.prev,
+        next: action.payload.next,
+        count: action.payload.count,
+        loading: false,
+      };
+    case subscriptionActionTypes.SUBSCRIPTIONS_INDATE_RANGE_FAILED:
+      return {
+        error: action.payload,
+        loading: false,
+        subscriptionListInDateRange: [],
+      };
+
+    default:
+      return state;
+  }
+};
+
+const dailySubsListInDateRangeReducer = (state = initState, action) => {
+  switch (action.type) {
+    case subscriptionActionTypes.DAILYSUBS_INDATE_RANGE_REQUEST:
+      return {
+        dailySubsListInDateRange: [],
+        loading: true,
+      };
+    case subscriptionActionTypes.DAILYSUBS_INDATE_RANGE_SUCCESS:
+      return {
+        dailySubsListInDateRange: action.payload.results,
+        prev: action.payload.prev,
+        next: action.payload.next,
+        count: action.payload.count,
+        loading: false,
+      };
+    case subscriptionActionTypes.DAILYSUBS_INDATE_RANGE_FAILED:
+      return {
+        error: action.payload,
+        loading: false,
+        dailySubsListInDateRange: [],
+      };
+
+    default:
+      return state;
+  }
+};
+
+const expiredSubscriptionListReducer = (state = initState, action) => {
+  switch (action.type) {
+    case subscriptionActionTypes.EXPIRED_SUBSCRIPTIONS_LIST_REQUEST:
+      return {
+        expiredSubscriptionList: [],
+        loading: true,
+      };
+    case subscriptionActionTypes.EXPIRED_SUBSCRIPTIONS_LIST_SUCCESS:
+      return {
+        expiredSubscriptionList: action.payload.results,
+        prev: action.payload.prev,
+        next: action.payload.next,
+        loading: false,
+      };
+    case subscriptionActionTypes.EXPIRED_SUBSCRIPTIONS_LIST_FAILED:
+      return {
+        error: action.payload,
+        loading: false,
+        expiredSubscriptionList: [],
+      };
+
+    default:
+      return state;
+  }
+};
+const unpaidSubscriptionListReducer = (state = initState, action) => {
+  switch (action.type) {
+    case subscriptionActionTypes.UNPAID_SUBSCRIPTIONS_LIST_REQUEST:
+      return {
+        unpaidSubscriptionList: [],
+        loading: true,
+      };
+    case subscriptionActionTypes.UNPAID_SUBSCRIPTIONS_LIST_SUCCESS:
+      return {
+        unpaidSubscriptionList: action.payload.results,
+        prev: action.payload.prev,
+        next: action.payload.next,
+        loading: false,
+      };
+    case subscriptionActionTypes.UNPAID_SUBSCRIPTIONS_LIST_FAILED:
+      return {
+        error: action.payload,
+        loading: false,
+        unpaidSubscriptionList: [],
+      };
+
+    default:
+      return state;
+  }
+};
 const addsubscriptionReducer = (state = {}, action) => {
   switch (action.type) {
     case subscriptionActionTypes.CREATE_SUBSCRIPTION_REQUEST:
@@ -207,6 +311,10 @@ const subscriptionReducers = persistReducer(
     updateSubscription: updatesubscriptionReducer,
     deleteSubscription: deletesubscriptionReducer,
     selectExpincsOfSubscription: selectExpincsOfSubscriptionReducer,
+    listAllExpiredSubs: expiredSubscriptionListReducer,
+    listAllUnpaidSubs: unpaidSubscriptionListReducer,
+    subscriptionListInDateRange: subscriptionListInDateRangeReducer,
+    dailySubsInDateRange: dailySubsListInDateRangeReducer,
   })
 );
 

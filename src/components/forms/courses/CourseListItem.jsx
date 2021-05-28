@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Badge, Col, ListGroup, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import Select from "react-select";
 
 import FormItem from "../FormItem";
 
@@ -16,16 +15,12 @@ const CourseListItem = ({
   const changeTableValues = (idx, key, value) => {
     coursesValues[idx]["value"][key] = value;
   };
-  const options = [
-    { value: "شهرى", label: "شهرى" },
-    { value: "يومى", label: "يومى" },
-  ];
+
   const [plan, setPlan] = useState({
     label: "شهرى",
     value: "شهرى",
   });
-  const [daysPerMonth, setDaysPerMonth] = useState();
-  const [minutesPerTime, setMinutesPerTime] = useState();
+
   const [period, setPeriod] = useState(1);
 
   return (

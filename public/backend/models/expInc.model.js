@@ -17,6 +17,10 @@ const expincSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Member",
     },
+    dailySub: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Subscription",
+    },
     subscription: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Subscription",
